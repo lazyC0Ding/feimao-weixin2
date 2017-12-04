@@ -1,0 +1,228 @@
+<style type="text/less" lang="less">
+  @import '../../common';
+
+  .follows {
+    position: relative;
+    margin-bottom: .1rem;
+    background-color: #fff;
+    font-size: .2rem;
+    height: 2.6rem;
+    > span {
+      position: absolute;
+      left: 0;
+      top: 0;
+      padding: 0 .26rem;
+      height: 100%;
+      text-align: center;
+      writing-mode: vertical-lr;
+      letter-spacing: .05rem;
+      z-index: 1;
+      background-color: #fff;
+      &:after {
+        content: " ";
+        position: absolute;
+        right: 0;
+        top: 50%;
+        width: 1px;
+        height: .6rem;
+        margin-top: -.3rem;
+        background-color: #e4e4e4;
+      }
+    }
+    > ul {
+      width: 100%;
+      height: 100%;
+      padding-top: .38rem;
+      padding-left: .72rem;
+      box-sizing: border-box;
+      overflow-y: hidden;
+      overflow-x: scroll;
+      white-space: nowrap;
+      &::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+      }
+      > li {
+        display: inline-block;
+        text-align: center;
+        width: 1.52rem;
+        &:first-child {
+          margin-left: .1rem;
+        }
+        dt {
+          > img {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+          }
+        }
+        dd {
+          > span {
+            margin: .1rem 0;
+            width: 1.2rem;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+        > span {
+          .middle(.4rem);
+          width: .84rem;
+          font-size: .16rem;
+          border: 1px solid #111;
+        }
+      }
+    }
+  }
+
+</style>
+<template>
+  <div class="bottom-container" style="padding-top:.9rem;">
+    <search-input v-href="'search'" disabled>
+      <img v-href.stop="'message'" src="../../assets/img/nav_message.png">
+    </search-input>
+    <swiper
+      :list="banner.list"
+      v-model="banner.index"
+      @on-index-change="bannerIndexChange"
+      :aspect-ratio="8/15"
+      dots-position="center"
+      auto
+      loop
+    ></swiper>
+    <ul class="tags-3">
+      <li :class="{active:activeTag === 0}" @click="activeTag=0">我的关注</li>
+      <li :class="{active:activeTag === 1}" @click="activeTag=1">热门文章</li>
+      <li :class="{active:activeTag === 2}" @click="activeTag=2">好物推荐</li>
+    </ul>
+    <div v-show="activeTag === 0" class="follows">
+      <span>推荐关注</span>
+      <ul>
+        <li v-for="person in attention.persons" :key="person.customer_id">
+          <dl>
+            <dt>
+              <img :src="person.avater || './static/img/default_head.png'">
+            </dt>
+            <dd><span>{{person.nickname}}</span></dd>
+          </dl>
+          <span @click="follow(person.customer_id)">关注TA</span>
+        </li><li v-if="attention.persons.length >= 9">
+          <dl>
+            <dt v-href="'follows'">
+              <img src="../../assets/img/people_more.png">
+            </dt>
+            <dd><span>更多推荐</span></dd>
+          </dl>
+          <span v-href="'follows'">查看全部</span>
+        </li>
+      </ul>
+    </div>
+    <div v-if="!attention.articles.length" v-show="activeTag === 0" class="tip-nothing">
+      <img src="../../assets/img/Tip_nothing.png">
+      <div>暂无关注</div>
+    </div>
+    <app-articles v-show="activeTag === 0" :parentData="_data" :articles="attention.articles"></app-articles>
+    <app-articles v-show="activeTag === 1" :parentData="_data" :articles="articles"></app-articles>
+    <goods-container v-show="activeTag === 2" :goods="recommend" hidePrice></goods-container>
+    <the-footer current="0"></the-footer>
+    <app-permanent type="1"></app-permanent>
+  </div>
+</template>
+<script>
+  import SearchInput from '@c/SearchInput.vue'
+  import AppArticles from '@c/AppArticles.vue'
+  import GoodsContainer from '@c/GoodsContainer.vue'
+  import TheFooter from '@c/TheFooter.vue'
+  import {Swiper} from 'vux'
+  import AppPermanent from '@c/AppPermanent.vue'
+
+  export default {
+    data () {
+      return {
+        banner: {
+          list: [],
+          index: 0,
+        },
+        activeTag: 0,
+        attention: {
+          articles: [],
+          persons: [],
+        },
+        articles: [],
+        recommend: [],
+        $_follow: false,
+      }
+    },
+    methods: {
+      bannerIndexChange (index) {
+        this.banner.index = index
+      },
+      follow(pid){
+        this.$post(URL.attention, {pid})
+          .then(res => {
+            if (res.errcode == 0) {
+              this.refreshByFollow();
+              follow_common();
+            }else {
+              errback(res)
+            }
+          })
+      },
+      refreshByFollow(){
+        this.$post(URL.getBaseData)
+          .then(res => {
+            this.attention = res.content.attention;
+            this.$_follow = false;
+            setSession(getPageName(), this._data);
+          })
+      },
+      test(){
+        toast('123');
+      },
+      keepAlive(){
+        const data = getSession(getPageName());
+        if (data) {
+          for (let i in data) {
+            this[i] = data[i];
+          }
+          if (data.$_follow) {
+            this.refreshByFollow();
+          }
+        } else {
+          this.fetch();
+        }
+      },
+      fetch(){
+        this.$post(URL.getBaseData)
+          .then(res => {
+            const content = res.content;
+            const banners = content.banners;
+            for (let i in banners) {
+              banners[i].img = banners[i].image
+            }
+            this.banner.list = banners;
+            this.attention = content.attention;
+            this.articles = content.articles;
+            this.recommend = content.recommend;
+          })
+      },
+    },
+    created(){
+      this.keepAlive();
+      // 开发测试用代码,生产时注释 ↓
+      const token = getToken();
+      if (!token) {
+        login();
+      }
+      // 开发测试用代码,生产时注释 ↑
+    },
+    components: {
+      SearchInput,
+      Swiper,
+      AppArticles,
+      GoodsContainer,
+      TheFooter,
+      AppPermanent,
+    }
+  }
+</script>

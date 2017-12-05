@@ -37,11 +37,24 @@
         bottom:.26rem;
         width:.32rem;
       }
-      >span,a{
+      >a{
         position:absolute;
         right:.1rem;
         bottom:0;
         font-size:.26rem;
+      }
+      >span{
+        position:absolute;
+        right:.06rem;
+        top:.16rem;
+        background-color:#D0021B;
+        font-size:.2rem;
+        height:.28rem;
+        border-radius:.28rem;
+        line-height:.28rem;
+        min-width: .14rem;
+        text-align:center;
+        padding:0 .07rem;
       }
     }
   }

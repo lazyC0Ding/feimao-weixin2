@@ -86,21 +86,23 @@
     font-size: 0;
     color: #fff;
     overflow: hidden;
-    > img {
-      margin-left: .3rem;
-      width: .6rem;
-      height: .6rem;
-      border-radius: 50%;
-      vertical-align: middle;
-    }
-    > .nickname {
-      width: 3rem;
-      margin-left: .2rem;
-      font-size: .28rem;
-      vertical-align: middle;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+    >a{
+      > img {
+        margin-left: .3rem;
+        width: .6rem;
+        height: .6rem;
+        border-radius: 50%;
+        vertical-align: middle;
+      }
+      > .nickname {
+        width: 3rem;
+        margin-left: .2rem;
+        font-size: .28rem;
+        vertical-align: middle;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
     }
     > .follows {
       float: right;
@@ -354,7 +356,7 @@
   }
 
   .footer {
-    .ul-horizontal-3(@footer-height);
+    .ul-horizontal(@footer-height,3);
     &:after {
       content: " ";
       position: absolute;
@@ -391,8 +393,10 @@
     <div v-if="article_id">
       <div class="detail-top">
         <div class="author">
-          <img :src="article.avater | avatar">
-          <span class="nickname">{{article.nickname}}</span>
+          <a v-href="['person_detail', {pid:article.customer_id}]">
+            <img :src="article.avater | avatar">
+            <span class="nickname">{{article.nickname}}</span>
+          </a>
           <span class="button" v-if="article.can_attention != 0" @click="follow">{{ article.is_attention == 0 ? '关注TA' : '已关注' }}</span>
           <span class="follows">{{article.attention_count}}人关注</span>
         </div>
@@ -409,11 +413,11 @@
         </ul>
       </div>
       <div class="article">
-        <img class="cover" :src="cover">
+        <img class="cover" :src="cover || content.article.cover">
         <div class="title">
           <div class="a">{{article.title}}</div>
           <hr>
-          <div class="b" v-cloak>
+          <div class="b">
             <span style="float:left">阅读 {{article.browse}}</span>
             <span v-if="article.date_add" style="float:right">{{article.date_add | time}}</span>
           </div>
@@ -518,15 +522,16 @@
               } else {
                 this.content.article.attention_count = Number(this.content.article.attention_count) - 1;
               }
+              follow_common();
             } else {
               errback(res);
             }
-            follow_common();
           })
       },
       fetch(){
         this.$post(URL.articleDetail, {article_id: this.article_id})
           .then(res => {
+              console.log(res)
             if (res.errcode == 0) {
               this.content = res.content;
             }else {
@@ -537,7 +542,7 @@
     },
     created(){
       document.title = '文章详情';
-      const {article_id, cover} = getParams(location.search);
+      const {article_id, cover} = getSearchParams(location.search);
       this.article_id = article_id;
       this.cover = cover;
 

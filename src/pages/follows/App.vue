@@ -13,15 +13,15 @@
   export default {
     data () {
       return {
-        page:1,
-        content:[],
-        $_follow:false
+        page: 1,
+        content: [],
+        $_follow: false
       }
     },
     methods: {
       fetch(){
-        this.$post(URL.getAllRecoAtte, {page:this.page})
-          .then( res => {
+        this.$post(URL.getAllRecoAtte, {page: this.page})
+          .then(res => {
             for (let i of res.content) {
               i['is_attention'] = 0;
             }
@@ -35,17 +35,14 @@
           for (let i in data) {
             this[i] = data[i];
           }
-          if(data.$_follow) {
-            this.fetch();
-          }
-        } else {
-          this.fetch();
+          if (!data.$_follow) return;
         }
+        return this.fetch();
       },
     },
     created(){
       document.title = '推荐关注';
-      this.keepAlive();
+      return this.keepAlive();
     },
     components: {
       AppArticles,

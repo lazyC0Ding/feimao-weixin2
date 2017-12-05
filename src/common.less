@@ -165,7 +165,9 @@
       font-size:.24rem;
       height:.32rem;
       line-height:.32rem;
+      min-width: .16rem;
       padding:0 .08rem;
+      text-align:center;
       float:right;
       margin-top:.44rem;
       background-color:#d0021b;
@@ -230,7 +232,7 @@
   }
 }
 
-.ul-horizontal(@height) {
+.ul-horizontal(@height, @count) {
   overflow: hidden;
   height: @height;
   line-height: @height;
@@ -238,27 +240,7 @@
     float: left;
     height: inherit;
     text-align: center;
-  }
-}
-
-.ul-horizontal-2(@height) {
-  .ul-horizontal(@height);
-  > li {
-    width: 50%;
-  }
-}
-
-.ul-horizontal-3(@height) {
-  .ul-horizontal(@height);
-  > li {
-    width: 33.3%;
-  }
-}
-
-.ul-horizontal-4(@height) {
-  .ul-horizontal(@height);
-  > li {
-    width: 25%;
+    width:100%/@count;
   }
 }
 
@@ -358,12 +340,12 @@
 
 .tags-3 {
   .tags;
-  .ul-horizontal-3(.8rem);
+  .ul-horizontal(.8rem, 3);
 }
 
 .tags-2 {
   .tags;
-  .ul-horizontal-2(.8rem);
+  .ul-horizontal(.8rem, 2);
 }
 
 .tip-nothing {

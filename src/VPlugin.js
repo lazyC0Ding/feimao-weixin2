@@ -69,6 +69,7 @@ export default {
       return [year, month, day].map(formatNumber).join('-') + ' ' + time
     });
 
+    // 01-01 20:00
     Vue.filter('time_2', function (timestamp) {
       const date = new Date(Number(timestamp) * 1000);
       const month = date.getMonth() + 1;

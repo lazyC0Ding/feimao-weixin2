@@ -79,6 +79,7 @@
 <template>
   <div class="bottom-container" style="padding-top:.9rem;">
     <search-input v-href="'search'" disabled>
+      <span v-if="message_count">{{message_count > 9 ? '9+' : message_count}}</span>
       <img v-href.stop="'message'" src="../../assets/img/nav_message.png">
     </search-input>
     <swiper
@@ -99,14 +100,15 @@
       <span>推荐关注</span>
       <ul>
         <li v-for="person in attention.persons" :key="person.customer_id">
-          <dl>
+          <dl v-href="['person_detail', {pid:person.customer_id}]">
             <dt>
-              <img :src="person.avater || './static/img/default_head.png'">
+              <img :src="person.avater | avatar">
             </dt>
             <dd><span>{{person.nickname}}</span></dd>
           </dl>
           <span @click="follow(person.customer_id)">关注TA</span>
-        </li><li v-if="attention.persons.length >= 9">
+        </li>
+        <li v-if="attention.persons.length >= 9">
           <dl>
             <dt v-href="'follows'">
               <img src="../../assets/img/people_more.png">
@@ -150,6 +152,7 @@
         },
         articles: [],
         recommend: [],
+        message_count:0,
         $_follow: false,
       }
     },
@@ -163,7 +166,7 @@
             if (res.errcode == 0) {
               this.refreshByFollow();
               follow_common();
-            }else {
+            } else {
               errback(res)
             }
           })
@@ -175,9 +178,6 @@
             this.$_follow = false;
             setSession(getPageName(), this._data);
           })
-      },
-      test(){
-        toast('123');
       },
       keepAlive(){
         const data = getSession(getPageName());
@@ -195,17 +195,28 @@
       fetch(){
         this.$post(URL.getBaseData)
           .then(res => {
-            const content = res.content;
-            const banners = content.banners;
-            for (let i in banners) {
-              banners[i].img = banners[i].image
+            if (res.errcode == 0) {
+              const content = res.content;
+              const banners = content.banners;
+              for (let i in banners) {
+                banners[i].img = banners[i].image
+              }
+              this.banner.list = banners;
+              this.attention = content.attention;
+              this.articles = content.articles;
+              this.recommend = content.recommend;
+            }else{
+              errback(res);
             }
-            this.banner.list = banners;
-            this.attention = content.attention;
-            this.articles = content.articles;
-            this.recommend = content.recommend;
-          })
+          });
+        this.fetchMsgCount();
       },
+      fetchMsgCount(){
+        this.$post(URL.getInitData)
+          .then( res => {
+            this.message_count = res.content.message_count;
+          })
+      }
     },
     created(){
       this.keepAlive();

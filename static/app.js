@@ -88,10 +88,23 @@ function changeState(pageName, attr, value) {
 }
 
 function follow_common() {
-  const willRefreshByFollow = ['index', 'follows'];
+  const willRefreshByFollow = ['index', 'follows', 'person_detail'];
   for (let page of willRefreshByFollow) {
     if(page === getPageName() && page === 'index') return;
     changeState(page, '$_follow', true);
+  }
+}
+
+// 各种action
+function jumpAction(action) {
+  switch (action.action_id) {
+    default:
+      let params = {};
+      for (let i of action.params) {
+        params[i.key] = i.value;
+      }
+      openPage(action.jump, params);
+      break;
   }
 }
 

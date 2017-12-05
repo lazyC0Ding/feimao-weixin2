@@ -17,7 +17,7 @@ function formatParams(json) {
 }
 
 // 获取页面间传递的参数 str = location.search
-function getParams(str) {
+function getSearchParams(str) {
   str = str.startsWith('?') ? str.slice(1) : str;
   const params = decodeURI(str).split('&');
 

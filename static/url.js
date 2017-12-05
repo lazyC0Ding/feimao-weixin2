@@ -11,4 +11,12 @@ const URL = {
   attention:'community/attention',
   getAllRecoAtte:'community/getAllRecoAtte',
   getMessages:'message/getMessages',
+  getSystemMessages:'message/getSystemMessages',
+  getOrderMessages:'message/getOrderMessages',
+  getFansMessages:'message/getFansMessages',
+  getAttentionMessages:'message/getAttentionMessages',
+  getAttenInfo:'community/getAttenInfo',
+  getCommentMessages:'message/getCommentMessages',
+  getLikeMessages:'message/getLikeMessages',
+  getInitData:'init/getbasedata',
 };

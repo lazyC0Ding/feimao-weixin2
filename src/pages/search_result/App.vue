@@ -47,7 +47,7 @@
       }
     },
     created(){
-      this.params.keyword = getParams(location.search).key;
+      this.params.keyword = getSearchParams(location.search).key;
       this.fetch();
     },
     components: {

@@ -63,7 +63,7 @@
   <ul class="msg_comment-ul">
     <li v-for="msg in msgs" :key="msg.message_id">
       <div class="div-1">
-        <img :src="msg.avater">
+        <img :src="msg.avater | avatar">
         <span class="nickname">{{msg.nickname}}</span><!--
           --><span class="date_add">{{msg.date_add | time}}</span>
         <span class="btn">回复TA</span>

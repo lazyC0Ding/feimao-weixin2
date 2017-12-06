@@ -47,9 +47,11 @@ span{
 }
 a:active, a:hover {
   outline: 0;
+  color:#111;
 }
 a, a:visited{
 	text-decoration:none;
+  color:#111;
 }
 
 label, .wordWrap{

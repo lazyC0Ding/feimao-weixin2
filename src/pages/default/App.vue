@@ -3,7 +3,7 @@
 </style>
 <template>
   <div>
-    <app-permanent type="1"></app-permanent>
+    <app-permanent type="2"></app-permanent>
   </div>
 </template>
 <script>

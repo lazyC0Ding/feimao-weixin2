@@ -9,7 +9,6 @@ const URL = {
   getAllRecoAtte:'community/getAllRecoAtte',
   articleDetail:'article/articleDetail',
   attention:'community/attention',
-  getAllRecoAtte:'community/getAllRecoAtte',
   getMessages:'message/getMessages',
   getSystemMessages:'message/getSystemMessages',
   getOrderMessages:'message/getOrderMessages',
@@ -19,4 +18,7 @@ const URL = {
   getCommentMessages:'message/getCommentMessages',
   getLikeMessages:'message/getLikeMessages',
   getInitData:'init/getbasedata',
+  getCategoryGoods:'mall/getCategoryGoods',
+  getActivityGoods:'mall/getActivityGoods',
+  getGoodsDetail:'goods/getGoodsDetail',
 };

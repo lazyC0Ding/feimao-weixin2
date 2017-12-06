@@ -29,7 +29,7 @@
         color: #a1a1a1;
         white-space: nowrap;
         overflow-x: scroll;
-        ::-webkit-scrollbar {
+        &::-webkit-scrollbar {
           width: 0;
           height: 0;
         }

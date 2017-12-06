@@ -20,6 +20,9 @@
       > li {
         height: 100%;
         line-height: .7rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }
@@ -56,7 +59,7 @@
         return 1000 / this.FPS;
       },
       indexAddPerTime(){
-        return 1 / ( this.duration * 60 / 1000);
+        return 1 / ( this.duration * this.FPS / 1000);
       }
     },
     watch:{

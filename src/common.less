@@ -316,10 +316,11 @@
   padding-left: @fontSize + .1rem;
 }
 
-.tags {
+.tags(@count) {
   background-color: #fff;
   font-size: .26rem;
   margin-bottom: .1rem;
+  .ul-horizontal(.8rem, @count);
   > li {
     &.active {
       position: relative;
@@ -336,16 +337,6 @@
       }
     }
   }
-}
-
-.tags-3 {
-  .tags;
-  .ul-horizontal(.8rem, 3);
-}
-
-.tags-2 {
-  .tags;
-  .ul-horizontal(.8rem, 2);
 }
 
 .tip-nothing {

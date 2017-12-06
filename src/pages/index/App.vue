@@ -1,6 +1,20 @@
 <style type="text/less" lang="less">
   @import '../../common';
 
+  .index-tags {
+    height:.8rem;
+    > ul {
+      width:100%;
+      .tags(3);
+      &.fixed {
+        position: fixed;
+        left: 0;
+        top: .9rem;
+        z-index: 10;
+      }
+    }
+  }
+
   .follows {
     position: relative;
     margin-bottom: .1rem;
@@ -91,11 +105,13 @@
       auto
       loop
     ></swiper>
-    <ul class="tags-3">
-      <li :class="{active:activeTag === 0}" @click="activeTag=0">我的关注</li>
-      <li :class="{active:activeTag === 1}" @click="activeTag=1">热门文章</li>
-      <li :class="{active:activeTag === 2}" @click="activeTag=2">好物推荐</li>
-    </ul>
+    <div class="index-tags">
+      <ul :class="{fixed:isIndexTagsFixed}">
+        <li :class="{active:activeTag === 0}" @click="activeTag=0">我的关注</li>
+        <li :class="{active:activeTag === 1}" @click="activeTag=1">热门文章</li>
+        <li :class="{active:activeTag === 2}" @click="activeTag=2">好物推荐</li>
+      </ul>
+    </div>
     <div v-show="activeTag === 0" class="follows">
       <span>推荐关注</span>
       <ul>
@@ -141,6 +157,7 @@
   export default {
     data () {
       return {
+        isIndexTagsFixed:false,
         banner: {
           list: [],
           index: 0,
@@ -152,7 +169,7 @@
         },
         articles: [],
         recommend: [],
-        message_count:0,
+        message_count: 0,
         $_follow: false,
       }
     },
@@ -205,7 +222,7 @@
               this.attention = content.attention;
               this.articles = content.articles;
               this.recommend = content.recommend;
-            }else{
+            } else {
               errback(res);
             }
           });
@@ -213,7 +230,7 @@
       },
       fetchMsgCount(){
         this.$post(URL.getInitData)
-          .then( res => {
+          .then(res => {
             this.message_count = res.content.message_count;
           })
       }
@@ -226,6 +243,9 @@
         login();
       }
       // 开发测试用代码,生产时注释 ↑
+      window.addEventListener('scroll', () => {
+        this.isIndexTagsFixed = window.scrollY > 200;
+      })
     },
     components: {
       SearchInput,

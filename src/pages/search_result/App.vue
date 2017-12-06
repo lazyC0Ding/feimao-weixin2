@@ -1,12 +1,15 @@
 <style type="text/less" lang="less">
   @import '../../common';
+  .search_result-tags {
+    .tags(2);
+  }
 </style>
 <template>
   <div class="bottom-container" style="padding-top:.9rem;">
     <search-input v-model="params.keyword" :callback="search">
       <a v-back>取消</a>
     </search-input>
-    <ul class="tags-2">
+    <ul class="search_result-tags">
       <li :class="{active:activeTag === 0}" @click="activeTag=0">商品结果</li>
       <li :class="{active:activeTag === 1}" @click="activeTag=1">文章结果</li>
     </ul>

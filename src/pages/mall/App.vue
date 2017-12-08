@@ -271,6 +271,7 @@
   export default {
     data () {
       return {
+        clientWidth:document.documentElement.clientWidth,
         message_count: 0,
         banner: {
           list: [],
@@ -370,7 +371,7 @@
     created(){
       this.fetch();
       window.addEventListener('scroll', () => {
-        this.isCategorysFixed = window.scrollY > 200;
+        this.isCategorysFixed = window.scrollY > this.clientWidth * 8 / 15;
       })
     },
     components: {

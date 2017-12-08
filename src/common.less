@@ -10,7 +10,7 @@
 
 @header-height: 1rem;
 
-@footer-height: 1rem;
+@footer-height: .8rem;
 
 @primary: #ffb305;
 
@@ -25,7 +25,7 @@
 }
 
 .primary-bg {
-  background-color: #e4393c;
+  background-color: #000;
 }
 
 .border-bottom-1px {
@@ -276,6 +276,27 @@
   }
 }
 
+.middle(@height) {
+  height: @height;
+  line-height: @height;
+  text-align: center;
+}
+
+.btn-small(@font-size) {
+  font-size: @font-size;
+  padding: @font-size/6 @font-size/2;
+  line-height: normal;
+}
+
+.btn-middle{
+  width:1.8rem;
+  height:.7rem;
+  line-height:.7rem;
+  text-align:center;
+  background-color:#000;
+  color:#fff;
+}
+
 .btn-big {
   margin: 0 .54rem;
   height: .9rem;
@@ -287,16 +308,17 @@
   .primary-bg;
 }
 
-.middle(@height) {
-  height: @height;
-  line-height: @height;
-  text-align: center;
-}
-
-.btn-small(@font-size) {
-  font-size: @font-size;
-  padding: @font-size/6 @font-size/2;
-  line-height: normal;
+.btn-corner{
+  position:absolute;
+  top:.1rem;
+  right:.1rem;
+  width:1rem;
+  height:.618rem;
+  line-height:.618rem;
+  text-align:center;
+  background-color:#000;
+  color:#fff;
+  font-size:.28rem;
 }
 
 .span-bg-icon-common(@fontSize, @direction) {

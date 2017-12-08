@@ -76,7 +76,7 @@
         }else{
           setTimeout( ()=>{
             this.currentIndex = this.currentIndex + this.indexAddPerTime;
-          },1000)
+          },2000)
         }
       },
     },
@@ -90,6 +90,9 @@
     },
     mounted(){
       this.ul = this.$refs.ul;
+      this.ul.ontouchmove = function (e) {
+        e.preventDefault();
+      };
       setTimeout( ()=>{
         this.currentIndex = this.indexAddPerTime;
       },this.UPDATE_INTERVAL)

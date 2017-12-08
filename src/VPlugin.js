@@ -81,6 +81,15 @@ export default {
       return [month, day].map(formatNumber).join('-') + ' ' + time
     });
 
+    // 01-01
+    Vue.filter('time_3', function (timestamp) {
+      const date = new Date(Number(timestamp) * 1000);
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+
+      return [month, day].map(formatNumber).join('-');
+    });
+
     // 倒计时 HH:MM:SS
     Vue.filter('countdown', function (d_timestamp) {
       if(d_timestamp < 0) return '00:00:00';

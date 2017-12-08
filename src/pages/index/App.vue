@@ -3,9 +3,11 @@
 
   .index-tags {
     height:.8rem;
+    margin-bottom:.1rem;
     > ul {
       width:100%;
       .tags(3);
+      .border-bottom-1px;
       &.fixed {
         position: fixed;
         left: 0;
@@ -141,7 +143,7 @@
     </div>
     <app-articles v-show="activeTag === 0" :parentData="_data" :articles="attention.articles"></app-articles>
     <app-articles v-show="activeTag === 1" :parentData="_data" :articles="articles"></app-articles>
-    <goods-container v-show="activeTag === 2" :goods="recommend" hidePrice></goods-container>
+    <goods-container v-show="activeTag === 2" :parentData="_data" :goods="recommend" hidePrice></goods-container>
     <the-footer current="0"></the-footer>
     <app-permanent type="1"></app-permanent>
   </div>
@@ -157,6 +159,7 @@
   export default {
     data () {
       return {
+        clientWidth:document.documentElement.clientWidth,
         isIndexTagsFixed:false,
         banner: {
           list: [],
@@ -202,6 +205,7 @@
           for (let i in data) {
             this[i] = data[i];
           }
+          this.isIndexTagsFixed = window.scrollY > this.clientWidth * 8 / 15;
           if (data.$_follow) {
             this.refreshByFollow();
           }
@@ -244,7 +248,7 @@
       }
       // 开发测试用代码,生产时注释 ↑
       window.addEventListener('scroll', () => {
-        this.isIndexTagsFixed = window.scrollY > 200;
+        this.isIndexTagsFixed = window.scrollY > this.clientWidth * 8 / 15;
       })
     },
     components: {

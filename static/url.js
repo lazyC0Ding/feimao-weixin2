@@ -21,4 +21,9 @@ const URL = {
   getCategoryGoods:'mall/getCategoryGoods',
   getActivityGoods:'mall/getActivityGoods',
   getGoodsDetail:'goods/getGoodsDetail',
+  addcart:'cart/addcart',
+  settlement:'cart/settlement',
+  getCarts:'cart/getCarts',
+  editCart:'cart/editCart',
+  delCart:'cart/delCart',
 };

@@ -13,8 +13,7 @@
       display: inline-block;
       width: 25%;
       height:100%;
-      background-repeat: no-repeat;
-      background-position: center .05rem;
+      background:no-repeat center .05rem;
       background-size:.6rem;
       font-size:.20rem;
       color:#fff;

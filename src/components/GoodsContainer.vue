@@ -33,11 +33,11 @@
           background-size:.3rem .3rem;
           >span:first-child{
             font-size:.28rem;
-            vertical-align: middle;
+            vertical-align: top;
           }
           >span:last-child{
             font-size:.24rem;
-            vertical-align: middle;
+            vertical-align: top;
           }
         }
       }
@@ -79,7 +79,7 @@
 <template>
   <ul>
     <li v-for="item in goods" :key="item.goods_id">
-      <div class="img" v-href="['goods_detail', {goods_id:item.goods_id}]">
+      <div class="img" @click="showDetail(item.goods_id)">
         <span v-if="time">
           <span>{{d_time | countdown}}</span>
           <span>后{{ifStarted ? '结束' : '开始'}}</span>
@@ -111,10 +111,11 @@
       hidePrice: Boolean,
       type:String,  //activity_goods专用
       time:Object,  //activity_goods专用
+      parentData: Object,  // 用于文章后退不刷新父级页面
     },
     data(){
       return {
-        now:''
+        now:0,
       }
     },
     computed:{
@@ -128,12 +129,19 @@
       }
     },
     methods:{
+      showDetail(goods_id){
+        if (this.parentData) {
+          setSession(getPageName(), this.parentData);
+        }
+        return openPage('goods_detail', {goods_id})
+      },
       getNow(){
         this.now = Date.parse(new Date()) / 1000;
       },
     },
     created(){
       if(this.time) {
+        this.getNow();
         setInterval(this.getNow, 1000);
       }
     },

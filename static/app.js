@@ -57,7 +57,7 @@ function login() {
       const phone = 15700082535;
       $vue.$post(URL.sendcode, {type, phone})
         .then(res => {
-          let code = prompt('输入验证码')
+          let code = prompt('输入验证码');
           return $vue.$post(URL.login, {phone, code})
         })
         .then(res => {
@@ -79,11 +79,19 @@ function errback(res) {
   toast(res.message);
 }
 
-// 页面状态相关
+// 以下是页面状态相关
+// 1.改变${pageName}.html页面vue实例上data[attr] = value;
 function changeState(pageName, attr, value) {
   const data = getSession(pageName);
   if (!data) return;
   data[attr] = value;
+  return setSession(pageName, data);
+}
+
+function changePageKey(pageName) {
+  const data = getSession(pageName);
+  if (!data) return;
+  data['pageKey'] = data.pageKey + 1;
   return setSession(pageName, data);
 }
 
@@ -92,6 +100,19 @@ function follow_common() {
   for (let page of willRefreshByFollow) {
     if(page === getPageName() && page === 'index') return;
     changeState(page, '$_follow', true);
+  }
+}
+
+function setKeys(pageName) {
+  let keys = getSession('keys') || [];
+
+  if(!keys.pageName) {
+    keys.pageName = {
+      o:1,
+      n:0,
+    }
+  }else{
+    keys.pageName.o++;
   }
 }
 

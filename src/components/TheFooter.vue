@@ -51,10 +51,10 @@
 </style>
 <template>
   <nav>
-    <a href="index.html" :class="{ active:current == 0 }">社区</a>
-    <a href="mall.html" :class="{ active:current == 1 }">商城</a>
-    <a href="cart.html" :class="{ active:current == 2 }">购物车</a>
-    <a href="user.html" :class="{ active:current == 3 }">我的</a>
+    <a @click="replacePage('index.html')" :class="{ active:current == 0 }">社区</a>
+    <a @click="replacePage('mall.html')" :class="{ active:current == 1 }">商城</a>
+    <a @click="replacePage('cart.html')" :class="{ active:current == 2 }">购物车</a>
+    <a @click="replacePage('user.html')" :class="{ active:current == 3 }">我的</a>
   </nav>
 </template>
 <script>
@@ -67,6 +67,12 @@
     },
     data(){
       return {}
+    },
+    methods:{
+      replacePage(str){
+        history.replaceState(null, '', str);
+        location.reload();
+      }
     },
     computed: {
 

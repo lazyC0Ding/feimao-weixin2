@@ -3,24 +3,40 @@ import api from './api'
 export default {
   install(Vue){
 
-    Vue.prototype.$post = api.post;
-    Vue.prototype.$get = api.get;
-
     Vue.mixin({
       created(){
         setVue(this)
-      }
+      },
     });
+
+    Vue.prototype.$post = api.post;
+    Vue.prototype.$get = api.get;
+
+    Vue.prototype.$setPage = function (pageName) {
+      const currentPage = getPageName();
+      if(!pageName || pageName === currentPage) {
+        setSession(currentPage, this._data);
+      }else{
+        setKeys(pageName);
+        setSession(pageName, this._data);
+      }
+    };
+
+    Vue.prototype.ifAlive = function () {
+      const data = getSession(getPageName());
+      if(!data) return false;
+      const keys = 
+    };
 
     Vue.directive('back', function (el, binding) {
       el.onclick = function () {
         history.go(-1);
       }
-    })
+    });
 
     Vue.directive('href', function (el, binding) {
       const value = binding.value;
-      if(value) {
+      if (value) {
         switch (typeof value) {
           case 'string':
             el.onclick = function (e) {
@@ -92,7 +108,7 @@ export default {
 
     // 倒计时 HH:MM:SS
     Vue.filter('countdown', function (d_timestamp) {
-      if(d_timestamp < 0) return '00:00:00';
+      if (d_timestamp < 0) return '00:00:00';
 
       const h = Math.floor(d_timestamp / 3600);
       const m = Math.floor(d_timestamp / 60 - h * 60);

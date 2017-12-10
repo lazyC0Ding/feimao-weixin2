@@ -186,7 +186,7 @@
       </ul>
     </div>
     <scroll-notice v-if="notices.length" :notices="notices"></scroll-notice>
-    <div class="seckill_goods">
+    <div class="seckill_goods" v-if="seckill_goods.time && seckill_goods.time.length">
       <div class="seckill_goods-time" v-for="time in seckill_goods.time">
         <span>{{time.activity_name}}</span>
         <span class="time">{{seckill_goods_D_time | countdown | countdown_h}}</span>
@@ -209,7 +209,7 @@
         </li>
       </ul>
     </div>
-    <div class="seckill_goods">
+    <div class="seckill_goods" v-if="coupon_goods.time && coupon_goods.time.length">
       <div class="seckill_goods-time" v-for="time in coupon_goods.time">
         <span>{{time.activity_name}}</span>
         <span class="time">{{coupon_goods_D_time | countdown | countdown_h}}</span>
@@ -290,27 +290,27 @@
     },
     computed: {
       seckill_goods_time(){
-        return this.seckill_goods.time[0];
-      },
-      seckill_goods_date_start(){
-        return Number(this.seckill_goods_time.date_start);
-      },
-      seckill_goods_date_end(){
-        return Number(this.seckill_goods_time.date_end);
+        const time = this.seckill_goods.time[0];
+        if(!time) return;
+        return {
+          time: time,
+          start: Number(time.date_start),
+          end: Number(time.date_end)
+        }
       },
       coupon_goods_time(){
-        return this.coupon_goods.time[0];
-      },
-      coupon_goods_date_start(){
-        return Number(this.coupon_goods_time.date_start);
-      },
-      coupon_goods_date_end(){
-        return Number(this.coupon_goods_time.date_end);
+        const time = this.coupon_goods.time[0];
+        if(!time) return;
+        return {
+          time:time,
+          start:Number(time.date_start),
+          end:Number(time.date_end),
+        };
       },
       ifStarted(){
         return {
-          seckill_goods: Date.parse(new Date()) / 1000 > this.seckill_goods_date_start,
-          coupon_goods: Date.parse(new Date()) / 1000 > this.coupon_goods_date_start,
+          seckill_goods: this.seckill_goods_time ? Date.parse(new Date()) / 1000 > this.seckill_goods_time.start : undefined,
+          coupon_goods:this.coupon_goods_time ? Date.parse(new Date()) / 1000 > this.coupon_goods_time.start : undefined,
         }
       }
     },
@@ -326,12 +326,16 @@
       },
       getD_timestamp(){
         const now = Date.parse(new Date()) / 1000;
-        this.seckill_goods_D_time = now < this.seckill_goods_date_start
-          ? this.seckill_goods_date_start - now
-          : this.seckill_goods_date_end - now;
-        this.coupon_goods_D_time = now < this.coupon_goods_date_start
-          ? this.coupon_goods_date_start - now
-          : this.coupon_goods_date_end - now;
+        if(this.seckill_goods_time){
+          this.seckill_goods_D_time = now < this.seckill_goods_time.start
+            ? this.seckill_goods_time.start - now
+            : this.seckill_goods_time.end - now;
+        }
+        if(this.coupon_goods_time){
+          this.coupon_goods_D_time = now < this.coupon_goods_time.start
+            ? this.coupon_goods_time.start - now
+            : this.coupon_goods_time.end - now;
+        }
         setTimeout(this.getD_timestamp, 1000);
       },
       openCategorys(category_id){

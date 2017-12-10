@@ -13,6 +13,7 @@
     height: .8rem;
     line-height: .8rem;
     color: #fff;
+    z-index: 10;
     > li {
       float: left;
       height: inherit;
@@ -36,9 +37,9 @@
   }
 
   img.cover {
-    display:block;
-    width:100%;
-    height:4rem;
+    display: block;
+    width: 100%;
+    height: 4rem;
   }
 </style>
 <template>
@@ -53,7 +54,7 @@
       </li>
     </ul>
     <img class="cover" :src="cover.image">
-    <goods-container :goods="goods"></goods-container>
+    <goods-container :parentData="_data" :goods="goods"></goods-container>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>
@@ -89,15 +90,30 @@
               errback(res)
             }
           })
-      }
+      },
+      keepAlive(){
+        const data = getSession(getPageName());
+        if (data) {
+          for (let i in data) {
+            this[i] = data[i];
+          }
+        } else {
+          this.fetch();
+        }
+      },
     },
     created(){
       document.title = '分类';
       const {category_id, categorys} = getSearchParams(location.search);
-      this.params.category_id = category_id;
-      this.categorys = JSON.parse(categorys);
 
-      this.fetch();
+      if (category_id) {
+        this.params.category_id = category_id;
+        this.categorys = categorys;
+        this.fetch();
+      } else {
+        this.keepAlive();
+      }
+      history.replaceState(null, '', 'categorys.html');
     },
     components: {
       AppPermanent,

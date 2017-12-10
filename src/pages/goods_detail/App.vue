@@ -237,6 +237,10 @@
             > span:nth-child(1) {
               vertical-align: top;
               font-size: .26rem;
+              max-width: 2rem;
+              overflow:hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
             }
             > span:nth-child(2) {
               vertical-align: top;
@@ -490,9 +494,11 @@
         <li :class="{active:activeTag === 2}" @click="activeTag=2">热销推荐</li>
       </ul>
       <div class="bottom-content">
+        <!-- 商品详情 -->
         <iframe v-show="activeTag === 0" :style="{height:clientHeight+'px'}" :src="content.desc" frameborder="no"
                 border="0" marginwidth=0
                 marginheight=0></iframe>
+        <!-- 购买记录 -->
         <ul v-show="activeTag === 1" class="records">
           <li v-for="record in content.records">
             <img :src="record.avater | avatar">
@@ -504,6 +510,7 @@
             </div>
           </li>
         </ul>
+        <!-- 热销推荐 -->
         <goods-container v-show="activeTag === 2"
                          :goods="recommend_goods"></goods-container>
       </div>
@@ -574,7 +581,7 @@
         params: {
           goods_id:'',
           quantity: 1,
-          option_id: '',
+          option_id: 0,
           is_collect: 1,
         }
       }

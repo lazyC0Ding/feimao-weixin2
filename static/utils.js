@@ -17,6 +17,15 @@ function formatParams(json) {
   return keys.sort().join('&');
 }
 
+function canJSONParse(str) {
+  try{
+    JSON.parse(str);
+  }catch(e){
+    return false
+  }
+  return true
+}
+
 // 获取页面间传递的参数 str = location.search
 function getSearchParams(str) {
   str = str.startsWith('?') ? str.slice(1) : str;
@@ -26,20 +35,23 @@ function getSearchParams(str) {
   const json = {};
   for (let i=0, l=params.length; i<l; i++) {
     entry = params[i].split('=');
-    json[entry[0]] = entry[1]
+    json[entry[0]] = canJSONParse(entry[1]) ? JSON.parse(entry[1]) : entry[1];
   }
   return json;
 }
 
 // 页面相关
 function openPage(url, paramsJson) {
+  if(url.startsWith('order_confirm')){
+    changePageKey('order_confirm');
+  }
   url = url.endsWith('.html')
     ? url
     : url + '.html';
   const paramsStr = paramsJson
     ? '?' + formatParams(paramsJson)
     : '';
-  window.location.href = url + paramsStr
+  window.location.href = url + paramsStr;
   // window.open(url + paramsStr)
 }
 
@@ -68,15 +80,6 @@ function getSystemType() {
   }else if(isIos) {
     return 'ios'
   }
-}
-
-function canJSONParse(str) {
-  try{
-    JSON.parse(str);
-  }catch(e){
-    return false
-  }
-  return true
 }
 
 //sessionStorage相关

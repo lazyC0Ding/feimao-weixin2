@@ -154,6 +154,12 @@
       height:100%;
       float:left;
     }
+    >span.right{
+      float:right;
+    }
+    >span.light{
+      color: @light;
+    }
     >.row-arrow{
       width:@arrowWidth;
       height:@arrowHeight;
@@ -309,7 +315,7 @@
 }
 
 .btn-corner{
-  position:absolute;
+  position:fixed;
   top:.1rem;
   right:.1rem;
   width:1rem;
@@ -319,12 +325,12 @@
   background-color:#000;
   color:#fff;
   font-size:.28rem;
+  z-index:100;
 }
 
 .span-bg-icon-common(@fontSize, @direction) {
-  background-repeat: no-repeat;
+  background:no-repeat @direction;
   background-size: @fontSize @fontSize;
-  background-position: @direction;
   font-size: @fontSize;
 }
 

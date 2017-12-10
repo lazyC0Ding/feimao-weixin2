@@ -26,4 +26,6 @@ const URL = {
   getCarts:'cart/getCarts',
   editCart:'cart/editCart',
   delCart:'cart/delCart',
+  getExpressFee:'order/getExpressFee',
+  getAllAddress:'address/getAllAddress',
 };

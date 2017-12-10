@@ -57,7 +57,7 @@
       height: .7rem;
       line-height: .7rem;
       text-align: center;
-      margin-top: .14rem;
+      margin-top: .15rem;
       margin-right: .14rem;
       background-color: #000;
       color: #fff;
@@ -226,7 +226,7 @@
     <ul v-if="goods" class="cart-list">
       <li v-for="item in goods" :key="item.cart_id">
       <span>
-        <span class="select" :class="{on:item.isSelected}" @click="item.isSelected = !item.isSelected"></span>
+        <span class="select" :class="{on:item.isSelected}" @click="select(item)"></span>
         <span class="img bg">
           <span class="countdown" v-if="item.date_start || item.date_end">{{item.d_time | countdown}}</span>
           <img v-href="['goods_detail', {goods_id:item.goods_id}]" :src="item.cover">
@@ -283,7 +283,7 @@
       },
       total(){
         let total = '0.00';
-        if(this.goods) {
+        if (this.goods) {
           for (let i of this.goods) {
             if (i.isSelected) {
               total = (Number(total) + Number(i.price) * Number(i.quantity)).toFixed(2);
@@ -291,6 +291,13 @@
           }
         }
         return total;
+      },
+      onSaleCounts(){
+        let count = 0;
+        for (let i of this.goods) {
+          if(i.on_sale != 0) count++;
+        }
+        return count;
       }
     },
     watch: {
@@ -312,7 +319,7 @@
         }
       },
       'selectedItems.length'(n){
-        this.isSelectAll = n === this.goods.length;
+        this.isSelectAll = n === this.onSaleCounts;
       },
     },
     methods: {
@@ -346,6 +353,13 @@
             }
           })
       },
+      select(item){
+        if(!this.isEdit && item.on_sale == 0) {
+          item.isSelected = false;
+        }else{
+          item.isSelected = !item.isSelected;
+        }
+      },
       selectAll(){
         if (this.isSelectAll) {
           for (let i of this.goods) {
@@ -353,7 +367,9 @@
           }
         } else {
           for (let i of this.goods) {
-            i.isSelected = true;
+            if(i.on_sale != 0) {
+              i.isSelected = true;
+            }
           }
         }
       },
@@ -365,7 +381,7 @@
               if (res.errcode == 0) {
                 this.goods.forEach((item, index, arr) => {
                   for (let i of this.selectedItems) {
-                    if(item.cart_id == i) {
+                    if (item.cart_id == i) {
                       arr.splice(index, 1);
                       break;
                     }
@@ -377,8 +393,30 @@
               }
             })
           //结算
-        }else{
-
+        } else {
+          const data = [];
+          for (let item of this.goods) {
+            for (let cart_id of this.selectedItems) {
+              if(cart_id == item.cart_id){
+                data.push({
+                  cart_id:item.cart_id,
+                  goods_id:item.goods_id,
+                  option_id:item.option_id,
+                  quantity:item.quantity
+                });
+                break;
+              }
+            }
+          }
+          this.$post(URL.settlement, {data:JSON.stringify(data), type: 2})
+            .then( res => {
+               if (res.errcode == 0) {
+                 openPage('order_confirm', res.content);
+                 console.log(res)
+               }else{
+                 errback(res);
+               }
+            });
         }
       },
       fetch(){

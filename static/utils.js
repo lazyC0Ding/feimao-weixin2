@@ -28,6 +28,8 @@ function canJSONParse(str) {
 
 // 获取页面间传递的参数 str = location.search
 function getSearchParams(str) {
+  if(!str) return;
+
   str = str.startsWith('?') ? str.slice(1) : str;
   const params = decodeURI(str).split('&');
 
@@ -43,7 +45,7 @@ function getSearchParams(str) {
 // 页面相关
 function openPage(url, paramsJson) {
   if(url.startsWith('order_confirm')){
-    changePageKey('order_confirm');
+    $vue.$setPage('order_confirm', null, true);
   }
   url = url.endsWith('.html')
     ? url

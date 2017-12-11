@@ -53,7 +53,7 @@
 </style>
 <template>
   <div style="padding-top:.74rem;">
-    <span class="btn-corner">新增</span>
+    <span class="btn-corner" v-href="'address_add'">新增</span>
     <ul class="address_list-ul">
       <li @click="selectAddress(address)" v-for="address in content" :key="address.address_id">
         <span>
@@ -79,7 +79,7 @@
     },
     methods: {
       selectAddress(address){
-        changeState('order_confirm', 'address', address);
+        this.$setData('order_confirm', 'address', address);
         history.go(-1);
       },
       fetch(){

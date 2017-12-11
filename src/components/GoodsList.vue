@@ -80,11 +80,11 @@
     <li v-for="item in goods" :key="item.cart_id">
       <span>
         <span class="img">
-          <img v-href="['goods_detail', {goods_id:item.goods_id}]" :src="item.cover">
+          <img v-href="['goods_detail', {goods_id:item.goods_id}]" :src="item.cover || item.image">
         </span>
       </span>
       <div>
-        <div class="a">{{item.goods_name}}</div>
+        <div class="a">{{item.goods_name || item.name}}</div>
         <div class="b">{{item.option_name}}</div>
         <div class="c">
           <span>¥ {{item.price}}</span>

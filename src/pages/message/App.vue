@@ -3,6 +3,13 @@
 
   .message-row-container {
     .row-container(1.2rem, .3rem);
+    >li.row{
+      >.icon{
+        width:.6rem;
+        height:.6rem;
+        margin-top:.3rem;
+      }
+    }
   }
 </style>
 <template>

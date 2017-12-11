@@ -1,5 +1,20 @@
 import api from './api'
 
+function setKeys(pageName, ifRefresh) {
+  let keys = getSession('keys') || {};
+
+  if (!keys[pageName]) {
+    keys[pageName] = {o: 0, n: 0}
+  }
+
+  if (ifRefresh) {
+    keys[pageName].o++;
+  } else {
+    keys[pageName].n = keys[pageName].o;
+  }
+  setSession('keys', keys);
+}
+
 export default {
   install(Vue){
 
@@ -12,20 +27,41 @@ export default {
     Vue.prototype.$post = api.post;
     Vue.prototype.$get = api.get;
 
-    Vue.prototype.$setPage = function (pageName) {
+    Vue.prototype.$setPage = function (pageName, data, ifRefresh) {
       const currentPage = getPageName();
-      if(!pageName || pageName === currentPage) {
+      if (!pageName || pageName === currentPage) {
+        setKeys(currentPage, false);
         setSession(currentPage, this._data);
-      }else{
-        setKeys(pageName);
-        setSession(pageName, this._data);
+      } else {
+        setKeys(pageName, ifRefresh);
+        if (data) {
+          setSession(pageName, data);
+        }
       }
     };
 
-    Vue.prototype.ifAlive = function () {
+    // 更新某个页面vue实例的data的attr属性
+    Vue.prototype.$setData = function (pageName, attr, value, ifRefresh) {
+      const data = getSession(pageName);
+      if (!data) return;
+      data[attr] = value;
+      setKeys(pageName, ifRefresh);
+      setSession(pageName, data);
+    };
+
+    Vue.prototype.$ifRefresh = function () {
       const data = getSession(getPageName());
-      if(!data) return false;
-      const keys = 
+      if (!data) return true;
+
+      const keys = getSession('keys');
+      if (!keys) return true;
+
+      const currentPage = getPageName();
+      if (!keys[currentPage]) {
+        return true;
+      } else {
+        return keys[currentPage].n !== keys[currentPage].o;
+      }
     };
 
     Vue.directive('back', function (el, binding) {

@@ -86,7 +86,8 @@
       > div.name {
         white-space: normal;
         text-align: left;
-        margin: .1rem .1rem;
+        margin: .1rem .1rem 0;
+        min-height:.6rem;
         font-size: .24rem;
         line-height: .3rem;
         text-overflow: ellipsis;
@@ -236,13 +237,13 @@
       <img v-for="item in sepcial.cover" :src="item.image">
       <ul class="seckill_goods-goods">
         <li v-for="item in sepcial.goods">
-          <img :src="item.cover">
+          <img :src="item.cover" v-href="['goods_detail', {goods_id:item.goods_id}]">
           <div class="name">{{item.name}}</div>
           <div class="price">
             <span class="activity_price">¥{{item.price}}</span>
           </div>
         </li><!--
-        --><li @click="toGoods">
+        --><li v-if="sepcial.goods && sepcial.goods.length > 3" @click="toGoods">
           <img src="../../assets/img/goods_more.png">
           <div style="font-size:.24rem;margin-top:.1rem;">查看全部</div>
         </li>

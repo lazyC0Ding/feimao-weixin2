@@ -319,7 +319,15 @@
         }
       },
       'selectedItems.length'(n){
-        this.isSelectAll = n === this.onSaleCounts;
+        if(this.isEdit) {
+          this.isSelectAll = n === this.goods.length;
+        }else{
+          if(this.onSaleCounts === 0) {
+            this.isSelectAll = false;
+          }else{
+            this.isSelectAll = n === this.onSaleCounts;
+          }
+        }
       },
     },
     methods: {
@@ -367,7 +375,7 @@
           }
         } else {
           for (let i of this.goods) {
-            if(i.on_sale != 0) {
+            if(this.isEdit || i.on_sale != 0) {
               i.isSelected = true;
             }
           }

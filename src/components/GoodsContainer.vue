@@ -42,6 +42,7 @@
         }
       }
       > div.name {
+        min-height:.76rem;
         margin-top: .1rem;
         font-size: .28rem;
         text-overflow: ellipsis;

@@ -121,11 +121,10 @@
 }
 
 .row-container(@height:@row-height, @font-size:.28rem) {
-  @iconWidth: @font-size * 2;
+  @iconWidth: @font-size * (10/7);
   @arrowWidth: @font-size / 1.2;
   @arrowHeight: @font-size;
 
-  background-color: #fff;
   overflow: hidden;
   > .row {
     padding: 0 .32rem;
@@ -134,6 +133,7 @@
     font-size: @font-size;
     .border-bottom-1px;
     overflow: hidden;
+    background-color: #fff;
     &:last-child {
       &:after {
         content: '';
@@ -148,6 +148,10 @@
       &.left {
         float:left;
         margin-right:@font-size / 2 ;
+      }
+      &.right{
+        float:right;
+        margin-left:@font-size / 2;
       }
     }
     > .title {
@@ -305,11 +309,10 @@
 
 .btn-big {
   margin: 0 .54rem;
-  height: .9rem;
-  line-height: .9rem;
+  height: .8rem;
+  line-height: .8rem;
   text-align: center;
   font-size: .34rem;
-  border-radius: .1rem;
   color: #fff;
   .primary-bg;
 }
@@ -377,6 +380,18 @@
     font-size: .28rem;
     color: @light;
   }
+}
+
+.cancel{
+  position:absolute;
+  top:50%;
+  margin-top:-.14rem;
+  right:.24rem;
+  width:.28rem;
+  height:.28rem;
+  z-index:10;
+  background:url(./assets/img/cancel.png) no-repeat;
+  background-size:100% 100%;
 }
 
 

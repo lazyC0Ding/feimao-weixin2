@@ -28,4 +28,12 @@ const URL = {
   delCart:'cart/delCart',
   getExpressFee:'order/getExpressFee',
   getAllAddress:'address/getAllAddress',
+  getCoupons:'coupon/getCoupons',
+  getUserInfo:'user/getUserInfo',
+  changeNickname:'user/changeNickname',
+  getQrcode:'user/getQrcode',
+  editStatus:'address/editStatus',
+  saveAddress:'address/saveAddress',
+  getOrders:'order/getOrders',
+  generate:'order/generate',
 };

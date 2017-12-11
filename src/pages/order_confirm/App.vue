@@ -137,15 +137,13 @@
       <li class="row">
         <span class="title">买家留言</span>
         <input maxlength="40" v-model="message" class="message" placeholder="选填/请输入对本次交易的留言说明">
-        <span class="right" style="color:#9DA5A8" v-show="messageLength">{{messageLength}}/40</span>
+        <span class="right" style="color:#9DA5A8" v-show="message.length">{{message.length}}/40</span>
       </li>
-    </ul>
-    <ul class="order_confirm-row-container">
-      <li class="row" @click="selectDiscount('coupon')">
+      <li class="row" @click="selectDiscount('coupon')" style="margin-top:.1rem;">
         <span class="title">使用优惠券</span>
         <span class="right select" :class="{on:discount.coupon}"></span>
       </li>
-      <li v-show="discount.coupon" class="row">
+      <li v-href="'coupon_list'" v-show="discount.coupon" class="row">
         <span class="title">优惠券</span>
         <img class="row-arrow" src="../../assets/img/direction_right_gray.png">
         <span class="light right">{{coupon || '请选择'}}</span>
@@ -158,7 +156,7 @@
     </ul>
     <div class="order_confirm-footer">
       <span class="a">应付: <span>¥{{payment}}</span></span>
-      <span class="b">立即付款</span>
+      <span class="b" @click="generate">立即付款</span>
     </div>
     <app-permanent type="2"></app-permanent>
   </div>
@@ -183,13 +181,27 @@
       }
     },
     computed: {
+      generateParams(){
+        const params = {
+          address_id:this.address.address_id,
+          data:this.data,
+        };
+        if(this.message) params.comment = this.message;
+        return params;
+      },
       data(){
         const data = [];
+        let item;
         for (let i of this.goods) {
-          data.push({
+          item = {
             goods_id: i.goods_id,
-            quantity: i.quantity
-          })
+            quantity: i.quantity,
+            option_id:i.option_id
+          };
+          if(i.cart_id) {
+            item.cart_id = i.cart_id;
+          }
+          data.push(item);
         }
         return JSON.stringify(data);
       },
@@ -203,11 +215,19 @@
       payment(){
         return (Number(this.content.total_fee) + Number(this.expressFee)).toFixed(2);
       },
-      messageLength(){
-        return this.message.length;
-      }
     },
     methods: {
+      generate(){
+        this.$post(URL.generate, this.generateParams)
+          .then ( res => {
+            if(res.errcode == 0) {
+              history.replaceState(null, '', 'order_detail.html?order_sn=' + res.content.order_sn);
+              openPage('pay', res.content);
+            }else{
+              errback(res);
+            }
+          })
+      },
       selectDiscount(discount){
         for (let i in this.discount) {
           if (i == discount) this.discount[i] = !this.discount[i];
@@ -220,6 +240,7 @@
             console.log(res)
             if (res.errcode == 0) {
               this.expressFee = Number(res.content).toFixed(2);
+              this.$setPage();
             } else {
               errback(res);
             }
@@ -239,20 +260,17 @@
         this.customer = customer;
         this.goods = goods;
         this.content = content;
-        setSession(getPageName(), this._data);
         this.getExpressFee();
         console.log(content)
       }
     },
     created(){
       document.title = '确认订单';
-      const data = getSession(getPageName());
-      if (!data) {
+      if(this.$ifRefresh()){
         this.init();
       }else{
-
+        this.keepAlive();
       }
-
     },
     components: {
       AppPermanent,

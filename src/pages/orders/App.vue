@@ -1,0 +1,151 @@
+<style type="text/less" lang="less">
+  @import '../../common';
+
+  .orders-tags {
+    .tags(5);
+    margin-bottom:0;
+  }
+
+  .orders-container{
+    >li{
+      margin-top:.1rem;
+      background-color:#fff;
+      >.top{
+        height:.8rem;
+        line-height:.8rem;
+        font-size:.24rem;
+        padding:0 .26rem 0 .22rem;
+        overflow:hidden;
+        .border-bottom-1px;
+        >span{
+          &:first-child{
+            float:left;
+          }
+          &:last-child{
+            float:right;
+            color:#FFB305;
+          }
+        }
+      }
+      >.bottom{
+        padding:0 .26rem 0 .22rem;
+        >.total{
+          height:.8rem;
+          line-height:.8rem;
+          text-align: right;
+          overflow:hidden;
+          font-size:.26rem;
+          >span{
+            font-size:.32rem;
+          }
+        }
+        >.action{
+          height:.8rem;
+        }
+      }
+    }
+  }
+
+  .orders-btn{
+    float:right;
+    margin-left:.3rem;
+    width:1.32rem;
+    height:.48rem;
+    line-height:.48rem;
+    text-align:center;
+    font-size:.24rem;
+    border:1px solid #111;
+  }
+</style>
+<template>
+  <div style="padding-top:.9rem;padding-bottom:.8rem;">
+    <search-input v-model="key" placeholder="请输入要搜索的订单" :callback="search">
+      <a v-back>取消</a>
+    </search-input>
+    <ul class="orders-tags">
+      <li :class="{active:params.state == 0}" @click="params.state=0">全部</li>
+      <li :class="{active:params.state == 1}" @click="params.state=1">待付款</li>
+      <li :class="{active:params.state == 2}" @click="params.state=2">待发货</li>
+      <li :class="{active:params.state == 3}" @click="params.state=3">待收货</li>
+      <li :class="{active:params.state == 4}" @click="params.state=4">待评价</li>
+    </ul>
+    <ul class="orders-container">
+      <li v-for="item in content" :key="item.order_sn">
+        <div class="top">
+          <span>{{item.date_add | time}}</span>
+          <span>{{item.state}}</span>
+        </div>
+        <goods-list :goods="item.goods"></goods-list>
+        <div class="bottom">
+          <div class="total">共{{item.goods_count}}件商品，合计<span>¥{{item.order_amount}}</span>（含运费¥{{item.express_amount}}）</div>
+          <div class="action" v-if="item.order_state == 1">
+            <span class="orders-btn">立即付款</span>
+            <span class="orders-btn">取消订单</span>
+          </div>
+          <div class="action" v-else-if="item.order_state == 3">
+            <span class="orders-btn">确认收货</span>
+            <span class="orders-btn">查看物流</span>
+          </div>
+          <div class="action" v-else-if="item.order_state == 6">
+            <span class="orders-btn">删除订单</span>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <app-permanent type="2"></app-permanent>
+  </div>
+</template>
+<script>
+  import AppPermanent from '@c/AppPermanent.vue'
+  import SearchInput from '@c/SearchInput.vue'
+  import GoodsList from '@c/GoodsList.vue'
+  export default {
+    data () {
+      return {
+        params: {
+          state: 0,
+          page: 1,
+        },
+        key:'',
+        content:[],
+      }
+    },
+    computed:{
+      fetchParams(){
+        if(this.key) {
+          return Object.assign(this.params(), {key:this.key})
+        }else{
+          return this.params
+        }
+      },
+    },
+    methods: {
+      pay(){
+
+      },
+      fetch(){
+        this.$post(URL.getOrders, this.fetchParams)
+          .then ( res => {
+            console.log(res)
+            if(res.errcode == 0) {
+              this.content = res.content;
+            }else{
+              errback(res);
+            }
+          })
+      },
+      search(){
+
+      }
+    },
+    created(){
+      document.title = '我的订单';
+      this.fetch();
+    },
+    components: {
+      AppPermanent,
+      SearchInput,
+      GoodsList,
+    }
+  }
+</script>

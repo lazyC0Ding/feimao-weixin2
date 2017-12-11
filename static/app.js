@@ -88,31 +88,11 @@ function changeState(pageName, attr, value) {
   return setSession(pageName, data);
 }
 
-function changePageKey(pageName) {
-  const data = getSession(pageName);
-  if (!data) return;
-  data['pageKey'] = data.pageKey + 1;
-  return setSession(pageName, data);
-}
-
 function follow_common() {
   const willRefreshByFollow = ['index', 'follows', 'person_detail'];
   for (let page of willRefreshByFollow) {
     if(page === getPageName() && page === 'index') return;
     changeState(page, '$_follow', true);
-  }
-}
-
-function setKeys(pageName) {
-  let keys = getSession('keys') || [];
-
-  if(!keys.pageName) {
-    keys.pageName = {
-      o:1,
-      n:0,
-    }
-  }else{
-    keys.pageName.o++;
   }
 }
 

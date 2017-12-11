@@ -623,6 +623,7 @@
 
         let url, params, callback;
         switch (this.buyType) {
+          // 加入购物车
           case 1:
               url = URL.addcart;
               params = this.params;
@@ -635,13 +636,14 @@
                 }
               };
               break;
+          // 立即购买
           case 2:
               url = URL.settlement;
               const data = JSON.stringify([this.params]);
               params = { data, type:1 };
               callback = (res) => {
                 if(res.errcode == 0) {
-
+                  openPage('order_confirm', res.content);
                 }else{
                   errback(res);
                 }

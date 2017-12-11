@@ -42,6 +42,7 @@
         right:.1rem;
         bottom:0;
         font-size:.26rem;
+        color:#fff;
       }
       >span{
         position:absolute;

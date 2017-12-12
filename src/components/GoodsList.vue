@@ -6,16 +6,15 @@
     padding: 0;
     margin: 0;
     > li {
-      height: 2.2rem;
       overflow: hidden;
       .border-bottom-1px;
-      > span{
-        float:left;
-        height:100%;
-        overflow:hidden;
+      > span {
+        float: left;
+        height: 2.2rem;
+        overflow: hidden;
         > .img {
           float: left;
-          position:relative;
+          position: relative;
           margin-top: .2rem;
           margin-left: .2rem;
           width: 1.8rem;
@@ -26,50 +25,66 @@
           }
         }
       }
-      > div {
-        position:relative;
-        height:100%;
-        padding-left:.2rem;
+      > div:nth-child(2) {
+        position: relative;
+        height: 2.2rem;
+        padding-left: .2rem;
         overflow: hidden;
-        >.a{
-          height:.72rem;
-          margin-top:.28rem;
-          font-size:.28rem;
-          line-height:.36rem;
+        > .a {
+          height: .72rem;
+          margin-top: .28rem;
+          font-size: .28rem;
+          line-height: .36rem;
           text-overflow: ellipsis;
           overflow: hidden;
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
         }
-        >.b{
-          margin-top:.1rem;
-          font-size:.24rem;
-          color:@light;
+        > .b {
+          margin-top: .1rem;
+          font-size: .24rem;
+          color: @light;
         }
-        >.c{
-          position:absolute;
-          width:100%;
-          left:0;
-          bottom:.28rem;
-          padding-left:.2rem;
+        > .c {
+          position: absolute;
+          width: 100%;
+          left: 0;
+          bottom: .28rem;
+          padding-left: .2rem;
           box-sizing: border-box;
-          >span{
+          > span {
             &:nth-child(1) {
-              font-size:.28rem;
-              color: #D0021B;
+              font-size: .28rem;
+              color: #111;
+              font-weight: bold;
             }
             &:nth-child(2) {
-              float:right;
-              margin-right:.24rem;
-              font-size:.24rem;
-              color:@light;
-              &:before{
+              float: right;
+              margin-right: .24rem;
+              font-size: .24rem;
+              color: @light;
+              &:before {
                 content: '';
-                font-size:.28rem;
+                font-size: .28rem;
               }
             }
           }
+        }
+      }
+      > div:nth-child(3) {
+        height: .8rem;
+        line-height: .8rem;
+        overflow: hidden;
+        > span {
+          float: right;
+          margin-right: .24rem;
+          width: 1.4rem;
+          height: .52rem;
+          line-height: .52rem;
+          text-align: center;
+          border: 0.5px solid #111;
+          font-size: .24rem;
         }
       }
     }
@@ -80,7 +95,7 @@
     <li v-for="item in goods" :key="item.cart_id">
       <span>
         <span class="img">
-          <img v-href="['goods_detail', {goods_id:item.goods_id}]" :src="item.cover || item.image">
+          <img @click="openGoodsDetail(item.goods_id)" :src="item.cover || item.image">
         </span>
       </span>
       <div>
@@ -90,6 +105,12 @@
           <span>¥ {{item.price}}</span>
           <span>x{{item.quantity}}</span>
         </div>
+      </div>
+      <div class="btn-refund" v-if="showRefund">
+        <span @click="clickShowRefund(item)">{{getShowRefund(item.refund_state)}}</span>
+      </div>
+      <div class="btn-refund" v-if="isRefund">
+        <span @click="clickIsRefund(item)">{{getIsRefund(item.refund_state)}}</span>
       </div>
     </li>
   </ul>
@@ -101,6 +122,66 @@
         type: Array,
         required: true,
       },
+      cantOpenGoods: Boolean,
+      showRefund: Boolean,
+      isRefund: Boolean,
+      order_sn:String,
     },
+    methods: {
+      getShowRefund(state){
+        if (!state) return '申请退款';
+        switch (state) {
+          case '1':
+            return '退款中';
+          case '3':
+            return '拒绝退款';
+          case '6':
+            return '退款关闭';
+          default:
+            return '未知showRefund';
+        }
+      },
+      getIsRefund(state){
+        if (!state) return '申请售后';
+        switch (state) {
+          case '1':
+            return '退款中';
+          case '3':
+            return '拒绝退款';
+          case '5':
+            return '退款成功';
+          case '6':
+            return '退款关闭';
+          default:
+            return '未知isRefund';
+        }
+      },
+      clickShowRefund(item){
+        if (!item.refund_state){
+          openPage('refund_apply', {goods:item,order_sn:this.order_sn});
+          return;
+        }
+        switch (item.refund_state) {
+          default:
+            openPage('refund_detail', {refund_sn: item.refund_sn});
+            break;
+        }
+      },
+      clickIsRefund(item){
+        if (!item.refund_state){
+          openPage('refund_apply', {goods:item,order_sn:this.order_sn});
+          return;
+        }
+        switch (item.refund_state) {
+          default:
+            openPage('refund_detail', {refund_sn: item.refund_sn});
+            break;
+        }
+      },
+      openGoodsDetail(goods_id){
+        if (this.cantOpenGoods) return;
+        openPage('goods_detail', {goods_id})
+      }
+    }
   }
 </script>

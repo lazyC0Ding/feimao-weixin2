@@ -27,7 +27,6 @@
     left: 0;
     bottom: 0;
     background-color: #fff;
-    border-top:1px solid #000;
     > .a {
       margin-left: .26rem;
       font-size: .24rem;

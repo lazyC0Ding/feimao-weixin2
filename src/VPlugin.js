@@ -142,7 +142,7 @@ export default {
       return [month, day].map(formatNumber).join('-');
     });
 
-    // 倒计时 HH:MM:SS
+    // 倒计时1 HH:MM:SS
     Vue.filter('countdown', function (d_timestamp) {
       if (d_timestamp < 0) return '00:00:00';
 
@@ -152,6 +152,15 @@ export default {
       return [h, m, s].map(formatNumber).join(':');
     });
 
+    // 倒计时2 d天h小时m分
+    Vue.filter('countdown_2', function (d_timestamp) {
+      if (d_timestamp < 0) return '0天0小时0分';
+
+      const d = Math.floor(d_timestamp / 86400);
+      const h = Math.floor(d_timestamp / 3600 - d * 24);
+      const m = Math.floor(d_timestamp / 60 - d * 1440 - h * 60);
+      return d + '天' + h + '小时' + m + '分';
+    });
 
     // 以下是本项目专用
     Vue.filter('countdown_h', function (countdown_str) {

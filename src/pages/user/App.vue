@@ -198,13 +198,13 @@
     </div>
     <div class="orders">
       <ul class="user-ul">
-        <li class="row" v-href="'orders'">
+        <li class="row" v-href="['orders', {state:0}]">
           <span class="title">我的订单</span>
           <span class="right">全部订单</span>
         </li>
       </ul>
       <ul class="orders-type">
-        <li>
+        <li v-href="['orders', {state:1}]">
           <dl>
             <dt>
               <img src="../../assets/img/order_fukuan.png">
@@ -213,7 +213,7 @@
             <dd>待付款</dd>
           </dl>
         </li>
-        <li>
+        <li v-href="['orders', {state:2}]">
           <dl>
             <dt>
               <img src="../../assets/img/order_fahuo.png">
@@ -222,7 +222,7 @@
             <dd>待发货</dd>
           </dl>
         </li>
-        <li>
+        <li v-href="['orders', {state:3}]">
           <dl>
             <dt>
               <img src="../../assets/img/order_shouhuo.png">
@@ -231,7 +231,7 @@
             <dd>待收货</dd>
           </dl>
         </li>
-        <li>
+        <li v-href="['orders', {state:4}]">
           <dl>
             <dt>
               <img src="../../assets/img/order_pingjia.png">
@@ -240,7 +240,7 @@
             <dd>待评论</dd>
           </dl>
         </li>
-        <li>
+        <li v-href="'refund'">
           <dl>
             <dt>
               <img src="../../assets/img/order_tuikuan.png">
@@ -301,7 +301,7 @@
     </ul>
     <ul class="collections">
       <li v-for="item in collections">
-        <img :src="item.cover">
+        <img :src="item.cover" v-href="['goods_detail', {goods_id:item.goods_id}]">
         <div class="name">{{item.name}}</div>
         <div class="price">{{item.price}}</div>
       </li>

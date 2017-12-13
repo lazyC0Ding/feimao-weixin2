@@ -413,7 +413,7 @@
         </ul>
       </div>
       <div class="article">
-        <img class="cover" :src="cover || content.article.cover">
+        <img class="cover" :src="content.article.cover">
         <div class="title">
           <div class="a">{{article.title}}</div>
           <hr>
@@ -489,7 +489,6 @@
     data () {
       return {
         article_id: '',
-        cover: '',
         content: {
           article: {},
           comments: [],
@@ -543,9 +542,8 @@
     created(){
       document.title = '文章详情';
       console.log(getSearchParams(location.search));
-      const {article_id, cover} = getSearchParams(location.search);
+      const { article_id } = getSearchParams(location.search);
       this.article_id = article_id;
-      this.cover = cover;
 
       this.fetch();
     },

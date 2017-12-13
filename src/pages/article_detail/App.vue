@@ -542,6 +542,7 @@
     },
     created(){
       document.title = '文章详情';
+      console.log(getSearchParams(location.search));
       const {article_id, cover} = getSearchParams(location.search);
       this.article_id = article_id;
       this.cover = cover;

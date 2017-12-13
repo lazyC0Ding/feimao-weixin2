@@ -234,8 +234,11 @@
       this.clientHeight = document.documentElement.clientHeight;
       this.title = '个人信息';
       this.content = getSearchParams(location.search);
-      const { nickname } = this.content;
+      const { nickname, showQrcode } = this.content;
       this.update.nickname = nickname;
+      if(showQrcode) {
+        this.show.qrcode = true;
+      }
       console.log(this.content);
     },
     components: {

@@ -2,27 +2,27 @@
   @import '../common';
 
   a {
-    width: 1.7rem;
+    float: right;
+    width: 1.58rem;
     height: .6rem;
     line-height: .6rem;
     text-align: center;
-    .primary-bg;
-    color: #fff;
-    font-size: .26rem;
-    border-radius: .3rem;
-    &.sent {
-      background-color: #ccc;
-    }
+    font-size: .3rem;
+    border: 1px solid #111;
+    box-sizing: border-box;
+    margin-top: .2rem;
+    /*&.sent {
+    background-color: #ccc;
+    }*/
   }
 </style>
 <template>
-  <a @click="sendCode" :class="{sent:hasSent}">{{countdown ? countdown + 's' : '发送验证码'}}</a>
+  <a @click="sendCode" :class="{sent:hasSent}">{{countdown ? countdown + 's' : config.btnValue}}</a>
 </template>
 <script>
   export default {
     props: {
-      callback: Function,
-      param: {
+      phone: {
         type: String,
         required: true,
       },
@@ -35,6 +35,19 @@
       return {
         hasSent: false,
         countdown: 0,
+        // 根据项目配置
+        config: {
+          url: URL.sendcode,
+          btnValue: '发送',
+        }
+      }
+    },
+    computed: {
+      params(){
+        return {
+          phone: this.phone,
+          type: this.type,
+        }
       }
     },
     watch: {
@@ -50,26 +63,21 @@
     },
     methods: {
       sendCode(){
-        if (this.hasSent || !this.param || !this.type) {
+        if (this.hasSent || !this.phone || !this.type) {
           return
         }
-        const params = {
-          param: this.param,
-          type: this.type,
-          time: (Date.parse(new Date())) / 1000,
-          content: 'ShuaiBo2017',
-        };
-        const str = formatParams(params);
-        const sign = md5(str);
-        params['sign'] = sign;
-
-        this.$post(url.sendCode, params)
+        this.hasSent = true;
+        this.$post(this.config.url, this.params)
           .then(res => {
             if (res.errcode == 0) {
-              this.hasSent = true;
               this.countdown = 60;
+            }else{
+              errback(res);
+              this.hasSent = false;
             }
-          });
+          }).catch( err => {
+            this.hasSent = false
+          })
       },
     },
     components: {}

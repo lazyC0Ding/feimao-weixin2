@@ -48,4 +48,7 @@ const URL = {
   cancel:'order/cancel',
   getExpress:'order/getExpress',
   uploadExpress:'order/uploadExpress',
+  collection:'article/collection',
+  like:'article/like',
+  comment:'article/comment',
 };

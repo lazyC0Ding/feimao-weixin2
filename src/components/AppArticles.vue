@@ -8,7 +8,7 @@
       > img {
         display: block;
         width: 100%;
-        height: 6rem;
+        height: 5rem;
       }
       > .text {
         padding: 0 .34rem 0 .26rem;

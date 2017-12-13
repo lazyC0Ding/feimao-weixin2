@@ -692,7 +692,11 @@
     },
     created(){
       document.title = '商品详情';
-      this.params.goods_id = getSearchParams(location.search).goods_id;
+      const { goods_id, customer_id } = getSearchParams(location.search)
+      this.params.goods_id = goods_id;
+      if(customer_id) {
+        setSession('customer_id', customer_id);
+      }
       this.fetch();
       window.addEventListener('scroll', () => {
         this.isTagsFixed = window.scrollY > this.before_mai.offsetTop + this.before_mai.clientHeight;

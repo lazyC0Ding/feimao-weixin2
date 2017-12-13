@@ -542,7 +542,10 @@
     created(){
       document.title = '文章详情';
       console.log(getSearchParams(location.search));
-      const { article_id } = getSearchParams(location.search);
+      const { article_id, customer_id } = getSearchParams(location.search);
+      if(customer_id) {
+        setSession('customer_id', customer_id);
+      }
       this.article_id = article_id;
 
       this.fetch();

@@ -50,24 +50,7 @@ function toast(msg) {
 }
 
 function login() {
-  if ($vue) {
-    let ifLogin = confirm('还没有登录,是否登录?');
-    if (ifLogin) {
-      const type = 0;
-      const phone = 15700082535;
-      $vue.$post(URL.sendcode, {type, phone})
-        .then(res => {
-          let code = prompt('输入验证码');
-          return $vue.$post(URL.login, {phone, code})
-        })
-        .then(res => {
-          if (res.content) {
-            setUser(res.content);
-            setToken(res.content.access_token)
-          }
-        })
-    }
-  }
+  openPage('login');
 }
 
 function errback(res) {

@@ -20,6 +20,36 @@
           color: @light;
         }
       }
+      .with-bg {
+        .span-bg-icon(.28rem, left);
+        background-image: url(../../assets/img/selected_off.png);
+        background-size:.32rem .32rem;
+        &:last-child{
+          margin-left:.3rem;
+        }
+        &.on{
+          background-image: url(../../assets/img/selected_on.png);
+        }
+      }
+    }
+    >li.textarea{
+      >textarea{
+        background-color:#fff;
+        resize:none;
+        outline: none;
+        font-size:.28rem;
+        width:100%;
+        height:2.6rem;
+        box-sizing: border-box;
+        padding:.3rem;
+        &::placeholder{
+          color:@light;
+        }
+        &::-webkit-scrollbar{
+          width:0;
+          height:0;
+        }
+      }
     }
     > li.images {
       background-color: #fff;
@@ -45,9 +75,17 @@
   <div>
     <goods-list v-if="goods" :goods="[goods]" cantOpenGoods></goods-list>
     <ul class="refund_apply-ul">
-      <li class="row">
+      <li v-if="!canSelectType" class="row">
         <span class="title">退款原因</span>
         <input v-model="reason" placeholder="请输入退款原因">
+      </li>
+      <li v-else class="row">
+        <span class="title">售后类型</span>
+        <span class="with-bg" :class="{on:type==1}" @click="type=1">我要退款</span>
+        <span class="with-bg" :class="{on:type==2}" @click="type=2">我要退货</span>
+      </li>
+      <li v-if="canSelectType" class="textarea">
+        <textarea v-model="reason" placeholder="请输入问题描述"></textarea>
       </li>
       <li class="row">
         <span class="title">退款金额</span>
@@ -82,6 +120,7 @@
         reason: '',
         money: '',
         images: [],
+        canSelectType:false,
       }
     },
     computed: {
@@ -141,10 +180,11 @@
     created(){
       document.title = '申请退款';
       console.log(getSearchParams(location.search));
-      const {goods, order_sn, refund_sn} = getSearchParams(location.search);
+      const {goods, order_sn, refund_sn, canSelectType} = getSearchParams(location.search);
       this.goods = goods;
       this.order_sn = order_sn;
       this.refund_sn = refund_sn;
+      if(canSelectType) this.canSelectType = canSelectType;
       this.getRefundMoney();
     },
     components: {

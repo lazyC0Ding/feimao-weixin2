@@ -32,8 +32,8 @@
         > .content {
           font-size: .24rem;
           padding: .16rem .2rem .24rem .3rem;
-          >div{
-            margin-top:.1rem;
+          > div {
+            margin-top: .1rem;
           }
           .imageCount {
             color: #0c68a0;
@@ -56,7 +56,7 @@
       margin-right: .2rem;
       height: .68rem;
       line-height: .68rem;
-      padding:0 .36rem;
+      padding: 0 .36rem;
       box-sizing: border-box;
       border: 0.5px solid #111;
     }
@@ -105,7 +105,7 @@
       <span @click="cancel">取消申请</span>
     </div>
     <div class="refund_detail-footer" v-else-if="content.refund_state == 2">
-      <span>上传快递单号</span>
+      <span @click="openRefund_express">上传快递单号</span>
     </div>
     <div class="refund_detail-footer" v-else-if="content.refund_state == 3">
       <span v-href="['refund_apply', {refund_sn:refund_sn, goods:goods}]">再次申请</span>
@@ -119,19 +119,30 @@
     data () {
       return {
         refund_sn: '',
-        goods:null,
+        goods: null,
         content: null,
       }
     },
     methods: {
+      openRefund_express(){
+        let name, address;
+        for (let i of this.content.messages) {
+          if(i.refund_state == 2) {
+            name = i.name;
+            address = i.address;
+            break;
+          }
+        }
+        openPage('refund_express', {address, name, refund_sn:this.refund_sn})
+      },
       cancel(){
-        this.$post(URL.cancal_refund, {refund_sn:this.content.refund_sn})
-          .then ( res => {
+        this.$post(URL.cancal_refund, {refund_sn: this.content.refund_sn})
+          .then(res => {
             console.log(res)
-            if(res.errcode == 0) {
+            if (res.errcode == 0) {
               toast('取消退款申请成功');
               history.go(-1);
-            }else{
+            } else {
               errback(res);
             }
           })

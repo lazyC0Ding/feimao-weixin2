@@ -128,21 +128,9 @@
       order_sn:String,
     },
     methods: {
+      // showRefund:待发货时退款
       getShowRefund(state){
         if (!state) return '申请退款';
-        switch (state) {
-          case '1':
-            return '退款中';
-          case '3':
-            return '拒绝退款';
-          case '6':
-            return '退款关闭';
-          default:
-            return '未知showRefund';
-        }
-      },
-      getIsRefund(state){
-        if (!state) return '申请售后';
         switch (state) {
           case '1':
             return '退款中';
@@ -153,12 +141,32 @@
           case '6':
             return '退款关闭';
           default:
+            return '未知showRefund';
+        }
+      },
+      // isRefund:待收货时退款
+      getIsRefund(state){
+        if (!state) return '申请售后';
+        switch (state) {
+          case '1':
+            return '退款中';
+          case '2':
+            return '退款中';
+          case '3':
+            return '拒绝退款';
+          case '4':
+            return '退款中';
+          case '5':
+            return '退款成功';
+          case '6':
+            return '退款关闭';
+          default:
             return '未知isRefund';
         }
       },
       clickShowRefund(item){
         if (!item.refund_state){
-          openPage('refund_apply', {goods:item,order_sn:this.order_sn});
+          openPage('refund_apply', {goods:item, order_sn:this.order_sn});
           return;
         }
         switch (item.refund_state) {
@@ -169,7 +177,7 @@
       },
       clickIsRefund(item){
         if (!item.refund_state){
-          openPage('refund_apply', {goods:item,order_sn:this.order_sn});
+          openPage('refund_apply', {goods:item, order_sn:this.order_sn, canSelectType:true});
           return;
         }
         switch (item.refund_state) {

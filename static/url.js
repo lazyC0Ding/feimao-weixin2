@@ -46,4 +46,6 @@ const URL = {
   delivery:'order/delivery',
   deleteOrder:'order/deleteOrder',
   cancel:'order/cancel',
+  getExpress:'order/getExpress',
+  uploadExpress:'order/uploadExpress',
 };

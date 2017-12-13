@@ -113,7 +113,7 @@
         <span class="button" @click="follow(article, article.customer_id)">{{ article.is_attention == 0 ? '关注TA' : '已关注'}}</span>
         <span class="follows">{{article.attention_count}}人关注</span>
       </div>
-      <img @click="showDetail(article)" :src="article.cover">
+      <img @click="showDetail(article.article_id)" :src="article.cover">
       <div class="text">
         <div @click="showDetail(article)" class="title">{{article.title}}</div>
         <div @click="showDetail(article)" class="mini_content">{{article.mini_content}}</div>
@@ -140,11 +140,11 @@
       return {}
     },
     methods: {
-      showDetail(article){
+      showDetail(article_id){
         if (this.parentData) {
           setSession(getPageName(), this.parentData);
         }
-        return openPage('article_detail', article)
+        return openPage('article_detail', {article_id})
       },
       follow(article, pid){
         this.$post(URL.attention, {pid})

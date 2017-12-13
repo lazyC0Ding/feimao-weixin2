@@ -146,20 +146,21 @@
         background: no-repeat center;
         background-size: 100%;
       }
-      &:nth-child(1) {
+      &.img-1{
         margin-left: .28rem;
         background-image: url(../../assets/img/goods_share.png)
       }
-      &:nth-child(3) {
+      &.img-2{
+        margin-left:.7rem;
         background-image: url(../../assets/img/goods_shoucang_off.png);
         &.active {
           background-image: url(../../assets/img/goods_shoucang_on.png);
         }
       }
-      &:nth-child(4) {
+      &.btn-1{
         background-color: #000;
       }
-      &:nth-child(5) {
+      &.btn-2{
         background-color: #F58C23;
       }
     }
@@ -431,132 +432,138 @@
 </style>
 <template>
   <div style="padding-bottom:.8rem;">
-    <div class="goods_detail-top">
-      <div style="position:relative;">
+    <template v-if="content">
+      <div class="goods_detail-top">
+        <div style="position:relative;">
         <span class="countdown" v-if="activity">
           <span >{{d_time | countdown}}</span>
           <span>后{{ifStarted ? '结束' : '开始'}}</span>
         </span>
-        <swiper
-          :list="content.images"
-          :aspect-ratio="1/1"
-          dots-position="center"
-          auto
-          loop
-        ></swiper>
-      </div>
-      <div class="info">
-        <div class="title">{{content.name}}</div>
-        <div v-if="activity" class="price">
-          <span>{{activity.activity_content}} ¥ {{activity.activity_price}}</span>
-          <span>¥ {{content.price}}</span>
+          <swiper
+            :list="content.images"
+            :aspect-ratio="1/1"
+            dots-position="center"
+            auto
+            loop
+          ></swiper>
         </div>
-        <div v-else class="price">¥ {{content.price}}</div>
-      </div>
-      <div class="feimao">
-        <img :src="'' | avatar">
-        <div>
-          <div>肥猫商城</div>
-          <div>品质保证 | 吃遍全国</div>
+        <div class="info">
+          <div class="title">{{content.name}}</div>
+          <div v-if="activity" class="price">
+            <span>{{activity.activity_content}} ¥ {{activity.activity_price}}</span>
+            <span>¥ {{content.price}}</span>
+          </div>
+          <div v-else class="price">¥ {{content.price}}</div>
         </div>
-        <span>进入首页</span>
-      </div>
-      <div class="recommend-part">
-        <div class="title-with-hr">
-          <hr>
-          热卖推荐
-          <hr>
+        <div class="feimao">
+          <img :src="'' | avatar">
+          <div>
+            <div>肥猫商城</div>
+            <div>品质保证 | 吃遍全国</div>
+          </div>
+          <span v-href="'mall'">进入首页</span>
         </div>
-        <ul v-if="content.recommend_goods">
-          <li v-for="item in content.recommend_goods.slice(0, 4)">
-            <dl>
-              <dt>
-                <img :src="item.cover">
-              </dt>
-              <dd>{{item.name}}</dd>
-            </dl>
-          </li>
-        </ul>
-      </div>
-      <div class="before_mai" ref="before_mai">
-        <div class="title-with-hr">
-          <hr>
-          购前须知
-          <hr>
-        </div>
-        <div class="content">{{content.before_mai}}</div>
-      </div>
-    </div>
-    <div class="goods_detail-bottom" :class="{fixed:isTagsFixed}">
-      <ul class="goods_detail-tags" :class="{fixed:isTagsFixed}">
-        <li :class="{active:activeTag === 0}" @click="activeTag=0">商品详情</li>
-        <li :class="{active:activeTag === 1}" @click="activeTag=1">购买记录</li>
-        <li :class="{active:activeTag === 2}" @click="activeTag=2">热销推荐</li>
-      </ul>
-      <div class="bottom-content">
-        <!-- 商品详情 -->
-        <iframe v-show="activeTag === 0" :style="{height:clientHeight+'px'}" :src="content.desc" frameborder="no"
-                border="0" marginwidth=0
-                marginheight=0></iframe>
-        <!-- 购买记录 -->
-        <ul v-show="activeTag === 1" class="records">
-          <li v-for="record in content.records">
-            <img :src="record.avater | avatar">
-            <div>
-              <span>{{record.nickname}}</span>
-              <span>购买了{{record.quantity}}件</span>
-              <span>回复</span>
-              <span>{{record.date_add | time_3}}</span>
-            </div>
-          </li>
-        </ul>
-        <!-- 热销推荐 -->
-        <goods-container v-show="activeTag === 2"
-                         :goods="recommend_goods"></goods-container>
-      </div>
-    </div>
-    <popup v-model="ifShowSelect" style="overflow-y: visible">
-      <div class="select">
-        <img @click="ifShowSelect = false" class="close" src="../../assets/img/close_black.png">
-        <div class="top">
-          <img :src="content.cover">
-          <div>¥{{activity ? activity.activity_price : content.price}}</div>
-          <div>库存: {{activity ? activity.stock : content.stock}}</div>
-        </div>
-        <div v-for="spec in content.specs" class="specs">
-          <div>{{spec.name}}</div>
-          <ul>
-            <li v-for="item in spec.items"
-                @click="selectSpec(spec, item.id)"
-                :class="{ active:item.id == spec.active_id }"
-            >
-              {{item.name}}
+        <div class="recommend-part">
+          <div class="title-with-hr">
+            <hr>
+            热卖推荐
+            <hr>
+          </div>
+          <ul v-if="content.recommend_goods">
+            <li v-for="item in content.recommend_goods.slice(0, 4)">
+              <dl>
+                <dt>
+                  <img :src="item.cover">
+                </dt>
+                <dd>{{item.name}}</dd>
+              </dl>
             </li>
           </ul>
         </div>
-        <div class="count">
-          <span>购买数量</span>
-          <span>
+        <div class="before_mai" ref="before_mai">
+          <div class="title-with-hr">
+            <hr>
+            购前须知
+            <hr>
+          </div>
+          <div class="content">{{content.before_mai}}</div>
+        </div>
+      </div>
+      <div class="goods_detail-bottom" :class="{fixed:isTagsFixed}">
+        <ul class="goods_detail-tags" :class="{fixed:isTagsFixed}">
+          <li :class="{active:activeTag === 0}" @click="activeTag=0">商品详情</li>
+          <li :class="{active:activeTag === 1}" @click="activeTag=1">购买记录</li>
+          <li :class="{active:activeTag === 2}" @click="activeTag=2">热销推荐</li>
+        </ul>
+        <div class="bottom-content">
+          <!-- 商品详情 -->
+          <iframe v-show="activeTag === 0" :style="{height:clientHeight+'px'}" :src="content.desc" frameborder="no"
+                  border="0" marginwidth=0
+                  marginheight=0></iframe>
+          <!-- 购买记录 -->
+          <ul v-show="activeTag === 1" class="records">
+            <li v-for="record in content.records">
+              <img :src="record.avater | avatar">
+              <div>
+                <span>{{record.nickname}}</span>
+                <span>购买了{{record.quantity}}件</span>
+                <span>回复</span>
+                <span>{{record.date_add | time_3}}</span>
+              </div>
+            </li>
+          </ul>
+          <!-- 热销推荐 -->
+          <goods-container v-show="activeTag === 2"
+                           :goods="recommend_goods"></goods-container>
+        </div>
+      </div>
+      <popup v-model="ifShowSelect" style="overflow-y: visible">
+        <div class="select">
+          <img @click="ifShowSelect = false" class="close" src="../../assets/img/close_black.png">
+          <div class="top">
+            <img :src="content.cover">
+            <div>¥{{activity ? activity.activity_price : content.price}}</div>
+            <div>库存: {{activity ? activity.stock : content.stock}}</div>
+          </div>
+          <div v-for="spec in content.specs" class="specs">
+            <div>{{spec.name}}</div>
+            <ul>
+              <li v-for="item in spec.items"
+                  @click="selectSpec(spec, item.id)"
+                  :class="{ active:item.id == spec.active_id }"
+              >
+                {{item.name}}
+              </li>
+            </ul>
+          </div>
+          <div class="count">
+            <span>购买数量</span>
+            <span>
             <span @click="params.quantity == 1 || params.quantity--"></span>
             <span>{{params.quantity}}</span>
             <span @click="params.quantity++"></span>
           </span>
+          </div>
+          <div class="favor"
+               :class="{off:params.is_collect == 0}"
+               @click="params.is_collect == 0 ? params.is_collect = 1 : params.is_collect = 0">
+            同时加入收藏
+          </div>
+          <div class="ok" @click="buy">确认</div>
         </div>
-        <div class="favor"
-             :class="{off:params.is_collect == 0}"
-             @click="params.is_collect == 0 ? params.is_collect = 1 : params.is_collect = 0">
-          同时加入收藏
-        </div>
-        <div class="ok" @click="buy">确认</div>
-      </div>
-    </popup>
-    <ul class="goods_detail-footer">
-      <li class="img"></li>
-      <hr>
-      <li class="img"></li>
-      <li class="btn" @click="select(2)">立即购买</li>
-      <li class="btn" @click="select(1)">加入购物车</li>
-    </ul>
+      </popup>
+      <ul class="goods_detail-footer">
+        <!--<li class="img"></li>-->
+        <!--<hr>-->
+        <li class="img img-2" :class="{active:content.is_collection == 1}" @click="goodsCollection"></li>
+        <li class="btn btn-1" @click="select(2)">立即购买</li>
+        <li class="btn btn-2" @click="select(1)">加入购物车</li>
+      </ul>
+    </template>
+    <div v-if="cantFind" class="tip-nothing" style="margin-top:2rem;">
+      <img src="../../assets/img/Tip_nothing.png">
+      <div>未找到对应的商品信息</div>
+    </div>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>
@@ -567,7 +574,7 @@
   export default {
     data () {
       return {
-        content: {},
+        content: null,
         recommend_goods: [],
         specs: [],
         activity: null,
@@ -583,7 +590,8 @@
           quantity: 1,
           option_id: 0,
           is_collect: 1,
-        }
+        },
+        cantFind:false,
       }
     },
     computed:{
@@ -598,6 +606,17 @@
       },
     },
     methods: {
+      goodsCollection(){
+        this.$post(URL.goodsCollection, {goods_id:this.params.goods_id})
+          .then( res => {
+            if(res.errcode == 0) {
+              toast(res.message);
+              this.content.is_collection = this.content.is_collection == 0 ? 1 : 0;
+            }else{
+              errback(res);
+            }
+          })
+      },
       select(type){ //type: 1:加入购物车, 2:立即购买
         this.ifShowSelect = true;
         this.buyType = type;
@@ -682,6 +701,7 @@
                 setInterval(this.getNow, 1000);
               }
             } else {
+              this.cantFind = true;
               errback(res)
             }
           })

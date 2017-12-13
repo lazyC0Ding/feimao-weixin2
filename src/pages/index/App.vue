@@ -241,12 +241,7 @@
     },
     created(){
       this.keepAlive();
-      // 开发测试用代码,生产时注释 ↓
-      const token = getToken();
-      if (!token) {
-        login();
-      }
-      // 开发测试用代码,生产时注释 ↑
+
       window.addEventListener('scroll', () => {
         this.isIndexTagsFixed = window.scrollY > this.clientWidth * 8 / 15;
       })

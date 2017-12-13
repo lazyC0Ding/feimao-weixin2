@@ -86,7 +86,7 @@
     font-size: 0;
     color: #fff;
     overflow: hidden;
-    >a{
+    > a {
       > img {
         margin-left: .3rem;
         width: .6rem;
@@ -356,7 +356,7 @@
   }
 
   .footer {
-    .ul-horizontal(@footer-height,3);
+    .ul-horizontal(@footer-height, 3);
     &:after {
       content: " ";
       position: absolute;
@@ -373,11 +373,17 @@
       &:nth-child(1) {
         > span {
           background-image: url(../../assets/img/Article_Collection_off.png);
+          &.on {
+            background-image: url(../../assets/img/Article_Collection_on.png);
+          }
         }
       }
       &:nth-child(2) {
         > span {
           background-image: url(../../assets/img/Article_like_off.png);
+          &.on {
+            background-image: url(../../assets/img/Article_like_on.png);
+          }
         }
       }
       &:nth-child(3) {
@@ -389,8 +395,8 @@
   }
 </style>
 <template>
-  <div class="bottom-container article_detail-container" :class="{ hasRecommend:article.goods_count > 0 }">
-    <div v-if="article_id">
+  <div class="bottom-container article_detail-container" :class="{ hasRecommend:article && article.goods_count > 0 }">
+    <div v-if="content">
       <div class="detail-top">
         <div class="author">
           <a v-href="['person_detail', {pid:article.customer_id}]">
@@ -471,12 +477,12 @@
         </li>
       </ul>
       <ul class="footer">
-        <li><span>收藏</span></li>
-        <li><span>点赞</span></li>
+        <li><span :class="{on:article.is_collection == 1}" @click="favor">收藏</span></li>
+        <li><span :class="{on:article.is_like == 1}" @click="like">点赞</span></li>
         <li><span>评论</span></li>
       </ul>
     </div>
-    <div v-if="!article_id" class="tip-nothing" style="margin-top:2rem;">
+    <div v-if="cantFind" class="tip-nothing" style="margin-top:2rem;">
       <img src="../../assets/img/Tip_nothing.png">
       <div>未找到对应的文章信息</div>
     </div>
@@ -488,38 +494,61 @@
   export default {
     data () {
       return {
+        cantFind:false,
         article_id: '',
-        content: {
-          article: {},
-          comments: [],
-          likes: [],
-          likes_count: '',
-          share: {},
-        },
-        ifShowGoods: false
+        content: null,
+        ifShowGoods: false,
       }
     },
     computed: {
       article(){
-        return this.content.article;
+        if (this.content) {
+          return this.content.article;
+        }
       },
       topShowGoodsImg(){
-        const goods = this.content.article.goods;
-        return goods.length > 4
-          ? goods.slice(0, 4)
-          : goods;
+        if(this.article){
+          const goods = this.article.goods;
+          return goods.length > 4
+            ? goods.slice(0, 4)
+            : goods;
+        }
       }
     },
     methods: {
+      favor(){
+        this.$post(URL.collection, {article_id: this.article_id})
+          .then(res => {
+            console.log(res)
+            if (res.errcode == 0) {
+              toast(res.message)
+              this.article.is_collection = this.article.is_collection == 0 ? 1 : 0;
+            }else{
+              errback(res);
+            }
+          })
+      },
+      like(){
+        this.$post(URL.like, {article_id:this.article_id})
+          .then ( res => {
+            console.log(res)
+            if(res.errcode == 0) {
+              toast(res.message);
+              this.article.is_like = this.article.is_like == 0 ? 1 : 0;
+            }else{
+              errback(res);
+            }
+          })
+      },
       follow(){
         this.$post(URL.attention, {pid: this.article.customer_id})
           .then(res => {
             if (res.errcode == 0) {
-              this.content.article.is_attention = res.content;
+              this.article.is_attention = res.content;
               if (res.content != 0) {
-                this.content.article.attention_count = Number(this.content.article.attention_count) + 1;
+                this.article.attention_count = Number(this.article.attention_count) + 1;
               } else {
-                this.content.article.attention_count = Number(this.content.article.attention_count) - 1;
+                this.article.attention_count = Number(this.article.attention_count) - 1;
               }
               follow_common();
             } else {
@@ -530,11 +559,12 @@
       fetch(){
         this.$post(URL.articleDetail, {article_id: this.article_id})
           .then(res => {
-              console.log(res)
+            console.log(res)
             if (res.errcode == 0) {
               this.content = res.content;
-            }else {
-              this.article_id = null;
+            } else {
+              errback(res);
+              this.cantFind = true;
             }
           })
       }
@@ -542,8 +572,8 @@
     created(){
       document.title = '文章详情';
       console.log(getSearchParams(location.search));
-      const { article_id, customer_id } = getSearchParams(location.search);
-      if(customer_id) {
+      const {article_id, customer_id} = getSearchParams(location.search);
+      if (customer_id) {
         setSession('customer_id', customer_id);
       }
       this.article_id = article_id;

@@ -5,7 +5,7 @@
   }
 </style>
 <template>
-  <div>
+  <div v-if="goods">
     <goods-container :goods="goods" :type="params.type" :time="time"></goods-container>
     <app-permanent type="2"></app-permanent>
   </div>
@@ -20,8 +20,8 @@
           type:'', //'1'：秒杀活动 '2'：打折活动 '3'：赠品
           page:1,
         },
-        goods:[],
-        time:{},
+        goods:null,
+        time:null,
       }
     },
     methods: {

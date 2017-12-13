@@ -51,4 +51,5 @@ const URL = {
   collection:'article/collection',
   like:'article/like',
   comment:'article/comment',
+  goodsCollection:'goods/goodsCollection',
 };

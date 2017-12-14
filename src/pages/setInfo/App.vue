@@ -48,7 +48,7 @@
 </style>
 <template>
   <div>
-    <template>
+    <template v-if="is_bind == 0">
       <div class="tip">为了体验肥猫完整服务请绑定您的手机号码</div>
       <ul class="login-ul">
         <li>
@@ -64,6 +64,7 @@
       <div class="text">点击完成绑定按钮代表您已同意<em>《肥猫用户协议》</em></div>
       <div class="btn-big" style="margin-top:.6rem;" @click="bind">完成绑定</div>
     </template>
+    <div class="tip" v-if="!is_bind">正在跳转中...</div>
   </div>
 </template>
 <script>
@@ -75,6 +76,7 @@
         code:'',
         wxCode:'',
         from:'',
+        is_bind:'',
       }
     },
     methods: {
@@ -98,7 +100,7 @@
       }
     },
     created(){
-      document.title = '完善信息';
+      document.title = '肥猫';
       const search = getSearchParams(location.search);
       if(search) {
         const {code, state} = search;

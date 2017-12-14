@@ -60,4 +60,5 @@ const URL = {
   changeSex:'user/changeSex',
   changeIntroduction:'user/changeIntroduction',
   changePhone:'user/changePhone',
+  getOauthInfo:'user/getOauthInfo',
 };

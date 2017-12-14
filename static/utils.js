@@ -54,7 +54,6 @@ function openPage(url, paramsJson) {
     ? '?' + formatParams(paramsJson)
     : '';
   window.location.href = url + paramsStr;
-  // window.open(url + paramsStr)
 }
 
 // 如index.html, name === 'index'

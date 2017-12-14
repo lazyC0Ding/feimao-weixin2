@@ -2,10 +2,10 @@
   @import '../../common';
 
   .index-tags {
-    height:.8rem;
-    margin-bottom:.1rem;
+    height: .8rem;
+    margin-bottom: .1rem;
     > ul {
-      width:100%;
+      width: 100%;
       .tags(3);
       .border-bottom-1px;
       &.fixed {
@@ -95,8 +95,9 @@
 <template>
   <div class="bottom-container" style="padding-top:.9rem;">
     <search-input v-href="'search'" disabled>
-      <span v-if="message_count">{{message_count > 9 ? '9+' : message_count}}</span>
-      <img v-href.stop="'message'" src="../../assets/img/nav_message.png">
+      <span v-if="message_count">{{message_count > 9 ? '9+' : message_count}}1</span>
+      <!--<img v-href.stop="'message'" src="../../assets/img/nav_message.png">-->
+      <img @click.stop="test" src="../../assets/img/nav_message.png">
     </search-input>
     <swiper
       :list="banner.list"
@@ -159,8 +160,8 @@
   export default {
     data () {
       return {
-        clientWidth:document.documentElement.clientWidth,
-        isIndexTagsFixed:false,
+        clientWidth: document.documentElement.clientWidth,
+        isIndexTagsFixed: false,
         banner: {
           list: [],
           index: 0,
@@ -177,6 +178,12 @@
       }
     },
     methods: {
+      test(){
+//        const url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx520c15f417810387&redirect\_uri=https%3A%2F%2Fchong.qq.com%2Fphp%2Findex.php%3Fd%3D%26c%3DwxAdapter%26m%3DmobileDeal%26showwxpaytitle%3D1%26vb2ctag%3D4\_2030\_5\_1194\_60&response\_type=code&scope=snsapi\_base&state=123#wechat\_redirect'
+//        const url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx520c15f417810387&redirect\_uri=https%3A%2F%2Fchong.qq.com%2Fphp%2Findex.php%3Fd%3D%26c%3DwxAdapter%26m%3DmobileDeal%26showwxpaytitle%3D1%26vb2ctag%3D4\_2030\_5\_1194\_60&response\_type=code&scope=snsapi\_base&state=123#wechat\_redirect'
+//        const url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx739a1b97ce756bcd&redirect\_uri=http%3A%2F%2Flocalhost%3A8080%2Findex.html&response\_type=code&scope=snsapi_userinfo&state=STATE#wechat\_redirect'
+        const url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx739a1b97ce756bcd&redirect_uri=http%3A%2F%2Ffeimao-weixin.zertone2.com%2F&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+      },
       clickBanner(){
         const action = this.banner.list[this.banner.index].action;
         jumpAction(action);

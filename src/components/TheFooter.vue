@@ -70,8 +70,7 @@
     },
     methods:{
       replacePage(str){
-        history.replaceState(null, '', str);
-        location.reload();
+        location.replace(str);
       }
     },
     computed: {

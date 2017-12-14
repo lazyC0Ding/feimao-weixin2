@@ -35,8 +35,8 @@
   }
 </style>
 <template>
-  <div>
-    <ul class="refund-container">
+  <div v-if="content">
+    <ul v-if="content.length" class="refund-container">
       <li v-for="item in content" :key="item.order_sn" v-href="['refund_detail', {refund_sn:item.refund_sn, goods:item.goods}]">
         <div class="top">
           <span>{{item.date_add | time}}</span>
@@ -46,6 +46,10 @@
         <div class="bottom">退款金额 <span>¥{{item.refund_price}}</span></div>
       </li>
     </ul>
+    <div v-else class="tip-nothing" style="margin-top:2rem;">
+      <img src="../../assets/img/Tip_nothing.png">
+      <div>您没有退款/退货</div>
+    </div>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>
@@ -56,7 +60,7 @@
     data () {
       return {
         page:1,
-        content:[],
+        content:null,
       }
     },
     methods: {

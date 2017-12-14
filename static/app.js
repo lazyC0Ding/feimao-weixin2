@@ -62,10 +62,12 @@ function login() {
 }
 
 function errback(res) {
-  toast(res.message);
   switch (res.errcode) {
     case 99:
       login();
+      break;
+    default:
+      toast(res.message);
       break;
   }
 }

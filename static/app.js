@@ -1,4 +1,5 @@
 var ua = navigator.userAgent;
+alert('123');
 if (ua.indexOf('iPhone') > -1) {//苹果手机
   window.onload = function () {
     setTimeout(() => {

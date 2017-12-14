@@ -72,7 +72,7 @@ function getPageName() {
   return name;
 }
 
-
+// 判断移动端系统
 function getSystemType() {
   const u = navigator.userAgent;
   const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;
@@ -81,6 +81,16 @@ function getSystemType() {
     return 'android'
   }else if(isIos) {
     return 'ios'
+  }
+}
+
+// 判断是否微信
+function is_weixn(){
+  var ua = navigator.userAgent.toLowerCase();
+  if(ua.match(/MicroMessenger/i)=="micromessenger") {
+    return true;
+  } else {
+    return false;
   }
 }
 

@@ -1,32 +1,10 @@
-var ua = navigator.userAgent;
-if (getSystemType() === 'ios') {//苹果手机
-  window.onload = function () {
-    setTimeout(() => {
-      window.addEventListener("popstate", function (e) {
-        alert("我监听到了浏览器的返回按钮事件啦");
-        self.location = document.referrer;
-      });
-    }, 500)
-  }
-}
-
-if (getSystemType() === 'ios') {//苹果手机
-  window.onload = function () {
-    setTimeout(() => {
-      window.addEventListener("popstate", function (e) {
-        alert("我监听到了浏览器的返回按钮事件啦");
-        self.location = document.referrer;
-      });
-    }, 500)
-  }
-}
-
 const config = {
   debug: true
 };
 
 if (!config.debug) {
-  console.log = function () {};
+  console.log = function () {
+  };
 }
 
 // wx.config({
@@ -81,7 +59,11 @@ function toast(msg) {
 }
 
 function login() {
-  openPage('login');
+  if (is_weixn()) {
+    openPage('setInfo')
+  } else {
+    openPage('login');
+  }
 }
 
 function errback(res) {
@@ -107,7 +89,7 @@ function changeState(pageName, attr, value) {
 function follow_common() {
   const willRefreshByFollow = ['index', 'follows', 'person_detail'];
   for (let page of willRefreshByFollow) {
-    if(page === getPageName() && page === 'index') return;
+    if (page === getPageName() && page === 'index') return;
     changeState(page, '$_follow', true);
   }
 }
@@ -125,7 +107,7 @@ function jumpAction(action) {
       break;
     default:
       let params = {};
-      if(action.params && action.params.length) {
+      if (action.params && action.params.length) {
         for (let i of action.params) {
           params[i.key] = i.value;
         }

@@ -71,7 +71,7 @@
 <template>
   <div style="padding-top:.9rem;padding-bottom:.8rem;">
     <search-input v-model="key" placeholder="请输入要搜索的订单" :callback="fetch">
-      <a @click="cancelSearch">取消1</a>
+      <a @click="cancelSearch">取消</a>
     </search-input>
     <ul class="orders-tags">
       <li :class="{active:params.state == 0}" @click="changeState(0)">全部</li>
@@ -184,7 +184,6 @@
       },
       changeState(state){
         this.params.state = state;
-        this.$setPage();
         this.fetch();
       },
       fetch(){
@@ -208,7 +207,7 @@
       const searchs = getSearchParams(location.search);
       if (searchs) {
         this.params.state = searchs.state;
-//        history.replaceState(null, '', getPageName()+'.html');
+        history.replaceState(null, '', getPageName()+'.html');
       }else{
         this.params.state = getSession(getPageName()).params.state;
       }

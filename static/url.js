@@ -62,4 +62,5 @@ const URL = {
   changePhone:'user/changePhone',
   getOauthInfo:'user/getOauthInfo',
   oauthLogin:'user/oauthLogin',
+  oauthRegister:'user/oauthRegister',
 };

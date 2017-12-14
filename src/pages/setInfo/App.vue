@@ -77,26 +77,25 @@
         wxCode:'',
         from:'',
         is_bind:'',
+        params:{
+          oauth:'weixin',
+          type:5,
+        }
       }
     },
     methods: {
       getOauthInfo(){
-        this.$post(URL.getOauthInfo, {
-          oauth:'weixin',
-          code:this.wxCode,
-          type:5,
-        }).then( res => {
-          alert(JSON.stringify(res));
+        this.$post(URL.getOauthInfo, Object.assign({code:this.wxCode}, this.params))
+          .then( res => {
           const wxData = res.content;
-          const params = {
-            oauth:'weixin',
-            type:5,
-          };
-          return this.$post(URL.oauthLogin, Object.assign(params, wxData))
+          return this.$post(URL.oauthLogin, Object.assign(wxData, this.params))
         }).then( res => {
           alert(JSON.stringify(res));
 
         })
+      },
+      bind(){
+        this.$post(URL.oauthRegister, )
       }
     },
     created(){

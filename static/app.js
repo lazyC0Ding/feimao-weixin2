@@ -1,5 +1,6 @@
 var ua = navigator.userAgent;
 alert('123');
+
 if (ua.indexOf('iPhone') > -1) {//苹果手机
   window.onload = function () {
     setTimeout(() => {
@@ -11,6 +12,20 @@ if (ua.indexOf('iPhone') > -1) {//苹果手机
     }, 500)
   }
 }
+
+if (getSystemType() === 'ios') {//苹果手机
+  window.onload = function () {
+    setTimeout(() => {
+      window.addEventListener("popstate", function (e) {
+        // alert("我监听到了浏览器的返回按钮事件啦");
+        alert('后退2');
+        location.reload();
+      });
+    }, 500)
+  }
+}
+
+
 
 const config = {
   debug: true

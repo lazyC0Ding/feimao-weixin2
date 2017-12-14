@@ -96,6 +96,7 @@
         this.wxCode = code;
         this.from = state;
       }
+      this.getOauthInfo();
     },
     components: {
       SendCode,

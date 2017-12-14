@@ -84,7 +84,11 @@
           code:this.wxCode,
           type:5,
         }).then( res => {
-          alert(res);
+          alert(JSON.stringify(res));
+//          return this.$post(URL.oauthLogin, {
+//            oauth:'weixin',
+//            type:5,
+//          })
         })
       }
     },

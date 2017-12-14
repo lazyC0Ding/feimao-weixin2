@@ -1,32 +1,3 @@
-var ua = navigator.userAgent;
-alert('456');
-
-if (ua.indexOf('iPhone') > -1) {//苹果手机
-  window.onload = function () {
-    setTimeout(() => {
-      window.addEventListener("popstate", function (e) {
-        // alert("我监听到了浏览器的返回按钮事件啦");
-        alert('后退');
-        self.location = document.referrer;
-      });
-    }, 500)
-  }
-}
-
-if (getSystemType() === 'ios') {//苹果手机
-  window.onload = function () {
-    setTimeout(() => {
-      window.addEventListener("popstate", function (e) {
-        // alert("我监听到了浏览器的返回按钮事件啦");
-        alert('后退2');
-        location.reload();
-      });
-    }, 500)
-  }
-}
-
-
-
 const config = {
   debug: true
 };
@@ -90,9 +61,17 @@ function toast(msg) {
 function login() {
   const from = getPageName();
   if (is_weixn()) {
-    // const url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx739a1b97ce756bcd&redirect_uri=http%3A%2F%2Ffeimao-weixin.zertone2.com%2F&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
-    // location.href = url;
-    openPage('setInfo', {from})
+    const url = 'https://open.weixin.qq.com/connect/oauth2/authorize';
+    const appid = 'wx739a1b97ce756bcd';
+    const redirect_uri = encodeURIComponent('http://feimao-weixin.zertone2.com/setInfo.html');
+    const response_type = 'code';
+    const scope = 'snsapi_userinfo';
+    let state = from;  // 自带参数
+
+    const to = `${url}?appid=${appid}&redirect_uri=${redirect_uri}&response_type=${response_type}&scope=${scope}&state=${state}#wechat_redirect`;
+    // const to = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx739a1b97ce756bcd&redirect_uri=http%3A%2F%2Ffeimao-weixin.zertone2.com%2F&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
+    location.href = to;
+    // openPage('setInfo', {from})
   } else {
     openPage('login', {from});
   }

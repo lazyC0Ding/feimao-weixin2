@@ -251,18 +251,6 @@
     created(){
       this.keepAlive();
 
-      const search = getSearchParams(location.search);
-      if(search) {
-        const { code , state} = search;
-        this.$post(URL.getOauthInfo, {
-          oauth:'weixin',
-          code,
-          type:5,
-        }).then( res => {
-          alert(res);
-        })
-      }
-
       window.addEventListener('scroll', () => {
         this.isIndexTagsFixed = window.scrollY > this.clientWidth * 8 / 15;
       })

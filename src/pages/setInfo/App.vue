@@ -48,20 +48,22 @@
 </style>
 <template>
   <div>
-    <div class="tip">为了体验肥猫完整服务请绑定您的手机号码</div>
-    <ul class="login-ul">
-      <li>
-        <img style="width:.36rem;height:.42rem;" src="../../assets/img/Login_phone.png">
-        <input v-model="phone" placeholder="请输入您的手机号">
-      </li>
-      <li>
-        <img style="width:.4rem;height:.46rem;" src="../../assets/img/Login_code.png">
-        <input v-model="code" placeholder="请输入验证码">
-        <send-code :phone="phone" type="0"></send-code>
-      </li>
-    </ul>
-    <div class="text">点击完成绑定按钮代表您已同意<em>《肥猫用户协议》</em></div>
-    <div class="btn-big" style="margin-top:.6rem;">完成绑定</div>
+    <template>
+      <div class="tip">为了体验肥猫完整服务请绑定您的手机号码</div>
+      <ul class="login-ul">
+        <li>
+          <img style="width:.36rem;height:.42rem;" src="../../assets/img/Login_phone.png">
+          <input v-model="phone" placeholder="请输入您的手机号">
+        </li>
+        <li>
+          <img style="width:.4rem;height:.46rem;" src="../../assets/img/Login_code.png">
+          <input v-model="code" placeholder="请输入验证码">
+          <send-code :phone="phone" type="0"></send-code>
+        </li>
+      </ul>
+      <div class="text">点击完成绑定按钮代表您已同意<em>《肥猫用户协议》</em></div>
+      <div class="btn-big" style="margin-top:.6rem;" @click="bind">完成绑定</div>
+    </template>
   </div>
 </template>
 <script>
@@ -71,13 +73,29 @@
       return {
         phone:'',
         code:'',
+        wxCode:'',
+        from:'',
       }
     },
     methods: {
-
+      getOauthInfo(){
+        this.$post(URL.getOauthInfo, {
+          oauth:'weixin',
+          code:this.wxCode,
+          type:5,
+        }).then( res => {
+          alert(res);
+        })
+      }
     },
     created(){
       document.title = '完善信息';
+      const search = getSearchParams(location.search);
+      if(search) {
+        const {code, state} = search;
+        this.wxCode = code;
+        this.from = state;
+      }
     },
     components: {
       SendCode,

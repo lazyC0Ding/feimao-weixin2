@@ -208,7 +208,7 @@
       const searchs = getSearchParams(location.search);
       if (searchs) {
         this.params.state = searchs.state;
-        history.replaceState(null, '', getPageName()+'.html');
+//        history.replaceState(null, '', getPageName()+'.html');
       }else{
         this.params.state = getSession(getPageName()).params.state;
       }

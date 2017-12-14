@@ -69,6 +69,14 @@
     },
     methods: {
       login(){
+        if(!this.phone.trim()){
+          toast('请输入手机号');
+          return;
+        }
+        if(!this.code.trim()){
+          toast('请输入验证码');
+          return;
+        }
         const params = {
           phone:this.phone,
           code:this.code

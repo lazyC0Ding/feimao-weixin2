@@ -1,3 +1,16 @@
+var ua = navigator.userAgent;
+if (ua.indexOf('iPhone') > -1) {//苹果手机
+  window.onload = function () {
+    setTimeout(() => {
+      window.addEventListener("popstate", function (e) {
+        // alert("我监听到了浏览器的返回按钮事件啦");
+        alert('后退');
+        self.location = document.referrer;
+      });
+    }, 500)
+  }
+}
+
 const config = {
   debug: true
 };

@@ -80,7 +80,8 @@
         params:{
           oauth:'weixin',
           type:5,
-        }
+        },
+        wxData:null,
       }
     },
     methods: {
@@ -88,6 +89,7 @@
         this.$post(URL.getOauthInfo, Object.assign({code:this.wxCode}, this.params))
           .then( res => {
           const wxData = res.content;
+          this.wxData = wxData;
           return this.$post(URL.oauthLogin, Object.assign(wxData, this.params))
         }).then( res => {
           alert(JSON.stringify(res));
@@ -95,7 +97,19 @@
         })
       },
       bind(){
-        this.$post(URL.oauthRegister, )
+        let params = {
+          oauth:this.params.oauth,
+          phone:this.phone,
+          verify_code:this.code,
+          type:this.params.type
+        };
+        params = Object.assign(params, this.wxData);
+        const pid = getSession('customer_id');
+        if(pid){
+          params.pid = pid;
+        }
+        this.$post(URL.oauthRegister, params)
+          .then (res)
       }
     },
     created(){

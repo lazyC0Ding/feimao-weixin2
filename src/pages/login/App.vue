@@ -64,6 +64,7 @@
       return {
         phone:'',
         code:'',
+        from:'',
       }
     },
     methods: {
@@ -80,8 +81,8 @@
             console.log(res);
             if(res.errcode == 0) {
               setUser(res.content);
-              setToken(res.content.access_token)
-              history.go(-1);
+              setToken(res.content.access_token);
+              replacePage(this.from || 'index');
             }else{
               errback(res);
             }
@@ -89,6 +90,10 @@
       },
     },
     created(){
+      const search = getSearchParams(location.search);
+      if(search && search.from) {
+        this.from = search.from;
+      }
       document.title = '登录';
     },
     components: {

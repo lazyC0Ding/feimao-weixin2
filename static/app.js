@@ -59,10 +59,11 @@ function toast(msg) {
 }
 
 function login() {
+  const from = getPageName();
   if (is_weixn()) {
-    openPage('setInfo')
+    openPage('setInfo', {from})
   } else {
-    openPage('login');
+    openPage('login', {from});
   }
 }
 

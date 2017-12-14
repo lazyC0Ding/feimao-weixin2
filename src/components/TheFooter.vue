@@ -51,10 +51,10 @@
 </style>
 <template>
   <nav>
-    <a @click="replacePage('index.html')" :class="{ active:current == 0 }">社区</a>
-    <a @click="replacePage('mall.html')" :class="{ active:current == 1 }">商城</a>
-    <a @click="replacePage('cart.html')" :class="{ active:current == 2 }">购物车</a>
-    <a @click="replacePage('user.html')" :class="{ active:current == 3 }">我的</a>
+    <a @click="replacePage('index')" :class="{ active:current == 0 }">社区</a>
+    <a @click="replacePage('mall')" :class="{ active:current == 1 }">商城</a>
+    <a @click="replacePage('cart')" :class="{ active:current == 2 }">购物车</a>
+    <a @click="replacePage('user')" :class="{ active:current == 3 }">我的</a>
   </nav>
 </template>
 <script>
@@ -70,7 +70,7 @@
     },
     methods:{
       replacePage(str){
-        location.replace(str);
+        replacePage(str);
       }
     },
     computed: {

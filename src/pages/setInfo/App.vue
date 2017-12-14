@@ -85,10 +85,15 @@
           type:5,
         }).then( res => {
           alert(JSON.stringify(res));
-//          return this.$post(URL.oauthLogin, {
-//            oauth:'weixin',
-//            type:5,
-//          })
+          const wxData = res.content;
+          const params = {
+            oauth:'weixin',
+            type:5,
+          };
+          return this.$post(URL.oauthLogin, Object.assign(params, wxData))
+        }).then( res => {
+          alert(JSON.stringify(res));
+
         })
       }
     },

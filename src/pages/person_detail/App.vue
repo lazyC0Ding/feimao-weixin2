@@ -155,7 +155,11 @@
     },
     created(){
       document.title = '个人信息';
-      this.pid = getSearchParams(location.search).pid;
+      const { pid, customer_id } = getSearchParams(location.search);
+      this.pid = pid;
+      if(customer_id) {
+        setSession('customer_id', customer_id);
+      }
       return this.keepAlive();
     },
     components: {

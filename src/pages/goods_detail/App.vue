@@ -712,7 +712,7 @@
     },
     created(){
       document.title = '商品详情';
-      const { goods_id, customer_id } = getSearchParams(location.search)
+      const { goods_id, customer_id } = getSearchParams(location.search);
       this.params.goods_id = goods_id;
       if(customer_id) {
         setSession('customer_id', customer_id);

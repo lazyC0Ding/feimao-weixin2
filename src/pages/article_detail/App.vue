@@ -127,7 +127,7 @@
     > .cover {
       display: block;
       width: 100%;
-      height: 6rem;
+      height: 5rem;
     }
     > .title {
       padding: 0 .24rem;
@@ -412,7 +412,7 @@
           <span>共推荐{{article.goods_count}}件商品</span>
         </div>
         <ul v-show="ifShowGoods">
-          <li v-for="item in article.goods">
+          <li v-for="item in article.goods" v-href="['goods_detail', {goods_id:item.goods_id}]">
             <img :src="item.cover">
             <span>{{item.name}}</span>
           </li>
@@ -448,7 +448,7 @@
         <div v-if="article.articles_count > 0" class="recommend-articles">
           <div>文章推荐</div>
           <div>
-            <div v-for="item in article.articles">
+            <div v-for="item in article.articles" v-href="['article_detail', {article_id:item.article_id}]">
               <img :src="item.cover | avatar">
               <span>{{item.title}}</span>
             </div>
@@ -571,7 +571,6 @@
     },
     created(){
       document.title = '文章详情';
-      console.log(getSearchParams(location.search));
       const {article_id, customer_id} = getSearchParams(location.search);
       if (customer_id) {
         setSession('customer_id', customer_id);

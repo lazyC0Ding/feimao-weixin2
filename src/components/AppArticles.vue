@@ -120,7 +120,7 @@
         <div class="actions">
           <span>{{article.browse}}</span>
           <span>{{article.likes}}</span>
-          <span @click="showDetail(article)">READ MORE</span>
+          <span @click="showDetail(article.article_id)">READ MORE</span>
         </div>
       </div>
     </li>

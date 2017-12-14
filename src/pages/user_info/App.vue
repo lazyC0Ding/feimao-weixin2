@@ -13,6 +13,13 @@
       &.light {
         color: @light;
       }
+      &.limit{
+        text-align:right;
+        width:3rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
     > .row-avatar {
       padding: 0 .32rem;
@@ -39,46 +46,49 @@
   }
 
   .nickname {
-    margin-top:.2rem;
+    margin-top: .2rem;
     > div {
       &:nth-child(1) {
-        position:relative;
-        padding-left:.4rem;
+        position: relative;
+        padding-left: .4rem;
         height: 1rem;
         background-color: #fff;
-        >input{
-          height:100%;
-          line-height:1rem;
-          font-size:.28rem;
+        > input {
+          height: 100%;
+          line-height: 1rem;
+          font-size: .28rem;
         }
       }
       &:nth-child(2) {
-        margin-top:.8rem;
+        margin-top: .6rem;
       }
     }
   }
 
-  .qrcode{
-    background-color:#fff;
-    text-align: center;
+  .introduction{
+    margin-top:.2rem;
     overflow:hidden;
-    >.img{
-      font-size:0;
-      margin-top:1.06rem;
-      >img{
-        width:5.4rem;
-        height:5.4rem;
+    >.textarea{
+      position:relative;
+      background-color:#fff;
+      overflow:hidden;
+      >textarea{
+        width:100%;
+        padding:.28rem 1rem .32rem .4rem;
+        font-size:.28rem;
+        resize: none;
+        outline: none;
+        box-sizing: border-box;
+        &::placeholder{
+          color:@light;
+        }
       }
-    }
-    >.text{
-      margin-top:.46rem;
-      color:@light;
-    }
-    >.btn-big{
-      margin-top:1.06rem;
-      >span {
-        .span-bg-icon(.34rem, left);
-        background-image: url(../../assets/img/qrcode_turn.png);
+      >.tips{
+        position:absolute;
+        right:.2rem;
+        bottom:0;
+        font-size:.28rem;
+        color:@light;
       }
     }
   }
@@ -88,7 +98,7 @@
     <ul class="user_info-ul" v-show="!ifShowOthers">
       <li class="row-avatar">
         <span class="title">头像</span>
-        <img class="row-avatar-arrow" src="../../assets/img/direction_right_gray.png">
+        <img class="row-avatar-arrow" src="../../assets/img/direction_right_black.png">
         <img class="avatar" :src="content.avater | avatar">
       </li>
       <li class="row" @click="showNickname">
@@ -99,24 +109,24 @@
         <span class="title">用户ID</span>
         <span class="right" style="background:none;padding:0;">{{content.uuid}}</span>
       </li>
-      <li class="row">
+      <li class="row" @click="showIntroduction">
         <span class="title">个人简介</span>
-        <span class="right" :class="{light:!content.introduction}">{{content.introduction || '介绍下自己'}}</span>
+        <span class="right limit" :class="{light:!content.introduction}">{{content.introduction || '介绍下自己'}}</span>
       </li>
-      <li class="row">
+      <li class="row" @click="showSex = true">
         <span class="title">性别</span>
         <span class="right" :class="{light:!content.sex}">{{content.sex || '请选择'}}</span>
       </li>
-      <li class="row" @click="showQrcode">
+      <li class="row" v-href="'qrcode'">
         <span class="title">二维码</span>
         <span class="right" style="font-size:0;"><img src="../../assets/img/qrcode_black.png"
                                                       style="width:.4rem;height:.4rem;vertical-align: middle;"></span>
       </li>
-      <li class="row">
-        <span class="title">微信号</span>
-        <span class="right" :class="{light:!content.weixin}">{{content.weixin || '未绑定'}}</span>
-      </li>
-      <li class="row">
+      <!--<li class="row">-->
+      <!--<span class="title">微信号</span>-->
+      <!--<span class="right" :class="{light:!content.weixin}">{{content.weixin || '未绑定'}}</span>-->
+      <!--</li>-->
+      <li class="row" v-href="'user_updatePhone'">
         <span class="title">手机号绑定</span>
         <span class="right" :class="{light:!content.phone}">{{content.phone || '未绑定'}}</span>
       </li>
@@ -132,51 +142,52 @@
       </div>
       <div class="btn-big" @click="updateNickname">保存</div>
     </div>
-    <div class="qrcode" v-if="qrcode" v-show="show.qrcode" :style="{height:clientHeight+'px'}">
-      <div class="img">
-        <img :src="qrcode.qrcode" v-show="qrcode.showQrcode">
-        <img :src="qrcode.receipt_qrcode" v-show="!qrcode.showQrcode">
+    <div class="introduction" v-show="show.introduction">
+      <div class="textarea">
+        <textarea v-model="update.introduction" placeholder="介绍下自己" maxlength="40"></textarea>
+        <span class="tips">{{update.introduction.length}}/40</span>
       </div>
-      <div class="text">扫描二维码{{qrcode.showQrcode ? '成为我的粉丝' : '付款给我'}}</div>
-      <div class="btn-big" @click="qrcode.showQrcode = !qrcode.showQrcode"><span>切换为{{qrcode.showQrcode ? '收货' : '个人'}}码</span></div>
+      <div class="btn-big" @click="updateIntroduction" style="margin-top:.6rem;">保存</div>
     </div>
+    <actionsheet v-model="showSex" :menus="['女','男']" @on-click-menu="updateSex" show-cancel></actionsheet>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>
 <script>
   import AppPermanent from '@c/AppPermanent.vue'
+  import {Actionsheet} from 'vux'
   export default {
     data () {
       return {
         content: {},
-        show:{
-          nickname:false,
-          qrcode:false,
+        show: {
+          nickname: false,
+          introduction:false,
         },
-        update:{
-          nickname:'',
+        update: {
+          nickname: '',
+          introduction:'',
         },
-        title:'',
-        qrcode:null,
-        clientHeight:null,
+        title: '',
+        showSex: false,
       }
     },
-    computed:{
+    computed: {
       ifShowOthers(){
         for (let i in this.show) {
-          if(this.show[i]) {
+          if (this.show[i]) {
             return true;
           }
         }
         return false;
       }
     },
-    watch:{
+    watch: {
       ifShowOthers(n){
-        if(n) {
+        if (n) {
           history.pushState(null, '', '#');
           window.addEventListener('popstate', this.backFn);
-        }else{
+        } else {
           window.removeEventListener('popstate', this.backFn);
         }
       },
@@ -187,13 +198,39 @@
     methods: {
       showNickname(){
         this.title = '修改昵称';
+        this.update.nickname = this.content.nickname;
         this.show.nickname = true;
       },
+      showIntroduction(){
+        this.title = '个人简介';
+        this.update.introduction = this.content.introduction || '';
+        this.show.introduction = true;
+      },
       updateNickname(){
-        this.$post(URL.changeNickname, {nickname:this.update.nickname})
-          .then( res => {
+        if(!this.update.nickname.trim()){
+          toast('昵称不得为空');
+          return;
+        }
+        this.$post(URL.changeNickname, {nickname: this.update.nickname})
+          .then(res => {
             if (res.errcode == 0) {
               this.content.nickname = res.content;
+              history.go(-1);
+            } else {
+              errback(res);
+            }
+          })
+      },
+      updateIntroduction(){
+        if(!this.update.nickname.trim()){
+          toast('简介不得为空');
+          return;
+        }
+        this.$post(URL.changeIntroduction, {introduction: this.update.introduction})
+          .then (res => {
+            console.log(res);
+            if(res.errcode == 0) {
+              this.content.introduction = res.content;
               history.go(-1);
             }else{
               errback(res);
@@ -204,21 +241,21 @@
         this.update.nickname = '';
         this.$refs.inputNickname.focus();
       },
-      showQrcode(){
-        this.title = '我的二维码';
-        this.show.qrcode = true;
-        if(!this.qrcode) {
-          this.$post(URL.getQrcode)
-            .then ( res => {
-              if(res.errcode == 0) {
-                console.log(res.content);
-                res.content.showQrcode = true;
-                this.qrcode = res.content;
-              }else{
-                errback(res);
-              }
-            })
-        }
+      updateSex(key, item){
+        if(!item || item === this.content.sex) return;
+
+        const type = item === '男' ? 1 : 2;
+
+        this.$post(URL.changeSex, {type})
+          .then (res => {
+            console.log(res);
+            if(res.errcode == 0) {
+              toast('修改性别成功');
+              this.content.sex = res.content;
+            }else{
+              errback(res);
+            }
+          })
       },
       showMain(){
         for (let i in this.show) {
@@ -231,18 +268,18 @@
       }
     },
     created(){
-      this.clientHeight = document.documentElement.clientHeight;
       this.title = '个人信息';
       this.content = getSearchParams(location.search);
-      const { nickname, showQrcode } = this.content;
+      const {nickname, showQrcode} = this.content;
       this.update.nickname = nickname;
-      if(showQrcode) {
+      if (showQrcode) {
         this.show.qrcode = true;
       }
       console.log(this.content);
     },
     components: {
-      AppPermanent
+      AppPermanent,
+      Actionsheet,
     }
   }
 </script>

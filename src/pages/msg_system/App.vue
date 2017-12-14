@@ -3,36 +3,36 @@
 
   .msg_system-ul {
     > li {
-      margin-top:.2rem;
-      position:relative;
-      overflow:hidden;
+      margin-top: .2rem;
+      position: relative;
+      overflow: hidden;
       background-color: #fff;
-      padding-bottom:.28rem;
-      >.img{
+      padding-bottom: .28rem;
+      > .img {
         text-align: center;
-        font-size:0;
-        >img{
-          margin-top:.16rem;
-          width:7.2rem;
-          height:2.4rem;
+        font-size: 0;
+        > img {
+          margin-top: .16rem;
+          width: 7.2rem;
+          height: 2.4rem;
         }
       }
-      >.text{
-        margin:0 .24rem;
-        position:relative;
+      > .text {
+        margin: 0 .24rem;
+        position: relative;
         overflow: hidden;
-        >.title{
-          margin-top:.16rem;
-          font-size:.28rem;
-          >span{
-            width:.2rem;
-            height:.2rem;
+        > .title {
+          margin-top: .16rem;
+          font-size: .28rem;
+          > span {
+            width: .2rem;
+            height: .2rem;
             border-radius: 50%;
-            background-color:#d0021b;
+            background-color: #d0021b;
           }
         }
-        >.bottom {
-          margin-top:.1rem;
+        > .bottom {
+          margin-top: .1rem;
           color: @light;
           font-size: .24rem;
           overflow: hidden;
@@ -53,8 +53,8 @@
 </style>
 <template>
   <div>
-    <ul class="msg_system-ul" v-if="content.length">
-      <li v-for="msg in content" :key="msg.message_id">
+    <ul class="msg_system-ul" v-if="content && content.length">
+      <li v-for="msg in content" :key="msg.message_id" v-action="msg.action">
         <div class="img">
           <img :src="msg.image" v-if="msg.image">
         </div>
@@ -70,6 +70,10 @@
         </div>
       </li>
     </ul>
+    <div v-else class="tip-nothing" style="margin-top:2rem;">
+      <img src="../../assets/img/Tip_nothing.png">
+      <div>暂无系统通知</div>
+    </div>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>
@@ -86,8 +90,12 @@
       fetch(){
         this.$post(URL.getSystemMessages, {page: this.page})
           .then(res => {
-            console.log(res)
-            this.content = res.content;
+            console.log(res);
+            if (res.errcode == 0) {
+              this.content = res.content;
+            }else{
+              errback(res);
+            }
           })
       }
     },

@@ -64,6 +64,13 @@ export default {
       }
     };
 
+    // 指令
+    Vue.directive('action', function (el, binding) {
+      el.onclick = function () {
+        jumpAction(binding.value);
+      }
+    });
+
     Vue.directive('back', function (el, binding) {
       el.onclick = function () {
         history.go(-1);
@@ -102,6 +109,7 @@ export default {
       }
     });
 
+    // 过滤器
     // 1970-01-01 20:00
     Vue.filter('time', function (timestamp) {
       const date = new Date(Number(timestamp) * 1000);
@@ -140,6 +148,15 @@ export default {
       const day = date.getDate();
 
       return [month, day].map(formatNumber).join('-');
+    });
+
+    Vue.filter('time_4', function (timestamp) {
+      const date = new Date(Number(timestamp) * 1000);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+
+      return [year, month, day].map(formatNumber).join('-');
     });
 
     // 倒计时1 HH:MM:SS

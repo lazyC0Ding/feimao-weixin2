@@ -72,7 +72,7 @@
       <div v-if="msg.foregin_type" class="div-3" :class="{ ellipsis: getType(msg.foregin_type) != 1}" @click="jumpAction(msg.action)">
         [{{getType(msg.foregin_type)}}]{{msg.to_content}}
       </div>
-      <div v-else class="div-3 ellipsis" @click="jumpAction(msg.action)">
+      <div v-else class="div-3 ellipsis" v-action="msg.action">
         {{msg.article_title}}
       </div>
     </li>

@@ -52,4 +52,12 @@ const URL = {
   like:'article/like',
   comment:'article/comment',
   goodsCollection:'goods/goodsCollection',
+  getCollections:'user/getCollections',
+  spokesman:'user/spokesman',
+  getMyAccount:'user/getMyAccount',
+  finance:'user/finance',
+  financeDetail:'user/financeDetail',
+  changeSex:'user/changeSex',
+  changeIntroduction:'user/changeIntroduction',
+  changePhone:'user/changePhone',
 };

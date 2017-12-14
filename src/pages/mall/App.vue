@@ -168,11 +168,11 @@
     <swiper
       :list="banner.list"
       v-model="banner.index"
-      @on-index-change="bannerIndexChange"
       :aspect-ratio="8/15"
       dots-position="center"
       auto
       loop
+      @click.native="clickBanner"
     ></swiper>
     <div class="categorys">
       <ul :class="{fixed:isCategorysFixed}" ref="categorys">
@@ -316,14 +316,15 @@
       }
     },
     methods: {
+      clickBanner(){
+        const action = this.banner.list[this.banner.index].action;
+        jumpAction(action);
+      },
       toGoods(){
         const goodsTop = this.$refs.goods.offsetTop;
         const categorysHeight = this.$refs.categorys.clientHeight;
         const searchInputHeight = this.$refs.searchInput.$el.clientHeight;
         window.scrollTo(0, goodsTop - searchInputHeight - categorysHeight);
-      },
-      bannerIndexChange (index) {
-        this.banner.index = index
       },
       getD_timestamp(){
         const now = Date.parse(new Date()) / 1000;

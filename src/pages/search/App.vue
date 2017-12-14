@@ -46,7 +46,7 @@
         <span>热门搜索</span>
       </div>
       <div class="keys">
-        <span @click="hotSearch(key.keyword)" v-for="key in content" :key="key.id">{{key.keyword}}</span>
+        <span v-href="['search_result', {key:key.keyword}]" v-for="key in content" :key="key.id">{{key.keyword}}</span>
       </div>
     </div>
   </div>
@@ -64,16 +64,16 @@
       search(){
         openPage('search_result', {key:this.key})
       },
-      hotSearch(key){
-        openPage('search_result', {key})
+      fetch(){
+        this.$post(URL.hotSearch)
+          .then( res => {
+            console.log(res)
+            this.content = res.content;
+          })
       }
     },
     created(){
-      this.$post(URL.hotSearch)
-        .then( res => {
-          console.log(res)
-          this.content = res.content;
-        })
+      this.fetch();
     },
     components: {
       SearchInput,

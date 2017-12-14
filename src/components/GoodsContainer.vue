@@ -99,6 +99,10 @@
         <span style="font-size:.28rem;">{{item.activity_content}}¥{{item.activity_price}}</span>
         <span>¥{{item.price}}</span>
       </div>
+      <div class="price" v-else-if="type && type == 3">
+        <span style="font-size:.28rem;">¥{{item.market_price}}</span>
+        <span>¥{{item.price}}</span>
+      </div>
     </li>
   </ul>
 </template>
@@ -110,7 +114,7 @@
         required: true
       },
       hidePrice: Boolean,
-      type:String,  //activity_goods专用
+      type:String,  // 1,2:activity_goods专用 3:商品收藏
       time:Object,  //activity_goods专用
       parentData: Object,  // 用于文章后退不刷新父级页面
     },

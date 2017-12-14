@@ -2,8 +2,12 @@
 
 </style>
 <template>
-  <div>
-    <app-msg-comment :msgs="content"></app-msg-comment>
+  <div v-if="content">
+    <app-msg-comment v-if="content.length" :msgs="content"></app-msg-comment>
+    <div v-else class="tip-nothing" style="margin-top:2rem;">
+      <img src="../../assets/img/Tip_nothing.png">
+      <div>您还没有点赞消息</div>
+    </div>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>
@@ -14,7 +18,7 @@
     data () {
       return {
         page:1,
-        content:[],
+        content:null,
       }
     },
     methods: {

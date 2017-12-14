@@ -193,7 +193,7 @@
           <span>{{content.nickname}}</span><br>
           <span>{{content.introduction || '介绍下自己'}}</span>
         </span>
-        <img class="qrcode" src="../../assets/img/qrcode_white.png">
+        <img v-href="'qrcode'" class="qrcode" src="../../assets/img/qrcode_white.png">
       </div>
     </div>
     <div class="orders">
@@ -251,7 +251,7 @@
         </li>
       </ul>
     </div>
-    <div class="spokesman">
+    <div class="spokesman" v-href="'spokesman'">
       <ul class="user-ul" style="margin-top: .1rem;">
         <li class="row">
           <span class="title">我是代言人</span>
@@ -280,21 +280,21 @@
       </ul>
     </div>
     <ul class="user-ul-3">
-      <li class="row">
+      <li class="row" v-href="'account'">
         <span class="title">我的账户</span>
         <img class="row-arrow" src="../../assets/img/direction_right_gray.png">
       </li>
-      <li class="row">
-        <span class="title">我的文章</span>
-        <img class="row-arrow" src="../../assets/img/direction_right_gray.png">
-      </li>
-      <li class="row">
+      <!--<li class="row">-->
+        <!--<span class="title">我的文章</span>-->
+        <!--<img class="row-arrow" src="../../assets/img/direction_right_gray.png">-->
+      <!--</li>-->
+      <li class="row" v-href="['collections', {type:1}]">
         <span class="title">文章收藏</span>
         <img class="row-arrow" src="../../assets/img/direction_right_gray.png">
       </li>
     </ul>
     <ul class="user-ul" style="margin-top:.1rem;">
-      <li class="row">
+      <li class="row" v-href="['collections', {type:2}]">
         <span class="title">商品收藏</span>
         <span class="right">查看全部</span>
       </li>

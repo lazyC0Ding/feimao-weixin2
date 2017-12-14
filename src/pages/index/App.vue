@@ -101,11 +101,11 @@
     <swiper
       :list="banner.list"
       v-model="banner.index"
-      @on-index-change="bannerIndexChange"
       :aspect-ratio="8/15"
       dots-position="center"
       auto
       loop
+      @click.native="clickBanner"
     ></swiper>
     <div class="index-tags">
       <ul :class="{fixed:isIndexTagsFixed}">
@@ -177,8 +177,9 @@
       }
     },
     methods: {
-      bannerIndexChange (index) {
-        this.banner.index = index
+      clickBanner(){
+        const action = this.banner.list[this.banner.index].action;
+        jumpAction(action);
       },
       follow(pid){
         this.$post(URL.attention, {pid})
@@ -245,6 +246,9 @@
       window.addEventListener('scroll', () => {
         this.isIndexTagsFixed = window.scrollY > this.clientWidth * 8 / 15;
       })
+    },
+    mounted(){
+      console.log(this._data);
     },
     components: {
       SearchInput,

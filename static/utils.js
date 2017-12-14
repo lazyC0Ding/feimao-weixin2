@@ -73,6 +73,7 @@ function getPageName() {
   return name;
 }
 
+
 function getSystemType() {
   const u = navigator.userAgent;
   const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;

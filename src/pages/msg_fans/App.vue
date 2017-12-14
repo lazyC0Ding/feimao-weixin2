@@ -1,4 +1,5 @@
 <style type="text/less" lang="less">
+  @import '../../common';
   .fans-ul{
     >li{
       background-color:#fff;
@@ -7,12 +8,16 @@
 </style>
 <template>
   <div>
-    <ul class="fans-ul">
+    <ul v-if="content && content.length" class="fans-ul">
       <li>
 
       </li>
     </ul>
-    <app-permanent type="2"></app-permanent>
+    <div v-else class="tip-nothing" style="margin-top:2rem;">
+      <img src="../../assets/img/Tip_nothing.png">
+      <div>您还没有粉丝消息</div>
+    </div>
+    <app-permanent type="1"></app-permanent>
   </div>
 </template>
 <script>
@@ -21,6 +26,7 @@
     data () {
       return {
         page:1,
+        content:null,
       }
     },
     methods: {
@@ -29,8 +35,9 @@
           .then( res => {
               if(res.errcode == 0) {
                 console.log(res)
+                this.content = res.content;
               }else {
-                  errback(res)
+                errback(res)
               }
           })
       }

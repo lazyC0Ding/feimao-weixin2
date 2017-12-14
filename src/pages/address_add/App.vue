@@ -68,7 +68,7 @@
         <span class="title input">联系电话</span>
         <input v-model="phone" placeholder="请输入联系电话">
       </li>
-      <select-address :province="province" :city="city" :district="district" @updateAddress="updateAddress"></select-address>
+      <!--<select-address :province="province" :city="city" :district="district" @updateAddress="updateAddress"></select-address>-->
       <li class="row-textarea">
         <textarea v-model="address" placeholder="详细地址"></textarea>
       </li>
@@ -85,7 +85,7 @@
 </template>
 <script>
   import AppPermanent from '@c/AppPermanent.vue'
-  import SelectAddress from '@c/SelectAddress.vue'
+//  import SelectAddress from '@c/SelectAddress.vue'
   export default {
     data () {
       return {
@@ -130,7 +130,7 @@
     },
     components: {
       AppPermanent,
-      SelectAddress,
+//      SelectAddress,
     }
   }
 </script>

@@ -82,10 +82,22 @@ function follow_common() {
 // 各种action
 function jumpAction(action) {
   switch (action.action_id) {
+    case '1':
+      break;
+    case '3':
+      history.replaceState(null, '', action.jump + '.html');
+      location.reload();
+      break;
+    case '4':
+      history.replaceState(null, '', action.jump + '.html');
+      location.reload();
+      break;
     default:
       let params = {};
-      for (let i of action.params) {
-        params[i.key] = i.value;
+      if(action.params && action.params.length) {
+        for (let i of action.params) {
+          params[i.key] = i.value;
+        }
       }
       openPage(action.jump, params);
       break;

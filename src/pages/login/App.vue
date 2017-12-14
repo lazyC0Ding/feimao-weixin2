@@ -3,6 +3,7 @@
   html,body{
     height:100%;
     background-color:#fff;
+    overflow:hidden;
   }
   .login-ul{
     margin-top:.6rem;
@@ -53,12 +54,10 @@
       <span>点击登录按钮代表您已同意<em>《肥猫用户协议》</em></span><br>
       <span>未注册的用户将直接注册并登录</span>
     </div>
-    <div class="btn-big" style="margin-top:.6rem;">登录</div>
-    <app-permanent type="2"></app-permanent>
+    <div class="btn-big" style="margin-top:.6rem;" @click="login">登录</div>
   </div>
 </template>
 <script>
-  import AppPermanent from '@c/AppPermanent.vue'
   import SendCode from '@c/SendCode.vue'
   export default {
     data () {
@@ -93,7 +92,6 @@
       document.title = '登录';
     },
     components: {
-      AppPermanent,
       SendCode,
     }
   }

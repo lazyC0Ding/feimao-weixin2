@@ -1,4 +1,5 @@
 <style type="text/less" lang="less">
+  @import '../../common';
   .msg_follow-ul {
     > li {
       margin-top: .2rem;
@@ -51,9 +52,9 @@
   }
 </style>
 <template>
-  <div>
-    <ul class="msg_follow-ul">
-      <li v-for="msg in content">
+  <div v-if="content">
+    <ul v-if="content.length" class="msg_follow-ul">
+      <li v-for="msg in content" v-action="msg.action">
         <span v-if="msg.is_read == 0"></span>
         <img :src="msg.avater">
         <div class="text">
@@ -65,6 +66,10 @@
         </div>
       </li>
     </ul>
+    <div v-else class="tip-nothing" style="margin-top:2rem;">
+      <img src="../../assets/img/Tip_nothing.png">
+      <div>您还没有关注消息</div>
+    </div>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>
@@ -74,7 +79,7 @@
     data () {
       return {
         page: 1,
-        content: []
+        content: null,
       }
     },
     methods: {

@@ -1,5 +1,5 @@
 var ua = navigator.userAgent;
-alert('123');
+alert('456');
 
 if (ua.indexOf('iPhone') > -1) {//苹果手机
   window.onload = function () {
@@ -90,6 +90,8 @@ function toast(msg) {
 function login() {
   const from = getPageName();
   if (is_weixn()) {
+    // const url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx739a1b97ce756bcd&redirect_uri=http%3A%2F%2Ffeimao-weixin.zertone2.com%2F&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
+    // location.href = url;
     openPage('setInfo', {from})
   } else {
     openPage('login', {from});

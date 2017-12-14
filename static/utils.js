@@ -47,12 +47,8 @@ function openPage(url, paramsJson) {
   if(url.startsWith('order_confirm')){
     $vue.$setPage('order_confirm', null, true);
   }
-  url = url.endsWith('.html')
-    ? url
-    : url + '.html';
-  const paramsStr = paramsJson
-    ? '?' + formatParams(paramsJson)
-    : '';
+  url = url.endsWith('.html') ? url : url + '.html';
+  const paramsStr = paramsJson ? '?' + formatParams(paramsJson) : '';
   window.location.href = url + paramsStr;
 }
 
@@ -60,12 +56,8 @@ function replacePage(url, paramsJson) {
   if(url.startsWith('order_confirm')){
     $vue.$setPage('order_confirm', null, true);
   }
-  url = url.endsWith('.html')
-    ? url
-    : url + '.html';
-  const paramsStr = paramsJson
-    ? '?' + formatParams(paramsJson)
-    : '';
+  url = url.endsWith('.html') ? url : url + '.html';
+  const paramsStr = paramsJson ? '?' + formatParams(paramsJson) : '';
   location.replace(url + paramsStr);
 }
 

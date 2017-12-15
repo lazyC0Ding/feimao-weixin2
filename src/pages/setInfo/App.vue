@@ -108,14 +108,15 @@
             this.test = JSON.stringify(res);
             console.log(res);
             const is_bind = res.content.is_bind;
-            if(!is_bind || is_bind == '0'){
-              document.title = '完善信息';
-              this.is_bind = '0';
-            }else if(is_bind) {
-              setUser(res.content.customer);
-              setToken(res.content.customer.access_token);
-              replacePage(this.from);
-            }
+            this.is_bind = '0';
+//            if(!is_bind || is_bind == '0'){
+//              document.title = '完善信息';
+//              this.is_bind = '0';
+//            }else if(is_bind) {
+//              setUser(res.content.customer);
+//              setToken(res.content.customer.access_token);
+//              replacePage(this.from);
+//            }
           })
       },
       bind(){

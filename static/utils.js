@@ -153,10 +153,9 @@ function removeToken() {
 }
 
 //md5加密
-function getSign(params) {
-  return md5(encodeURIComponent(formatParams(params)));
+function getSign(json) {
+  return md5(encodeURIComponent(formatParams(json)));
 }
-
 
 function md5(string) {
   function md5_RotateLeft(lValue, iShiftBits) {

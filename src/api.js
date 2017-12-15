@@ -5,13 +5,21 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 // axios.defaults.baseURL = 'http://feimao.zertone1.com/app/';
 axios.defaults.baseURL = 'http://app.feelmao.com/app/';
 
-const getURLSearchParams = function (paramsJson) {
+const getURLSearchParams = function (json) {
   const p = new URLSearchParams();
-  for (let i in paramsJson) {
-    p.append(i, paramsJson[i]);
+  for (let i in json) {
+    p.append(i, json[i]);
   }
   return p;
 };
+
+function UrlToJson(URLSearchParams) {
+  const json = {};
+  for (let i of URLSearchParams){
+    json[i[0]] = i[1];
+  }
+  return json;
+}
 
 const content = 'pinet.FeiMao.2017';
 const t = '3';
@@ -46,9 +54,7 @@ axios.interceptors.request.use(function (config) {
     config.data.append('content', content);
     config.data.append('time', (Date.parse(new Date())) / 1000);
     // config.data.sort();
-    str = decodeURIComponent(config.data.toString());
-    let json = getSearchParams(str);
-    console.log(json);
+    let json = UrlToJson(config.data);
     config.data.append('sign', getSign(json));
     // config.data.append('sign', md5(decodeURIComponent(config.data.toString())));
     config.data.delete('content');

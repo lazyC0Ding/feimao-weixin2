@@ -7,24 +7,29 @@
 <body>
 </body>
 <script>
+  let t = 3;
+  let content = 'pinet.FeiMao.2017';
 
-  let json = {
-    b:'Tas io',
-    c:'汉字汉字',
-    a:3
-  };
+  let a = new URLSearchParams();
+  a.append('t', t);
+  a.append('content', content);
+  a.append('time', (Date.parse(new Date())) / 1000);
+  a.append('nickname', 'tis os');
 
-  let str = formatParams(json);
+  for (let i of a) {
+    console.log(i);
+  }
 
-  encodeStr = encodeURIComponent(str);
-  decodeStr = decodeURIComponent(encodeStr);
+  function toStringForURL(URLSearchParams) {
+    const json = {};
+    for (let i of URLSearchParams){
+      json[i[0]] = i[1];
+    }
+    return json;
+  }
 
-  let json2 = getSearchParams(decodeStr);
+  console.log(toStringForURL(a));
 
-  console.log(json);
-  console.log(json2);
-//  console.log(md5(str));
-//  console.log(getSign(json));
 
   function canJSONParse(str) {
     try{

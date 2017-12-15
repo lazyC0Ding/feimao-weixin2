@@ -9,6 +9,7 @@ const formatNumber = n => {
 
 function formatParams(json) {
   const keys = [];
+  json = Object.assign({}, json);
   for (let i in json) {
     json[i] = typeof json[i] === 'object' ? JSON.stringify(json[i]) : json[i];
     keys.push(i + '=' + json[i]);

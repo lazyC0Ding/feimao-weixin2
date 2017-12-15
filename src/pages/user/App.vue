@@ -240,7 +240,8 @@
             <dd>待评论</dd>
           </dl>
         </li>
-        <li v-href="'refund'">
+        <!--<li v-href="'refund'">-->
+        <li @click="test">
           <dl>
             <dt>
               <img src="../../assets/img/order_tuikuan.png">
@@ -340,6 +341,9 @@
               errback(res);
             }
           })
+      },
+      test(){
+        removeToken();
       }
     },
     created(){

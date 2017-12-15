@@ -104,10 +104,10 @@
           type:this.params.type,
           openid:this.wxData.openid,
           unionid:this.wxData.unionid,
-          nickname:this.wxData.nickname,
+//          nickname:this.wxData.nickname,
+          nickname:'电话电话',
           headimgurl:this.wxData.headimgurl,
         };
-        console.log(params);
         this.$post(URL.oauthLogin, params)
           .then(res => {
             this.test2 = JSON.stringify(res);

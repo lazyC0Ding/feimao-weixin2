@@ -48,6 +48,7 @@ axios.interceptors.request.use(function (config) {
     // config.data.sort();
     str = decodeURIComponent(config.data.toString());
     let json = getSearchParams(str);
+    console.log('json:' + json);
     config.data.append('sign', getSign(json));
     // config.data.append('sign', md5(decodeURIComponent(config.data.toString())));
     config.data.delete('content');

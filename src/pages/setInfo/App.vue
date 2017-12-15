@@ -97,7 +97,15 @@
           })
       },
       oauthLogin(wxData){
-        this.$post(URL.oauthLogin, Object.assign(wxData, this.params))
+        const params = {
+          oauth:this.params.oauth,
+          type:this.params.type,
+          openid:wxData.openid,
+          unionid:wxData.unionid,
+          nickname:wxData.nickname,
+          headimgurl:wxData.headimgurl,
+        };
+        this.$post(URL.oauthLogin, params)
           .then(res => {
             this.test = JSON.stringify(res);
           })

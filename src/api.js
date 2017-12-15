@@ -45,8 +45,11 @@ axios.interceptors.request.use(function (config) {
     config.data.append('t', t);
     config.data.append('content', content);
     config.data.append('time', (Date.parse(new Date())) / 1000);
-    config.data.sort();
-    config.data.append('sign', md5(decodeURIComponent(config.data.toString())));
+    // config.data.sort();
+    str = decodeURIComponent(config.data.toString());
+    let json = getSearchParams(str);
+    config.data.append('sign', getSign(json));
+    // config.data.append('sign', md5(decodeURIComponent(config.data.toString())));
     config.data.delete('content');
     config.data.append('access_token', token);
 

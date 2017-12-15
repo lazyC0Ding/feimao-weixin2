@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>Title</title>
 </head>
 <body>
 
@@ -11,10 +11,14 @@
   const url = 'http://feimao-weixin.zertone2.com/';
   console.log(encodeURIComponent(url))
 
-  let a = new URLSearchParams();
-  a.append('t', 123);
-  a.append('content', 456);
-  a.append('time', (Date.parse(new Date())) / 1000);
-  console.log(a.keys());
+  const json = {
+    "message": "成功",
+    "errcode": "0",
+    "content": {
+      "is_bind": "0",
+    }
+  };
+
+  console.log(JSON.stringify(json));
 </script>
 </html>

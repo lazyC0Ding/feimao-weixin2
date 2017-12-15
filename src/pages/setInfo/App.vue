@@ -48,7 +48,7 @@
 </style>
 <template>
   <div>
-    <template v-if="is_bind === 0">
+    <template v-if="is_bind == 0">
       <div class="tip">为了体验肥猫完整服务请绑定您的手机号码</div>
       <ul class="login-ul">
         <li>
@@ -90,10 +90,7 @@
       getOauthInfo(){
         this.$post(URL.getOauthInfo, Object.assign({code: this.wxCode}, this.params))
           .then(res => {
-            const wxData = res.content;
-            alert(JSON.stringify(wxData));
-            this.wxData = wxData;
-            this.oauthLogin(wxData);
+            this.oauthLogin(res.content);
           })
       },
       oauthLogin(wxData){
@@ -108,6 +105,12 @@
         this.$post(URL.oauthLogin, params)
           .then(res => {
             this.test = JSON.stringify(res);
+            const is_bind = res.content.is_bind;
+            if(!is_bind || is_bind == '0'){
+              this.is_bind = '0';
+            }else if(is_bind) {
+              replacePage(this.from);
+            }
           })
       },
       bind(){
@@ -135,6 +138,7 @@
             if (res.errcode == 0) {
               setUser(res.content);
               setToken(res.content.access_token);
+              replacePage(this.from);
             } else {
 
             }

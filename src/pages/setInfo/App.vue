@@ -93,7 +93,7 @@
             const wxData = res.content;
             alert(JSON.stringify(wxData));
             this.wxData = wxData;
-            this.oauthLogin();
+            this.oauthLogin(wxData);
           })
       },
       oauthLogin(wxData){

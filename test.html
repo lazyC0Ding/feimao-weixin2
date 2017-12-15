@@ -10,5 +10,11 @@
 <script>
   const url = 'http://feimao-weixin.zertone2.com/';
   console.log(encodeURIComponent(url))
+
+  let a = new URLSearchParams();
+  a.append('t', 123);
+  a.append('content', 456);
+  a.append('time', (Date.parse(new Date())) / 1000);
+  console.log(a.keys());
 </script>
 </html>

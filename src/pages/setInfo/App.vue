@@ -1,48 +1,48 @@
 <style type="text/less" lang="less">
   @import '../../common';
 
-  html,body{
-    height:100%;
-    background-color:#fff;
-    overflow:hidden;
+  html, body {
+    height: 100%;
+    background-color: #fff;
+    overflow: hidden;
   }
 
-  .tip{
-    margin-top:.68rem;
-    font-size:.28rem;
-    text-align:center;
+  .tip {
+    margin-top: .68rem;
+    font-size: .28rem;
+    text-align: center;
   }
 
-  .login-ul{
-    margin-top:.72rem;
-    >li{
-      margin:0 .45rem;
-      padding-left:.24rem;
-      height:1rem;
-      line-height:1rem;
-      font-size:0;
+  .login-ul {
+    margin-top: .72rem;
+    > li {
+      margin: 0 .45rem;
+      padding-left: .24rem;
+      height: 1rem;
+      line-height: 1rem;
+      font-size: 0;
       .border-bottom-1px;
-      >img{
-        margin-right:.32rem;
+      > img {
+        margin-right: .32rem;
         vertical-align: middle;
       }
-      >input{
+      > input {
         vertical-align: middle;
-        font-size:.3rem;
-        &::placeholder{
-          color:@light;
+        font-size: .3rem;
+        &::placeholder {
+          color: @light;
         }
       }
     }
   }
 
-  .text{
-    margin-top:1.12rem;
-    font-size:.2rem;
-    color:@light;
-    text-align:center;
-    em{
-      color:#478db7;
+  .text {
+    margin-top: 1.12rem;
+    font-size: .2rem;
+    color: @light;
+    text-align: center;
+    em {
+      color: #478db7;
     }
   }
 </style>
@@ -65,6 +65,7 @@
       <div class="btn-big" style="margin-top:.6rem;" @click="bind">完成绑定</div>
     </template>
     <div class="tip" v-if="!is_bind">正在跳转中...</div>
+    <div>{{test}}</div>
   </div>
 </template>
 <script>
@@ -72,59 +73,61 @@
   export default {
     data () {
       return {
-        phone:'',
-        code:'',
-        wxCode:'',
-        from:'',
-        is_bind:'',
-        params:{
-          oauth:'weixin',
-          type:5,
+        phone: '',
+        code: '',
+        wxCode: '',
+        from: '',
+        is_bind: '',
+        params: {
+          oauth: 'weixin',
+          type: 5,
         },
-        wxData:null,
+        wxData: null,
+        test:'',
       }
     },
     methods: {
       getOauthInfo(){
-        this.$post(URL.getOauthInfo, Object.assign({code:this.wxCode}, this.params))
-          .then( res => {
-          const wxData = res.content;
-          this.wxData = wxData;
-          return this.$post(URL.oauthLogin, Object.assign(wxData, this.params))
-        }).then( res => {
-          alert(JSON.stringify(res));
-
-        })
+        this.$post(URL.getOauthInfo, Object.assign({code: this.wxCode}, this.params))
+          .then(res => {
+            const wxData = res.content;
+            alert(JSON.stringify(wxData));
+            this.wxData = wxData;
+            this.oauthLogin();
+          })
       },
       oauthLogin(wxData){
-        this.$post(URL.oauthLogin, )
+        this.$post(URL.oauthLogin, Object.assign(wxData, this.params))
+          .then(res => {
+            this.test = JSON.stringify(res);
+          })
       },
       bind(){
-        if(!this.phone.trim()){
+        if (!this.phone.trim()) {
           toast('请输入手机号');
           return;
         }
-        if(!this.code.trim()){
+        if (!this.code.trim()) {
           toast('请输入验证码');
           return;
         }
         let params = {
-          oauth:this.params.oauth,
-          phone:this.phone,
-          verify_code:this.code,
-          type:this.params.type
+          oauth: this.params.oauth,
+          phone: this.phone,
+          verify_code: this.code,
+          type: this.params.type
         };
         params = Object.assign(params, this.wxData);
         const pid = getSession('customer_id');
-        if(pid){
+        if (pid) {
           params.pid = pid;
         }
         this.$post(URL.oauthRegister, params)
-          .then (res => {
-            if(res.errcode == 0) {
+          .then(res => {
+            if (res.errcode == 0) {
               setUser(res.content);
               setToken(res.content.access_token);
-            }else{
+            } else {
 
             }
           })
@@ -133,7 +136,7 @@
     created(){
       document.title = '肥猫';
       const search = getSearchParams(location.search);
-      if(search) {
+      if (search) {
         const {code, state} = search;
         this.wxCode = code;
         this.from = state;

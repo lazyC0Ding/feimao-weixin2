@@ -107,6 +107,7 @@
           nickname:this.wxData.nickname,
           headimgurl:this.wxData.headimgurl,
         };
+        console.log(params);
         this.$post(URL.oauthLogin, params)
           .then(res => {
             this.test2 = JSON.stringify(res);

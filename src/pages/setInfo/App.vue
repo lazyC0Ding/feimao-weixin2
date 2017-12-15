@@ -48,7 +48,7 @@
 </style>
 <template>
   <div>
-    <template v-if="is_bind == 0">
+    <template v-if="needBind">
       <div class="tip">为了体验肥猫完整服务请绑定您的手机号码</div>
       <ul class="login-ul">
         <li>
@@ -64,8 +64,8 @@
       <div class="text">点击完成绑定按钮代表您已同意<em>《肥猫用户协议》</em></div>
       <div class="btn-big" style="margin-top:.6rem;" @click="bind">完成绑定</div>
     </template>
-    <div class="tip" v-if="is_bind == -1" >正在跳转中...</div>
-    <!--<div>{{test}}</div>-->
+    <div class="tip" v-if="!needBind" >正在跳转中...</div>
+    <div>{{test || '测试数据'}}</div>
   </div>
 </template>
 <script>
@@ -77,7 +77,7 @@
         code: '',
         wxCode: '',
         from: '',
-        is_bind: -1,
+        needBind:false,
         params: {
           oauth: 'weixin',
           type: 5,
@@ -107,16 +107,18 @@
           .then(res => {
             this.test = JSON.stringify(res);
             console.log(res);
-            const is_bind = res.content.is_bind;
-            this.is_bind = '0';
-//            if(!is_bind || is_bind == '0'){
-//              document.title = '完善信息';
-//              this.is_bind = '0';
-//            }else if(is_bind) {
-//              setUser(res.content.customer);
-//              setToken(res.content.customer.access_token);
-//              replacePage(this.from);
-//            }
+            if(res.errcode == 0) {
+              if(res.content.is_bind){
+                setUser(res.content.customer);
+                setToken(res.content.customer.access_token);
+                replacePage(this.from);
+              }else {
+                document.title = '完善信息';
+                this.needBind = true;
+              }
+            }else{
+              errback(res);
+            }
           })
       },
       bind(){

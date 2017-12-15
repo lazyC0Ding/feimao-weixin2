@@ -113,7 +113,7 @@
             }else if(is_bind) {
               setUser(res.content);
               setToken(res.content.access_token);
-              replacePage(this.from);
+//              replacePage(this.from);
             }
           })
       },

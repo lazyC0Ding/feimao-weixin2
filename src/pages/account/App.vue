@@ -4,7 +4,6 @@
   .account-top {
     height: 4.8rem;
     text-align: center;
-    background: url(../../assets/img/account_bj.png);
     background-size: 100% 100%;
     overflow: hidden;
     > .top-1 {
@@ -57,7 +56,7 @@
 </style>
 <template>
   <div v-if="content">
-    <div class="account-top">
+    <div class="account-top" :style="{backgroundImage:'url(./static/img/account_bj.png)'}">
       <div class="top-1">总余额(元)</div>
       <div class="top-2">{{content.total_account}}</div>
       <div class="top-3">

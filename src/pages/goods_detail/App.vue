@@ -594,6 +594,18 @@
         cantFind:false,
       }
     },
+    watch:{
+      content(n){
+        if(n) {
+          this.$nextTick( () => {
+            this.before_mai = this.$refs.before_mai;
+            window.addEventListener('scroll', () => {
+              this.isTagsFixed = window.scrollY > this.before_mai.offsetTop + this.before_mai.clientHeight;
+            });
+          })
+        }
+      }
+    },
     computed:{
       ifStarted(){
         return this.now >= Number(this.activity.date_start);
@@ -718,12 +730,6 @@
         setSession('customer_id', customer_id);
       }
       this.fetch();
-      window.addEventListener('scroll', () => {
-        this.isTagsFixed = window.scrollY > this.before_mai.offsetTop + this.before_mai.clientHeight;
-      });
-    },
-    mounted(){
-      this.before_mai = this.$refs.before_mai;
     },
     components: {
       AppPermanent,

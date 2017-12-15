@@ -185,9 +185,9 @@
 
 </style>
 <template>
-  <div style="padding-bottom:1rem;">
+  <div style="padding-bottom:1rem;" v-if="content">
     <div class="user-top">
-      <div v-if="content" class="info">
+      <div class="info">
         <img v-href="['user_info', content]" class="avatar" :src="content.avater | avatar">
         <span v-href="['user_info', content]" class="text">
           <span>{{content.nickname}}</span><br>
@@ -208,7 +208,7 @@
           <dl>
             <dt>
               <img src="../../assets/img/order_fukuan.png">
-              <span class="unread-count" v-if="order_count && order_count.wait_pay_count > 0">{{order_count.wait_pay_count}}</span>
+              <span class="unread-count" v-if="content.order_count.wait_pay_count > 0">{{content.order_count.wait_pay_count}}</span>
             </dt>
             <dd>待付款</dd>
           </dl>
@@ -217,7 +217,7 @@
           <dl>
             <dt>
               <img src="../../assets/img/order_fahuo.png">
-              <span class="unread-count" v-if="order_count && order_count.wait_delivery_count > 0">{{order_count.wait_delivery_count}}</span>
+              <span class="unread-count" v-if="content.order_count.wait_delivery_count > 0">{{content.order_count.wait_delivery_count}}</span>
             </dt>
             <dd>待发货</dd>
           </dl>
@@ -226,7 +226,7 @@
           <dl>
             <dt>
               <img src="../../assets/img/order_shouhuo.png">
-              <span class="unread-count" v-if="order_count && order_count.wait_receive_count > 0">{{order_count.wait_receive_count}}</span>
+              <span class="unread-count" v-if="content.order_count.wait_receive_count > 0">{{content.order_count.wait_receive_count}}</span>
             </dt>
             <dd>待收货</dd>
           </dl>
@@ -235,7 +235,7 @@
           <dl>
             <dt>
               <img src="../../assets/img/order_pingjia.png">
-              <span class="unread-count" v-if="order_count && order_count.wait_comment_count > 0">{{order_count.wait_comment_count}}</span>
+              <span class="unread-count" v-if="content.order_count.wait_comment_count > 0">{{content.order_count.wait_comment_count}}</span>
             </dt>
             <dd>待评论</dd>
           </dl>
@@ -244,7 +244,7 @@
           <dl>
             <dt>
               <img src="../../assets/img/order_tuikuan.png">
-              <span class="unread-count" v-if="order_count && order_count.wait_refund_count > 0">{{order_count.wait_refund_count}}</span>
+              <span class="unread-count" v-if="content.order_count.wait_refund_count > 0">{{content.order_count.wait_refund_count}}</span>
             </dt>
             <dd>退货/退款</dd>
           </dl>
@@ -261,19 +261,19 @@
       <ul class="spokesman-info">
         <li>
           <dl>
-            <dt>{{spokesman ? spokesman.commission : '0.00'}}</dt>
+            <dt>{{content.spokesman.commission || '0.00'}}</dt>
             <dd>奖励金</dd>
           </dl>
         </li>
         <li>
           <dl>
-            <dt>{{spokesman ? spokesman.sale_amount : '0.00'}}</dt>
+            <dt>{{content.spokesman.sale_amount || '0.00'}}</dt>
             <dd>销售额</dd>
           </dl>
         </li>
         <li>
           <dl>
-            <dt>{{spokesman ? spokesman.fans_count : 0}}</dt>
+            <dt>{{content.spokesman.fans_count || 0}}</dt>
             <dd>粉丝数</dd>
           </dl>
         </li>
@@ -300,7 +300,7 @@
       </li>
     </ul>
     <ul class="collections">
-      <li v-for="item in collections">
+      <li v-for="item in content.collections">
         <img :src="item.cover" v-href="['goods_detail', {goods_id:item.goods_id}]">
         <div class="name">{{item.name}}</div>
         <div class="price">{{item.price}}</div>
@@ -327,17 +327,6 @@
     data () {
       return {
         content: null,
-      }
-    },
-    computed:{
-      spokesman(){
-        return this.content ? this.content.spokesman : null;
-      },
-      collections(){
-        return this.content ? this.content.collections : null;
-      },
-      order_count(){
-        return this.content ? this.content.order_count : null;
       }
     },
     methods: {

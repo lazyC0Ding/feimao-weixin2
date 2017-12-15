@@ -19,6 +19,15 @@
     }
   };
 
-  console.log(JSON.stringify(json));
+  function replacePage(url, paramsJson) {
+    if(url.startsWith('order_confirm')){
+      $vue.$setPage('order_confirm', null, true);
+    }
+    url = url.endsWith('.html') ? url : url + '.html';
+    const paramsStr = paramsJson ? '?' + formatParams(paramsJson) : '';
+    location.replace(url + paramsStr);
+  }
+
+  replacePage('index1' || 'index2');
 </script>
 </html>

@@ -135,10 +135,11 @@
         }
         this.$post(URL.oauthRegister, params)
           .then(res => {
+            console.log(res)
             if (res.errcode == 0) {
               setUser(res.content);
               setToken(res.content.access_token);
-              replacePage(this.from);
+              replacePage(this.from || 'index');
             } else {
 
             }

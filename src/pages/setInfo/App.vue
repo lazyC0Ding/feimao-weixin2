@@ -111,9 +111,9 @@
             if(!is_bind || is_bind == '0'){
               this.is_bind = '0';
             }else if(is_bind) {
-              setUser(res.content);
-              setToken(res.content.access_token);
-//              replacePage(this.from);
+              setUser(res.content.customer);
+              setToken(res.content.customer.access_token);
+              replacePage(this.from);
             }
           })
       },

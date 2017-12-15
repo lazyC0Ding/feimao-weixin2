@@ -90,17 +90,18 @@
       getOauthInfo(){
         this.$post(URL.getOauthInfo, Object.assign({code: this.wxCode}, this.params))
           .then(res => {
-            this.oauthLogin(res.content);
+            this.wxData = res.content;
+            this.oauthLogin();
           })
       },
-      oauthLogin(wxData){
+      oauthLogin(){
         const params = {
           oauth:this.params.oauth,
           type:this.params.type,
-          openid:wxData.openid,
-          unionid:wxData.unionid,
-          nickname:wxData.nickname,
-          headimgurl:wxData.headimgurl,
+          openid:this.wxData.openid,
+          unionid:this.wxData.unionid,
+          nickname:this.wxData.nickname,
+          headimgurl:this.wxData.headimgurl,
         };
         this.$post(URL.oauthLogin, params)
           .then(res => {
@@ -122,13 +123,17 @@
           toast('请输入验证码');
           return;
         }
-        let params = {
-          oauth: this.params.oauth,
+        const params = {
+          oauth:this.params.oauth,
+          type:this.params.type,
           phone: this.phone,
           verify_code: this.code,
-          type: this.params.type
+          openid:this.wxData.openid,
+          unionid:this.wxData.unionid,
+          nickname:this.wxData.nickname,
+          headimgurl:this.wxData.headimgurl,
         };
-        params = Object.assign(params, this.wxData);
+
         const pid = getSession('customer_id');
         if (pid) {
           params.pid = pid;

@@ -9,19 +9,46 @@
 <script>
 
   let json = {
-    content: "pinet.FeiMao.2017",
-    headimgurl: "http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eozuzZRhiaP4Xrtb3JbndwuE8HsxVbBGYzZah3HRicictcYUZg2lictczM3UGIs6LhNGfWibZiaAcAp7TOw/0",
-    nickname: "Troye+Sivan",
-    oauth: "weixin",
-    openid: "oPc3BwW-yPoBXM2IlBKVyKRA-Dgk",
-    t: 3,
-    time: 1513322858,
-    type: 5,
-    unionid: "oigmdv7kx49iQrkmN9pESpI7pON0",
+    b:'Tas io',
+    c:'汉字汉字',
+    a:3
   };
 
-  const sign = getSign(json);
-  console.log(sign);
+  let str = formatParams(json);
+
+  encodeStr = encodeURIComponent(str);
+  decodeStr = decodeURIComponent(encodeStr);
+
+  let json2 = getSearchParams(decodeStr);
+
+  console.log(json);
+  console.log(json2);
+//  console.log(md5(str));
+//  console.log(getSign(json));
+
+  function canJSONParse(str) {
+    try{
+      JSON.parse(str);
+    }catch(e){
+      return false
+    }
+    return true
+  }
+
+  function getSearchParams(str) {
+    if(!str) return;
+
+    str = str.startsWith('?') ? str.slice(1) : str;
+    const params = decodeURI(str).split('&');
+
+    let entry;
+    const json = {};
+    for (let i=0, l=params.length; i<l; i++) {
+      entry = params[i].split('=');
+      json[entry[0]] = canJSONParse(entry[1]) ? JSON.parse(entry[1]) : entry[1];
+    }
+    return json;
+  }
 
   function getSign(params) {
     return md5(formatParams(params));

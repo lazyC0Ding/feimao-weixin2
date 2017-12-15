@@ -2,15 +2,29 @@
 
 </style>
 <template>
-    <div>
+  <div>
 
-    </div>
+  </div>
 </template>
 <script>
-    export default {
-        data(){
-            return {}
-        },
-        components: {}
-    }
+  export default {
+    data(){
+      return {
+
+      }
+    },
+    methods:{
+      doScroll(){
+        if (document.body.scrollTop + window.innerHeight >= document.body.scrollHeight) {
+          if (!this.busy) {
+            this.loadMore();
+          }
+        }
+      }
+    },
+    mounted(){
+      window.addEventListener('scroll', this.doScroll);
+    },
+    components: {}
+  }
 </script>

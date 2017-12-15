@@ -208,7 +208,7 @@
           <dl>
             <dt>
               <img src="../../assets/img/order_fukuan.png">
-              <span class="unread-count" v-if="content.order_count.wait_pay_count > 0">{{content.order_count.wait_pay_count}}</span>
+              <span class="unread-count" v-if="content.order_count && content.order_count.wait_pay_count > 0">{{content.order_count.wait_pay_count}}</span>
             </dt>
             <dd>待付款</dd>
           </dl>
@@ -217,7 +217,7 @@
           <dl>
             <dt>
               <img src="../../assets/img/order_fahuo.png">
-              <span class="unread-count" v-if="content.order_count.wait_delivery_count > 0">{{content.order_count.wait_delivery_count}}</span>
+              <span class="unread-count" v-if="content.order_count && content.order_count.wait_delivery_count > 0">{{content.order_count.wait_delivery_count}}</span>
             </dt>
             <dd>待发货</dd>
           </dl>
@@ -226,7 +226,7 @@
           <dl>
             <dt>
               <img src="../../assets/img/order_shouhuo.png">
-              <span class="unread-count" v-if="content.order_count.wait_receive_count > 0">{{content.order_count.wait_receive_count}}</span>
+              <span class="unread-count" v-if="content.order_count && content.order_count.wait_receive_count > 0">{{content.order_count.wait_receive_count}}</span>
             </dt>
             <dd>待收货</dd>
           </dl>
@@ -235,7 +235,7 @@
           <dl>
             <dt>
               <img src="../../assets/img/order_pingjia.png">
-              <span class="unread-count" v-if="content.order_count.wait_comment_count > 0">{{content.order_count.wait_comment_count}}</span>
+              <span class="unread-count" v-if="content.order_count && content.order_count.wait_comment_count > 0">{{content.order_count.wait_comment_count}}</span>
             </dt>
             <dd>待评论</dd>
           </dl>
@@ -245,7 +245,7 @@
           <dl>
             <dt>
               <img src="../../assets/img/order_tuikuan.png">
-              <span class="unread-count" v-if="content.order_count.wait_refund_count > 0">{{content.order_count.wait_refund_count}}</span>
+              <span class="unread-count" v-if="content.order_count && content.order_count.wait_refund_count > 0">{{content.order_count.wait_refund_count}}</span>
             </dt>
             <dd>退货/退款</dd>
           </dl>

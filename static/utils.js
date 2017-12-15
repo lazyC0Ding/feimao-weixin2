@@ -1,12 +1,18 @@
-function getSign(params) {
-  return md5(formatParams(params));
-}
-
 const formatNumber = n => {
   n = n.toString();
   return n[1] ? n : '0' + n
 };
 
+function canJSONParse(str) {
+  try{
+    JSON.parse(str);
+  }catch(e){
+    return false
+  }
+  return true
+}
+
+// json => location.search
 function formatParams(json) {
   const keys = [];
   json = Object.assign({}, json);
@@ -18,16 +24,8 @@ function formatParams(json) {
   return keys.sort().join('&');
 }
 
-function canJSONParse(str) {
-  try{
-    JSON.parse(str);
-  }catch(e){
-    return false
-  }
-  return true
-}
 
-// 获取页面间传递的参数 str = location.search
+// 获取页面间传递的参数 location.search => json
 function getSearchParams(str) {
   if(!str) return;
 
@@ -155,6 +153,11 @@ function removeToken() {
 }
 
 //md5加密
+function getSign(params) {
+  return md5(encodeURIComponent(formatParams(params)));
+}
+
+
 function md5(string) {
   function md5_RotateLeft(lValue, iShiftBits) {
     return (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits));

@@ -104,8 +104,7 @@
           type:this.params.type,
           openid:this.wxData.openid,
           unionid:this.wxData.unionid,
-//          nickname:this.wxData.nickname,
-          nickname:'电话电话',
+          nickname:this.wxData.nickname,
           headimgurl:this.wxData.headimgurl,
         };
         this.$post(URL.oauthLogin, params)

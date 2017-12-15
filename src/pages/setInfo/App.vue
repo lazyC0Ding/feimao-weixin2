@@ -88,7 +88,6 @@
       getOauthInfo(){
         this.$post(URL.getOauthInfo, Object.assign({code:this.wxCode}, this.params))
           .then( res => {
-            alert(123);
           const wxData = res.content;
           this.wxData = wxData;
           return this.$post(URL.oauthLogin, Object.assign(wxData, this.params))
@@ -96,6 +95,9 @@
           alert(JSON.stringify(res));
 
         })
+      },
+      oauthLogin(wxData){
+        this.$post(URL.oauthLogin, )
       },
       bind(){
         if(!this.phone.trim()){

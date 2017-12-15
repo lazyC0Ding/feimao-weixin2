@@ -64,7 +64,7 @@
       <div class="text">点击完成绑定按钮代表您已同意<em>《肥猫用户协议》</em></div>
       <div class="btn-big" style="margin-top:.6rem;" @click="bind">完成绑定</div>
     </template>
-    <div class="tip" v-if="!is_bind">正在跳转中...</div>
+    <div class="tip" v-if="is_bind == -1" >正在跳转中...</div>
     <!--<div>{{test}}</div>-->
   </div>
 </template>
@@ -77,7 +77,7 @@
         code: '',
         wxCode: '',
         from: '',
-        is_bind: '',
+        is_bind: -1,
         params: {
           oauth: 'weixin',
           type: 5,
@@ -106,10 +106,13 @@
         this.$post(URL.oauthLogin, params)
           .then(res => {
             this.test = JSON.stringify(res);
+            console.log(res);
             const is_bind = res.content.is_bind;
             if(!is_bind || is_bind == '0'){
               this.is_bind = '0';
             }else if(is_bind) {
+              setUser(res.content);
+              setToken(res.content.access_token);
               replacePage(this.from);
             }
           })

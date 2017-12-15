@@ -65,7 +65,7 @@
       <div class="btn-big" style="margin-top:.6rem;" @click="bind">完成绑定</div>
     </template>
     <div class="tip" v-if="!is_bind">正在跳转中...</div>
-    <div>{{test}}</div>
+    <!--<div>{{test}}</div>-->
   </div>
 </template>
 <script>

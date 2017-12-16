@@ -96,7 +96,7 @@
 <template>
   <div>
     <ul class="user_info-ul" v-show="!ifShowOthers">
-      <li class="row-avatar">
+      <li class="row-avatar" @click="updateAvatar">
         <span class="title">头像</span>
         <img class="row-avatar-arrow" src="../../assets/img/direction_right_black.png">
         <img class="avatar" :src="content.avater | avatar">
@@ -205,6 +205,18 @@
         this.title = '个人简介';
         this.update.introduction = this.content.introduction || '';
         this.show.introduction = true;
+      },
+      updateAvatar(){
+        wx.chooseImage({
+          count: 1, // 默认9
+          sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+          sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+          success: function (res) {
+            var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+            console.log(localIds);
+            alert(localIds);
+          }
+        });
       },
       updateNickname(){
         if(!this.update.nickname.trim()){

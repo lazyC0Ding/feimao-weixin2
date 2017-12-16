@@ -64,4 +64,5 @@ const URL = {
   oauthLogin:'user/oauthLogin',
   oauthRegister:'user/oauthRegister',
   getArticles:'community/getArticles',
+  getWeixinInfo:'init/getWeixinInfo',
 };

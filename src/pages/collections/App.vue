@@ -22,7 +22,7 @@
       <app-articles v-if="type==1" :parentData="_data" :articles="display"></app-articles>
       <goods-container v-if="type==2" :parentData="_data" :goods="display" type="3"></goods-container>
     </template>
-    <div v-if="cantFind" class="tip-nothing" style="margin-top:2rem;">
+    <div v-if="!content.length" class="tip-nothing" style="margin-top:2rem;">
       <img src="../../assets/img/Tip_nothing.png">
       <div>暂无收藏内容</div>
     </div>
@@ -76,9 +76,6 @@
       }
     },
     methods: {
-      search(){
-
-      },
       cancelSearch(){
         this.key = '';
       },
@@ -91,7 +88,6 @@
               this.$setPage();
             } else {
               errback(res);
-              this.cantFind = true;
             }
           })
       },

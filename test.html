@@ -7,10 +7,9 @@
 <body>
 </body>
 <script>
-  let a = [1, 2, 3, 4, 5, 6];
-  let b = [7, 8, 9];
-
-  b.push(...a);
-  console.log(b)
+  let url = location.href;
+  const i = url.indexOf('#');
+  url = url.slice(0, i);
+  console.log(url);
 </script>
 </html>

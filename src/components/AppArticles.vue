@@ -113,7 +113,7 @@
         <span class="button" @click="follow(article, article.customer_id)">{{ article.is_attention == 0 ? '关注TA' : '已关注'}}</span>
         <span class="follows">{{article.attention_count}}人关注</span>
       </div>
-      <div v-ratio-img="article.cover"></div>
+      <div v-ratio-img="article.cover" @click="showDetail(article.article_id)"></div>
       <div class="text">
         <div @click="showDetail(article)" class="title">{{article.title}}</div>
         <div @click="showDetail(article)" class="mini_content">{{article.mini_content}}</div>

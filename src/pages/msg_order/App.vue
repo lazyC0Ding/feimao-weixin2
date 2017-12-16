@@ -1,66 +1,67 @@
 <style type="text/less" lang="less">
   @import '../../common';
-  .msg_order-ul{
-    >li{
-      margin-top:.2rem;
-      background-color:#fff;
-      >.state{
-        height:.8rem;
-        line-height:.8rem;
-        overflow:hidden;
-        padding:0 .24rem 0 .2rem;
+
+  .msg_order-ul {
+    > li {
+      margin-top: .2rem;
+      background-color: #fff;
+      > .state {
+        height: .8rem;
+        line-height: .8rem;
+        overflow: hidden;
+        padding: 0 .24rem 0 .2rem;
         .border-bottom-1px;
-        >span{
-          &:first-child{
-            margin-right:.1rem;
-            width:.2rem;
-            height:.2rem;
+        > span {
+          &:first-child {
+            margin-right: .1rem;
+            width: .2rem;
+            height: .2rem;
             background-color: #D0021B;
             border-radius: 50%;
           }
           &:nth-child(2) {
-            font-size:.28rem;
+            font-size: .28rem;
           }
-          &:last-child{
-            float:right;
-            color:@light;
-            font-size:.24rem;
+          &:last-child {
+            float: right;
+            color: @light;
+            font-size: .24rem;
           }
         }
       }
-      >.content{
-        height:2.2rem;
-        padding:0 .24rem 0 .2rem;
-        >img{
-          float:left;
-          width:1.8rem;
-          height:1.8rem;
-          margin-top:.2rem;
-          margin-right:.18rem;
+      > .content {
+        height: 2.2rem;
+        padding: 0 .24rem 0 .2rem;
+        > img {
+          float: left;
+          width: 1.8rem;
+          height: 1.8rem;
+          margin-top: .2rem;
+          margin-right: .18rem;
         }
-        >div{
-          overflow:hidden;
-          >div{
-            &.div-1{
-              height:.7rem;
-              font-size:.28rem;
-              line-height:.36rem;
-              margin-top:.28rem;
+        > div {
+          overflow: hidden;
+          > div {
+            &.div-1 {
+              height: .7rem;
+              font-size: .28rem;
+              line-height: .36rem;
+              margin-top: .28rem;
               text-overflow: ellipsis;
               overflow: hidden;
               display: -webkit-box;
               -webkit-line-clamp: 2;
               -webkit-box-orient: vertical;
             }
-            &.div-2{
-              font-size:.24rem;
+            &.div-2 {
+              font-size: .24rem;
               color: @light;
-              margin-top:.18rem;
+              margin-top: .18rem;
             }
-            &.div-3{
-              font-size:.24rem;
+            &.div-3 {
+              font-size: .24rem;
               color: @light;
-              margin-top:.15rem;
+              margin-top: .15rem;
             }
           }
         }
@@ -99,7 +100,7 @@
   export default {
     data () {
       return {
-        content:null,
+        content: null,
         page: 1
       }
     },
@@ -110,8 +111,8 @@
             if (res.errcode == 0) {
               console.log(res)
               this.content = res.content;
-            }else {
-                errback(res)
+            } else {
+              errback(res)
             }
           })
       }

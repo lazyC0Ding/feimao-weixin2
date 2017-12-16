@@ -3,7 +3,10 @@
 </style>
 <template>
   <div>
-
+    <div>scrollTop:{{scrollTop}}</div>
+    <div>clientHeight:{{clientHeight}}</div>
+    <div>scrollHeight:{{scrollHeight}}</div>
+    <div>$_ifListen:{{$_ifListen}}</div>
   </div>
 </template>
 <script>
@@ -27,10 +30,15 @@
       return {
         busy: false,
         hasMore: true,
+        scrollTop:'',
+        clientHeight:'',
+        scrollHeight:'',
+        $_ifListen:'',
       }
     },
     watch: {
       ifListen(n){
+        this.$_ifListen = n;
         if (n) {
           window.addEventListener('scroll', this.doScroll);
         } else {

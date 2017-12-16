@@ -420,7 +420,7 @@
           </li>
         </ul>
       </div>
-      <!--文章详情-->
+      <!--文章顶部-->
       <div class="article">
         <div class="cover" :style="{backgroundImage:'url(' + content.article.cover + ')'}"></div>
         <div v-ratio-img="content.article.cover"></div>
@@ -432,6 +432,7 @@
             <span v-if="article.date_add" style="float:right">{{article.date_add | time}}</span>
           </div>
         </div>
+        <!--文章内容-->
         <div class="content">
           <template v-for="item in article.content">
             <div class="text" v-if="item.type === 'text'">{{item.content}}</div>
@@ -447,6 +448,7 @@
                 </div>
               </div>
             </div>
+            <video v-else-if="item.type === 'video'" :src="item.content"></video>
           </template>
         </div>
         <div v-if="article.articles_count > 0" class="recommend-articles">

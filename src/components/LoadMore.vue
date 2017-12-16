@@ -3,6 +3,7 @@
 </style>
 <template>
   <div>
+    <div>scrollY:{{scrollY}}</div>
     <div>scrollTop:{{scrollTop}}</div>
     <div>clientHeight:{{clientHeight}}</div>
     <div>scrollHeight:{{scrollHeight}}</div>
@@ -34,10 +35,16 @@
         clientHeight: '',
         scrollHeight: '',
         $_ifListen: '',
+        scrollY:'',
+      }
+    },
+    computed:{
+      _ifListen(){
+        return this.ifListen;
       }
     },
     watch: {
-      ifListen(n){
+      _ifListen(n){
         this.$_ifListen = n;
         if (n) {
           window.addEventListener('scroll', this.doScroll);
@@ -68,6 +75,7 @@
           })
       },
       doScroll(){
+        this.scrollY = window.scrollY;
         this.scrollTop = document.documentElement.scrollTop;
         this.clientHeight = document.documentElement.clientHeight;
         this.scrollHeight = document.documentElement.scrollHeight;
@@ -78,6 +86,9 @@
           this.loadMore();
         }
       }
+    },
+    mounted(){
+      window.addEventListener('scroll', this.doScroll);
     },
     components: {}
   }

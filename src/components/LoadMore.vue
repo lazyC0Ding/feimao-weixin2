@@ -3,11 +3,6 @@
 </style>
 <template>
   <div>
-    <div>scrollY:{{scrollY}}</div>
-    <div>scrollTop:{{scrollTop}}</div>
-    <div>clientHeight:{{clientHeight}}</div>
-    <div>scrollHeight:{{scrollHeight}}</div>
-    <div>$_ifListen:{{$_ifListen ? 'true' : 'false'}}</div>
   </div>
 </template>
 <script>
@@ -31,27 +26,7 @@
       return {
         busy: false,
         hasMore: true,
-        scrollTop: '',
-        clientHeight: '',
-        scrollHeight: '',
-        $_ifListen: '',
-        scrollY:'',
       }
-    },
-    computed:{
-      _ifListen(){
-        return this.ifListen;
-      }
-    },
-    watch: {
-      _ifListen(n){
-        this.$_ifListen = n;
-        if (n) {
-          window.addEventListener('scroll', this.doScroll);
-        } else {
-          window.removeEventListener('scroll', this.doScroll);
-        }
-      },
     },
     methods: {
       loadMore(){
@@ -75,14 +50,10 @@
           })
       },
       doScroll(){
-        this.scrollY = window.scrollY;
-        this.scrollTop = document.documentElement.scrollTop;
-        this.clientHeight = document.documentElement.clientHeight;
-        this.scrollHeight = document.documentElement.scrollHeight;
-        if (this.busy) {
+        if (!this.ifListen || this.busy) {
           return;
         }
-        if (Math.ceil(document.documentElement.scrollTop) + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+        if (Math.ceil(window.scrollY) + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
           this.loadMore();
         }
       }

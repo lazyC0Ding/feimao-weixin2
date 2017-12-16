@@ -122,13 +122,13 @@
     <div class="address" v-href="'address_list'">
       <span class="placeholder" v-if="!address">请选择收货地址</span>
       <span class="info" v-if="address">
-        <span class="a">{{address.name}}<span>{{address.phone}}</span></span><br>
-        <span class="b">{{address.province}}{{address.city}}{{address.district}}{{address.address}}</span>
+        <span class="a">{{search.address.name}}<span>{{search.address.phone}}</span></span><br>
+        <span class="b">{{search.address.province}}{{search.address.city}}{{search.address.district}}{{search.address.address}}</span>
       </span>
       <img src="../../assets/img/direction_right_gray.png">
     </div>
-    <goods-list style="margin-top:.1rem;" :goods="goods"></goods-list>
-    <div class="total">共{{content.goods_count}}件商品，小计<span>¥ {{content.total_fee.toFixed(2)}}</span></div>
+    <goods-list style="margin-top:.1rem;" :goods="search.goods"></goods-list>
+    <div class="total">共{{search.goods_count}}件商品，小计<span>¥ {{search.total_fee.toFixed(2)}}</span></div>
     <ul class="order_confirm-row-container">
       <li class="row">
         <span class="title">运费</span>
@@ -150,7 +150,7 @@
       </li>
       <li class="row" @click="selectDiscount('point')">
         <span class="title">使用积分</span>
-        <span class="light" style="margin-left:.1rem;">{{customer.point == 0 ? '暂无积分' : customer.point}}</span>
+        <span class="light" style="margin-left:.1rem;">{{search.customer.point == 0 ? '暂无积分' : search.customer.point}}</span>
         <span class="right select" :class="{on:discount.point}"></span>
       </li>
     </ul>
@@ -167,10 +167,7 @@
   export default {
     data () {
       return {
-        content: null,
-        address: null,
-        customer: null,
-        goods: null,
+        search:null,
         expressFee: null,
         message: '',
         discount: {
@@ -183,7 +180,7 @@
     computed: {
       generateParams(){
         const params = {
-          address_id:this.address.address_id,
+          address_id:this.search.address.address_id,
           data:this.data,
         };
         if(this.message) params.comment = this.message;
@@ -192,7 +189,7 @@
       data(){
         const data = [];
         let item;
-        for (let i of this.goods) {
+        for (let i of this.search.goods) {
           item = {
             goods_id: i.goods_id,
             quantity: i.quantity,
@@ -207,13 +204,13 @@
       },
       getExpressFeeParams(){
         return {
-          address_id: this.address.address_id,
-          total_fee: this.content.total_fee,
+          address_id: this.search.address.address_id,
+          total_fee: this.search.total_fee,
           data: this.data,
         }
       },
       payment(){
-        return (Number(this.content.total_fee) + Number(this.expressFee)).toFixed(2);
+        return (Number(this.search.total_fee) + Number(this.expressFee)).toFixed(2);
       },
     },
     methods: {
@@ -254,12 +251,7 @@
         this.getExpressFee();
       },
       init(){
-        const content = getSearchParams(location.search);
-        const {address, customer, goods} = content;
-        this.address = address;
-        this.customer = customer;
-        this.goods = goods;
-        this.content = content;
+        this.search = getSearchParams(location.search);
         this.getExpressFee();
         console.log(content)
       }

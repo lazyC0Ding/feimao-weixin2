@@ -22,7 +22,7 @@ function setVue($_vue) {
     if(i > -1) {
       url = url.slice(0, i);
     }
-    console.log(url);
+    alert(url);
     $vue.$post(URL.getWeixinInfo, {url})
       .then (res => {
         if(res.errcode == 0) {

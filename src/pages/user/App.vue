@@ -331,15 +331,16 @@
     },
     computed:{
       user_infoSearch(){
-        if(!this.content) return;
-        return {
-          avater:content.avater,
-          nickname:content.nickname,
-          uuid:content.uuid,
-          introduction:content.introduction,
-          sex:content.sex,
-          weixin:content.weixin,
-          phone:content.phone,
+        if(this.content) {
+          return {
+            avater:this.content.avater,
+            nickname:this.content.nickname,
+            uuid:this.content.uuid,
+            introduction:this.content.introduction,
+            sex:this.content.sex,
+            weixin:this.content.weixin,
+            phone:this.content.phone,
+          }
         }
       }
     },

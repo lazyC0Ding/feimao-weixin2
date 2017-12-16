@@ -18,7 +18,6 @@ function setVue($_vue) {
   if (!$vue) {
     $vue = $_vue;
     const url = location.href.split('#')[0];
-    alert(url);
     $vue.$post(URL.getWeixinInfo, {url})
       .then (res => {
         if(res.errcode == 0) {

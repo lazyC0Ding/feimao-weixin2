@@ -19,11 +19,12 @@ function setVue($_vue) {
     $vue = $_vue;
     let url = location.href;
     const i = url.indexOf('#');
-    url = url.slice(0, i);
-    console.log($vue);
+    if(i > -1) {
+      url = url.slice(0, i);
+    }
+    console.log(url);
     $vue.$post(URL.getWeixinInfo, {url})
       .then (res => {
-        console.log(res);
         if(res.errcode == 0) {
           const content = res.content;
           wx.config({

@@ -32,7 +32,9 @@ function setVue($_vue) {
             timestamp: content.timestamp,
             nonceStr: content.nonceStr,
             signature: content.signature,
-            jsApiList: []
+            jsApiList: [
+              'chooseImage',
+            ]
           });
         }else{
           errback(res);

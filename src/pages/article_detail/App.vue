@@ -17,7 +17,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    z-index:10;
+    z-index: 10;
     > .recommend {
       height: 1rem;
       line-height: 1rem;
@@ -125,10 +125,10 @@
 
   .article {
     padding-bottom: .6rem;
-    >.cover{
-      max-height:5rem;
-      background:no-repeat center center;
-      background-size:100%;
+    > .cover {
+      max-height: 5rem;
+      background: no-repeat center center;
+      background-size: 100%;
     }
     > .title {
       padding: 0 .24rem;
@@ -165,6 +165,16 @@
         width: 100%;
         &:first-child {
           margin-top: 0;
+        }
+      }
+      > div.video {
+        margin-top:.4rem;
+        height:5rem;
+        background:url(../../assets/img/default_pic.png);
+        background-size:100% 100%;
+        > video {
+          width: 100%;
+          height: 100%;
         }
       }
       > div.url {
@@ -448,7 +458,9 @@
                 </div>
               </div>
             </div>
-            <video v-else-if="item.type === 'video'" :src="item.content"></video>
+            <div class="video" v-else-if="item.type === 'video'">
+              <video :src="item.content" preload="auto" controls="controls"></video>
+            </div>
           </template>
         </div>
         <div v-if="article.articles_count > 0" class="recommend-articles">
@@ -511,11 +523,11 @@
   export default {
     data () {
       return {
-        cantFind:false,
+        cantFind: false,
         article_id: '',
         content: null,
         ifShowGoods: false,
-        ifShowRecommend:false,
+        ifShowRecommend: false,
       }
     },
     computed: {
@@ -525,7 +537,7 @@
         }
       },
       topShowGoodsImg(){
-        if(this.article){
+        if (this.article) {
           const goods = this.article.goods;
           return goods.length > 4
             ? goods.slice(0, 4)
@@ -541,19 +553,19 @@
             if (res.errcode == 0) {
               toast(res.message)
               this.article.is_collection = this.article.is_collection == 0 ? 1 : 0;
-            }else{
+            } else {
               errback(res);
             }
           })
       },
       like(){
-        this.$post(URL.like, {article_id:this.article_id})
-          .then ( res => {
+        this.$post(URL.like, {article_id: this.article_id})
+          .then(res => {
             console.log(res)
-            if(res.errcode == 0) {
+            if (res.errcode == 0) {
               toast(res.message);
               this.article.is_like = this.article.is_like == 0 ? 1 : 0;
-            }else{
+            } else {
               errback(res);
             }
           })

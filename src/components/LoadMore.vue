@@ -6,7 +6,7 @@
     <div>scrollTop:{{scrollTop}}</div>
     <div>clientHeight:{{clientHeight}}</div>
     <div>scrollHeight:{{scrollHeight}}</div>
-    <div>$_ifListen:{{$_ifListen}}</div>
+    <div>$_ifListen:{{$_ifListen ? 'true' : 'false'}}</div>
   </div>
 </template>
 <script>
@@ -30,10 +30,10 @@
       return {
         busy: false,
         hasMore: true,
-        scrollTop:'',
-        clientHeight:'',
-        scrollHeight:'',
-        $_ifListen:'',
+        scrollTop: '',
+        clientHeight: '',
+        scrollHeight: '',
+        $_ifListen: '',
       }
     },
     watch: {
@@ -59,7 +59,7 @@
             if (res.errcode == 0) {
               if (res.content && res.content.length) {
                 this.callback(res.content);
-              }else{
+              } else {
                 this.hasMore = false;
               }
             } else {
@@ -68,6 +68,9 @@
           })
       },
       doScroll(){
+        this.scrollTop = document.documentElement.scrollTop;
+        this.clientHeight = document.documentElement.clientHeight;
+        this.scrollHeight = document.documentElement.scrollHeight;
         if (this.busy) {
           return;
         }

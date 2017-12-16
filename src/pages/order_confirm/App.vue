@@ -266,6 +266,7 @@
     },
     created(){
       document.title = '确认订单';
+      this.init();
       if(this.$ifRefresh()){
         this.init();
       }else{

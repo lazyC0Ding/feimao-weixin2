@@ -80,7 +80,7 @@
     methods: {
       selectAddress(address){
         this.$setData('order_confirm', 'address', address);
-        history.go(-1);
+        replacePage('order_confirm');
       },
       fetch(){
         this.$post(URL.getAllAddress)

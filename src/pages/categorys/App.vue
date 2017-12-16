@@ -113,7 +113,7 @@
       } else {
         this.keepAlive();
       }
-      history.replaceState(null, '', 'categorys.html');
+//      history.replaceState(null, '', 'categorys.html');
     },
     components: {
       AppPermanent,

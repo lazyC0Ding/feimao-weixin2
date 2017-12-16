@@ -5,10 +5,10 @@
   ul {
     > li {
       margin-bottom:.2rem;
-      > img {
-        display: block;
-        width: 100%;
-        height: 5rem;
+      >.cover{
+        max-height:5rem;
+        background:no-repeat center center;
+        background-size:100%;
       }
       > .text {
         padding: 0 .34rem 0 .26rem;
@@ -113,7 +113,7 @@
         <span class="button" @click="follow(article, article.customer_id)">{{ article.is_attention == 0 ? '关注TA' : '已关注'}}</span>
         <span class="follows">{{article.attention_count}}人关注</span>
       </div>
-      <img @click="showDetail(article.article_id)" :src="article.cover">
+      <div v-ratio-img="article.cover"></div>
       <div class="text">
         <div @click="showDetail(article)" class="title">{{article.title}}</div>
         <div @click="showDetail(article)" class="mini_content">{{article.mini_content}}</div>

@@ -106,7 +106,7 @@
       const search = getSearchParams(location.search);
       if (search) {
         this.type = search.type;
-        history.replaceState(null, '', getPageName() + '.html');
+//        history.replaceState(null, '', getPageName() + '.html');
         this.fetch();
       } else {
         this.keepAlive();

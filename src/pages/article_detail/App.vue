@@ -17,6 +17,7 @@
     top: 0;
     left: 0;
     width: 100%;
+    z-index:10;
     > .recommend {
       height: 1rem;
       line-height: 1rem;
@@ -124,10 +125,10 @@
 
   .article {
     padding-bottom: .6rem;
-    > .cover {
-      display: block;
-      width: 100%;
-      height: 5rem;
+    >.cover{
+      max-height:5rem;
+      background:no-repeat center center;
+      background-size:100%;
     }
     > .title {
       padding: 0 .24rem;
@@ -397,6 +398,7 @@
 <template>
   <div class="bottom-container article_detail-container" :class="{ hasRecommend:article && article.goods_count > 0 }">
     <div v-if="content">
+      <!--顶部作者头像、关注、推荐商品等-->
       <div class="detail-top">
         <div class="author">
           <a v-href="['person_detail', {pid:article.customer_id}]">
@@ -418,8 +420,10 @@
           </li>
         </ul>
       </div>
+      <!--文章详情-->
       <div class="article">
-        <img class="cover" :src="content.article.cover">
+        <div class="cover" :style="{backgroundImage:'url(' + content.article.cover + ')'}"></div>
+        <div v-ratio-img="content.article.cover"></div>
         <div class="title">
           <div class="a">{{article.title}}</div>
           <hr>
@@ -476,6 +480,14 @@
           </div>
         </li>
       </ul>
+      <!-- 好物推荐 -->
+      <goods-container
+        v-if="ifShowRecommend && content.recommend"
+        :goods="content.recommend.length <= 6 ? content.recommend : content.recommend.slice(0, 6)"
+        hidePrice
+      >
+      </goods-container>
+      <!-- Footer -->
       <ul class="footer">
         <li><span :class="{on:article.is_collection == 1}" @click="favor">收藏</span></li>
         <li><span :class="{on:article.is_like == 1}" @click="like">点赞</span></li>
@@ -486,11 +498,14 @@
       <img src="../../assets/img/Tip_nothing.png">
       <div>未找到对应的文章信息</div>
     </div>
+    <the-shade v-show="ifShowGoods" @click.native="ifShowGoods = false"></the-shade>
     <app-permanent type="1"></app-permanent>
   </div>
 </template>
 <script>
   import AppPermanent from '@c/AppPermanent.vue'
+  import TheShade from '@c/TheShade.vue'
+  import GoodsContainer from '@c/GoodsContainer.vue'
   export default {
     data () {
       return {
@@ -498,6 +513,7 @@
         article_id: '',
         content: null,
         ifShowGoods: false,
+        ifShowRecommend:false,
       }
     },
     computed: {
@@ -573,6 +589,7 @@
       document.title = '文章详情';
       const {article_id, customer_id} = getSearchParams(location.search);
       if (customer_id) {
+        this.ifShowRecommend = true;
         setSession('customer_id', customer_id);
       }
       this.article_id = article_id;
@@ -580,7 +597,9 @@
       this.fetch();
     },
     components: {
-      AppPermanent
+      AppPermanent,
+      TheShade,
+      GoodsContainer,
     }
   }
 </script>

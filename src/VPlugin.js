@@ -65,9 +65,43 @@ export default {
     };
 
     // 指令
+    // Vue.directive('loadmore', function (el, binding) {
+    //   window.addEventListener('scroll', function () {
+    //     console.log(el.clientHeight);
+    //     console.log(el.scrollTop);
+    //   })
+    // });
+
+    Vue.directive('ratioImg', function (el, binding) {
+      const src = binding.value;
+      const widthStr = '/width_';
+      const heightStr = '/height_';
+      const wStartIdx = src.indexOf(widthStr);
+      const wEndIdx = src.indexOf('/', wStartIdx+1);
+      const hStartIdx = src.indexOf(heightStr);
+      const hEndIdx = src.indexOf('/', hStartIdx+1);
+      const srcWidth = src.slice(wStartIdx + widthStr.length, wEndIdx);
+      const srcHeight = src.slice(hStartIdx + heightStr.length, hEndIdx);
+
+      const ratio = Number(srcWidth) / Number(srcHeight);
+      const width = document.documentElement.clientWidth;
+      let height = width / ratio;
+      height = height > 300 ? 300 : height;
+      el.style.height = height + 'px';
+      el.style.background = 'url(' + src + ') no-repeat center center';
+      el.style.backgroundSize = '100%';
+    });
+
     Vue.directive('action', function (el, binding) {
-      el.onclick = function () {
-        jumpAction(binding.value);
+      el.onclick = function (e) {
+        if (binding.modifiers.stop) {
+          e.stopPropagation();
+          if (el == e.target) {
+            jumpAction(binding.value);
+          }
+        } else {
+          jumpAction(binding.value);
+        }
       }
     });
 

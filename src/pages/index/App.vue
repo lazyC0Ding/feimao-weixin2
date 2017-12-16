@@ -144,6 +144,13 @@
     <app-articles v-show="activeTag === 0" :parentData="_data" :articles="attention.articles"></app-articles>
     <app-articles v-show="activeTag === 1" :parentData="_data" :articles="articles"></app-articles>
     <goods-container v-show="activeTag === 2" :parentData="_data" :goods="recommend" hidePrice></goods-container>
+    <load-more
+      :url="loadMoreAttr.url"
+      :params="loadMoreAttr.params"
+      :callback="loadMore"
+      :if-listen="activeTag===1"
+    >
+    </load-more>
     <the-footer current="0"></the-footer>
     <app-permanent type="1"></app-permanent>
   </div>
@@ -155,6 +162,7 @@
   import TheFooter from '@c/TheFooter.vue'
   import {Swiper} from 'vux'
   import AppPermanent from '@c/AppPermanent.vue'
+  import LoadMore from '@c/LoadMore.vue'
 
   export default {
     data () {
@@ -171,12 +179,22 @@
           persons: [],
         },
         articles: [],
+        loadMoreAttr: {
+          url: URL.getArticles,
+          params: {
+            page: 2
+          }
+        },
         recommend: [],
         message_count: 0,
         $_follow: false,
       }
     },
     methods: {
+      loadMore(content){
+        this.articles.push(...content);
+        this.loadMoreAttr.params.page++;
+      },
       clickBanner(){
         const action = this.banner.list[this.banner.index].action;
         jumpAction(action);
@@ -257,6 +275,7 @@
       GoodsContainer,
       TheFooter,
       AppPermanent,
+      LoadMore,
     }
   }
 </script>

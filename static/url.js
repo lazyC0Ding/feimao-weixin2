@@ -63,4 +63,5 @@ const URL = {
   getOauthInfo:'user/getOauthInfo',
   oauthLogin:'user/oauthLogin',
   oauthRegister:'user/oauthRegister',
+  getArticles:'community/getArticles',
 };

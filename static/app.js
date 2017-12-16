@@ -20,6 +20,7 @@ function setVue($_vue) {
     let url = location.href;
     const i = url.indexOf('#');
     url = url.slice(0, i);
+    console.log($vue);
     $vue.$post(URL.getWeixinInfo, {url})
       .then (res => {
         console.log(res);

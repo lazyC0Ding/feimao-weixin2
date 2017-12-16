@@ -110,7 +110,7 @@
     <div class="index-tags">
       <ul :class="{fixed:isIndexTagsFixed}">
         <li :class="{active:activeTag === 0}" @click="activeTag=0">我的关注</li>
-        <li :class="{active:activeTag === 1}" @click="activeTag=1">热门文章1</li>
+        <li :class="{active:activeTag === 1}" @click="activeTag=1">热门文章</li>
         <li :class="{active:activeTag === 2}" @click="activeTag=2">好物推荐</li>
       </ul>
     </div>

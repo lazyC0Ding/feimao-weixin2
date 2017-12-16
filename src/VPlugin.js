@@ -65,27 +65,25 @@ export default {
     };
 
     // 指令
-    // Vue.directive('loadmore', function (el, binding) {
-    //   window.addEventListener('scroll', function () {
-    //     console.log(el.clientHeight);
-    //     console.log(el.scrollTop);
-    //   })
-    // });
-
     Vue.directive('ratioImg', function (el, binding) {
       const src = binding.value;
+      let ratio;
+
       const widthStr = '/width_';
       const heightStr = '/height_';
       const wStartIdx = src.indexOf(widthStr);
-      const wEndIdx = src.indexOf('/', wStartIdx+1);
-      const hStartIdx = src.indexOf(heightStr);
-      const hEndIdx = src.indexOf('/', hStartIdx+1);
-      const srcWidth = src.slice(wStartIdx + widthStr.length, wEndIdx);
-      const srcHeight = src.slice(hStartIdx + heightStr.length, hEndIdx);
+      if(wStartIdx > -1) {
+        const wEndIdx = src.indexOf('/', wStartIdx+1);
+        const hStartIdx = src.indexOf(heightStr);
+        const hEndIdx = src.indexOf('/', hStartIdx+1);
+        const srcWidth = src.slice(wStartIdx + widthStr.length, wEndIdx);
+        const srcHeight = src.slice(hStartIdx + heightStr.length, hEndIdx);
 
-      const ratio = Number(srcWidth) / Number(srcHeight);
+        ratio = Number(srcWidth) / Number(srcHeight);
+      }
+
       const width = document.documentElement.clientWidth;
-      let height = width / ratio;
+      let height = ratio ? width / ratio : 250;
       height = height > 300 ? 300 : height;
       el.style.height = height + 'px';
       el.style.background = 'url(' + src + ') no-repeat center center';

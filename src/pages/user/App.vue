@@ -331,8 +331,7 @@
     },
     computed:{
       user_infoSearch(){
-        if(!content) return;
-
+        if(!this.content) return;
         return {
           avater:content.avater,
           nickname:content.nickname,

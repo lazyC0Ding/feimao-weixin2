@@ -332,14 +332,15 @@
     computed:{
       user_infoSearch(){
         if(this.content) {
+          const {avater, nickname, uuid, introduction, sex, weixin, phone} = this.content;
           return {
-            avater:this.content.avater,
-            nickname:this.content.nickname,
-            uuid:this.content.uuid,
-            introduction:this.content.introduction,
-            sex:this.content.sex,
-            weixin:this.content.weixin,
-            phone:this.content.phone,
+            avater,
+            nickname,
+            uuid,
+            introduction,
+            sex,
+            weixin,
+            phone,
           }
         }
       }

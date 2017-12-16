@@ -17,6 +17,8 @@ let $vue;
 function setVue($_vue) {
   if (!$vue) {
     $vue = $_vue;
+
+    // wx.config相关
     const url = location.href.split('#')[0];
     $vue.$post(URL.getWeixinInfo, {url})
       .then (res => {
@@ -30,6 +32,7 @@ function setVue($_vue) {
             signature: content.signature,
             jsApiList: [
               'chooseImage',
+              'uploadImage',
             ]
           });
         }else{

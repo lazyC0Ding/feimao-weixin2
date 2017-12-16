@@ -121,6 +121,7 @@
   import AppPermanent from '@c/AppPermanent.vue'
   import SearchInput from '@c/SearchInput.vue'
   import GoodsList from '@c/GoodsList.vue'
+  import LoadMore from '@c/LoadMore.vue'
   export default {
     data () {
       return {
@@ -207,7 +208,7 @@
       const searchs = getSearchParams(location.search);
       if (searchs) {
         this.params.state = searchs.state;
-        history.replaceState(null, '', getPageName()+'.html');
+//        history.replaceState(null, '', getPageName()+'.html');
       }else{
         this.params.state = getSession(getPageName()).params.state;
       }
@@ -217,6 +218,7 @@
       AppPermanent,
       SearchInput,
       GoodsList,
+      LoadMore,
     }
   }
 </script>

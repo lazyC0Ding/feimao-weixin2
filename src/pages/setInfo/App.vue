@@ -65,8 +65,8 @@
       <div class="btn-big" style="margin-top:.6rem;" @click="bind">完成绑定</div>
     </template>
     <div class="tip" v-if="!needBind" >正在跳转中...</div>
-    <div>{{test1 || '测试数据1'}}</div>
-    <div>{{test2 || '测试数据2'}}</div>
+    <!--<div>{{test1 || '测试数据1'}}</div>-->
+    <!--<div>{{test2 || '测试数据2'}}</div>-->
   </div>
 </template>
 <script>
@@ -92,8 +92,6 @@
       getOauthInfo(){
         this.$post(URL.getOauthInfo, Object.assign({code: this.wxCode}, this.params))
           .then(res => {
-            console.log(res);
-            this.test1 = JSON.stringify(res);
             this.wxData = res.content;
             this.oauthLogin();
           })
@@ -109,8 +107,6 @@
         };
         this.$post(URL.oauthLogin, params)
           .then(res => {
-            this.test2 = JSON.stringify(res);
-            console.log(res);
             if(res.errcode == 0) {
               if(res.content.is_bind){
                 setUser(res.content.customer);

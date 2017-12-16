@@ -335,6 +335,7 @@
           .then(res => {
             if (res.errcode == 0) {
               console.log(res.content);
+              this.content = res.content;
               setUser(res.content);
             } else {
               errback(res);
@@ -343,7 +344,6 @@
       },
     },
     created(){
-      this.content = getUser();
       this.fetch();
     },
     components: {

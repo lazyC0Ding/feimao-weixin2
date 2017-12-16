@@ -18,12 +18,6 @@ function setKeys(pageName, ifRefresh) {
 export default {
   install(Vue){
 
-    Vue.mixin({
-      created(){
-        setVue(this)
-      },
-    });
-
     Vue.prototype.$post = api.post;
     Vue.prototype.$get = api.get;
 
@@ -226,6 +220,12 @@ export default {
 
     Vue.filter('avatar', function (value) {
       return value || './static/img/default_head.png';
+    });
+
+    Vue.mixin({
+      created(){
+        setVue(this)
+      },
     });
 
   }

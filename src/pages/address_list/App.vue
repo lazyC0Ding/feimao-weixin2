@@ -75,12 +75,13 @@
     data () {
       return {
         content:[],
+        search:null,
       }
     },
     methods: {
       selectAddress(address){
-        this.$setData('order_confirm', 'address', address);
-        replacePage('order_confirm', getSession('order_confirm'));
+        this.search.address = address;
+        replacePage('order_confirm', this.search);
       },
       fetch(){
         this.$post(URL.getAllAddress)
@@ -96,6 +97,7 @@
     },
     created(){
       document.title = '选择收货地址';
+      this.search = getSearchParams(location.search);
       this.fetch();
     },
     components: {

@@ -119,7 +119,7 @@
 </style>
 <template>
   <div v-if="expressFee" style="padding-bottom:1rem;">
-    <div class="address" v-href="'address_list'">
+    <div class="address" v-href="['address_list', search]">
       <span class="placeholder" v-if="!address">请选择收货地址</span>
       <span class="info" v-if="address">
         <span class="a">{{search.address.name}}<span>{{search.address.phone}}</span></span><br>
@@ -253,17 +253,17 @@
       init(){
         this.search = getSearchParams(location.search);
         this.getExpressFee();
-        console.log(content)
+        console.log(this.search);
       }
     },
     created(){
       document.title = '确认订单';
       this.init();
-      if(this.$ifRefresh()){
-        this.init();
-      }else{
-        this.keepAlive();
-      }
+//      if(this.$ifRefresh()){
+//        this.init();
+//      }else{
+//        this.keepAlive();
+//      }
     },
     components: {
       AppPermanent,

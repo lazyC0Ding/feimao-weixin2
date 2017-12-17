@@ -81,7 +81,7 @@ export default {
       height = height > 300 ? 300 : height;
       el.style.height = height + 'px';
       el.style.background = 'url(' + src + ') no-repeat center center';
-      el.style.backgroundSize = '100%';
+      el.style.backgroundSize = 'cover';
     });
 
     Vue.directive('action', function (el, binding) {
@@ -155,8 +155,18 @@ export default {
       return [year, month, day].map(formatNumber).join('-') + ' ' + time
     });
 
-    // 01-01 20:00
+    // 1970-01-01
     Vue.filter('time_2', function (timestamp) {
+      const date = new Date(Number(timestamp) * 1000);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+
+      return [year, month, day].map(formatNumber).join('-');
+    });
+
+    // 01-01 20:00
+    Vue.filter('time_3', function (timestamp) {
       const date = new Date(Number(timestamp) * 1000);
       const month = date.getMonth() + 1;
       const day = date.getDate();
@@ -168,21 +178,12 @@ export default {
     });
 
     // 01-01
-    Vue.filter('time_3', function (timestamp) {
+    Vue.filter('time_4', function (timestamp) {
       const date = new Date(Number(timestamp) * 1000);
       const month = date.getMonth() + 1;
       const day = date.getDate();
 
       return [month, day].map(formatNumber).join('-');
-    });
-
-    Vue.filter('time_4', function (timestamp) {
-      const date = new Date(Number(timestamp) * 1000);
-      const year = date.getFullYear();
-      const month = date.getMonth() + 1;
-      const day = date.getDate();
-
-      return [year, month, day].map(formatNumber).join('-');
     });
 
     // 倒计时1 HH:MM:SS

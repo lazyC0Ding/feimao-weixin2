@@ -217,13 +217,15 @@
 </style>
 <template>
   <div style="padding-top:.85rem;padding-bottom: 2rem;">
-    <span class="btn-corner" @click="edit()">{{isEdit ? '完成' : '编辑'}}</span>
+    <span v-if="goods && goods.length" class="btn-corner" @click="edit()">{{isEdit ? '完成' : '编辑'}}</span>
+    <!-- 空购物车提示 -->
     <div v-if="goods && !goods.length" class="empty">
       <div><img src="../../assets/img/Tip_ShoppingCart.png"></div>
       <div>您的购物车是空的</div>
-      <div><span>去商城逛逛</span></div>
+      <div><span @click="toMall">去商城逛逛</span></div>
     </div>
-    <ul v-if="goods" class="cart-list">
+    <!-- 购物车列表 -->
+    <ul v-if="goods && goods.length" class="cart-list">
       <li v-for="item in goods" :key="item.cart_id">
       <span>
         <span class="select" :class="{on:item.isSelected}" @click="select(item)"></span>
@@ -248,7 +250,8 @@
         </div>
       </li>
     </ul>
-    <div class="cart-footer">
+    <!-- 购物车footer -->
+    <div class="cart-footer" v-if="goods && goods.length">
       <span class="select" :class="{on:isSelectAll}" @click="selectAll">全选</span>
       <span class="settle" @click="settle">{{isEdit ? '删除' : '结算'}}</span>
       <span class="price" v-show="!isEdit">合计 : <span>¥{{total}}</span></span>
@@ -387,14 +390,20 @@
           this.$post(URL.delCart, {cart_ids: this.selectedItems.join(',')})
             .then(res => {
               if (res.errcode == 0) {
-                this.goods.forEach((item, index, arr) => {
+
+                const newGoods = [];
+
+                loop1:
+                for (let item of this.goods) {
                   for (let i of this.selectedItems) {
                     if (item.cart_id == i) {
-                      arr.splice(index, 1);
-                      break;
+                      break loop1;
                     }
                   }
-                });
+                  newGoods.push(item);
+                }
+
+                this.goods = newGoods;
                 this.isEdit = false;
               } else {
                 errback(res)
@@ -448,6 +457,9 @@
       },
       getNow(){
         this.now = Date.parse(new Date()) / 1000;
+      },
+      toMall(){
+        replacePage('mall');
       }
     },
     created(){

@@ -87,7 +87,7 @@
         position:absolute;
         right:.2rem;
         bottom:0;
-        font-size:.28rem;
+        font-size:.24rem;
         color:@light;
       }
     }

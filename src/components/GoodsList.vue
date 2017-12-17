@@ -122,10 +122,10 @@
         type: Array,
         required: true,
       },
-      cantOpenGoods: Boolean,
-      showRefund: Boolean,
-      isRefund: Boolean,
-      order_sn:String,
+      cantOpenGoods: Boolean, //能否点击图片打开商品详情页面
+      showRefund: Boolean,  //待发货状态相关按钮
+      isRefund: Boolean,  //待收货状态相关按钮
+      order_sn:String,   //打开订单详情用
     },
     methods: {
       // showRefund:待发货时退款

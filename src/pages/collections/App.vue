@@ -14,9 +14,9 @@
   }
 </style>
 <template>
-  <div style="padding-top:.9rem;">
-    <template v-if="content">
-      <search-input v-model="key" placeholder="请输入要搜索的内容" :callback="search">
+  <div style="padding-top:.9rem;" v-if="content">
+    <template v-if="content.length">
+      <search-input v-model="key" placeholder="请输入要搜索的内容">
         <a @click="key = ''">取消</a>
       </search-input>
       <app-articles v-if="type==1" :parentData="_data" :articles="display"></app-articles>

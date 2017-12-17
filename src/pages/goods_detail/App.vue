@@ -470,7 +470,7 @@
             <hr>
           </div>
           <ul v-if="content.recommend_goods">
-            <li v-for="item in content.recommend_goods.slice(0, 4)">
+            <li v-for="item in content.recommend_goods.slice(0, 4)" v-href="['goods_detail', {goods_id:item.goods_id}]">
               <dl>
                 <dt>
                   <img :src="item.cover">

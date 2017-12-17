@@ -88,11 +88,11 @@
         <span class="title">资金明细</span>
         <img class="row-arrow" src="../../assets/img/direction_right_gray.png">
       </li>
-      <li class="row">
+      <li class="row" v-href="'coupon_list'">
         <span class="title">我的优惠券</span>
         <img class="row-arrow" src="../../assets/img/direction_right_gray.png">
       </li>
-      <li class="row">
+      <li class="row" v-href="'point'">
         <span class="title">我的积分</span>
         <img class="row-arrow" src="../../assets/img/direction_right_gray.png">
       </li>

@@ -105,7 +105,7 @@
             <span class="orders-btn">查看物流</span>
           </div>
           <div class="action" v-else-if="item.order_state == 4">
-            <span class="orders-btn">去评价</span>
+            <span class="orders-btn" @click="comment(item)">去评价</span>
             <span class="orders-btn" @click="deleteOrder(item.order_sn, index)">删除订单</span>
           </div>
           <div class="action" v-else-if="item.order_state == 6">
@@ -176,12 +176,15 @@
               item.order_state = 4;
               toast('收货成功');
               setTimeout(function () {
-                // 打开评论页面
-              }, 1000);
+                this.comment(item);
+              }, 500);
             }else{
               errback(res)
             }
           })
+      },
+      comment(item){
+        openPage('order_comment', {goods:item.goods});
       },
       changeState(state){
         this.params.state = state;

@@ -249,7 +249,7 @@
       <span>查看物流</span><span @click="delivery">确认收货</span>
     </div>
     <div class="order_detail-footer" v-else-if="order.order_state == 4">
-      <span @click="deleteOrder">删除订单</span><span >去评价</span>
+      <span @click="deleteOrder">删除订单</span><span @click="comment">去评价</span>
     </div>
     <div class="order_detail-footer" v-else-if="order.order_state ==  5 || order.order_state == 6">
       <span @click="deleteOrder">删除订单</span>
@@ -299,12 +299,15 @@
               this.order.order_state = 4;
               toast('收货成功');
               setTimeout(function () {
-                // 打开评论页面
-              }, 1000);
+                this.comment();
+              }, 500);
             }else{
               errback(res)
             }
           })
+      },
+      comment(){
+        openPage('order_comment', {goods:this.order.goods});
       },
       pay(){
         const params = {

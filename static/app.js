@@ -86,9 +86,7 @@ function login() {
     let state = from;  // 自带参数
 
     const to = `${url}?appid=${appid}&redirect_uri=${redirect_uri}&response_type=${response_type}&scope=${scope}&state=${state}#wechat_redirect`;
-    // const to = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx739a1b97ce756bcd&redirect_uri=http%3A%2F%2Ffeimao-weixin.zertone2.com%2F&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
     location.href = to;
-    // openPage('setInfo', {from})
   } else {
     openPage('login', {from});
   }

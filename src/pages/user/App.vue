@@ -307,11 +307,11 @@
       </li>
     </ul>
     <ul class="user-ul-3">
-      <li class="row">
+      <li class="row" v-href="'feedback'">
         <span class="title">意见反馈</span>
         <img class="row-arrow" src="../../assets/img/direction_right_gray.png">
       </li>
-      <li class="row">
+      <li class="row" v-href="'settings'">
         <span class="title">设置</span>
         <img class="row-arrow" src="../../assets/img/direction_right_gray.png">
       </li>

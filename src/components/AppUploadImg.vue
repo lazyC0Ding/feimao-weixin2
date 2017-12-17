@@ -1,0 +1,84 @@
+<style scoped lang="less" type="text/less">
+  .images {
+    background-color: #fff;
+    padding-bottom: .3rem;
+    font-size:0;
+    > li {
+      position:relative;
+      vertical-align: top;
+      display: inline-block;
+      margin-bottom: .2rem;
+      margin-left: .38rem;
+      width: 1.4rem;
+      height: 1.4rem;
+      line-height: 2rem;
+      text-align: center;
+      font-size: .2rem;
+      color: #9DA5A8;
+      background: url(../assets/img/upload_pic.png) no-repeat center .4rem;
+      background-size: .44rem .36rem;
+      border: .5px solid #979797;
+      box-sizing: border-box;
+      >.content{
+        width:100%;
+        height:100%;
+      }
+      >.close{
+        position:absolute;
+        top:0;
+        right:0;
+        width:.28rem;
+        height:.28rem;
+      }
+    }
+  }
+</style>
+<template>
+  <ul class="images">
+    <li v-for="(image, index) in images">
+      <img class="content" :src="image.src | avatar">
+      <img class="close" src="../assets/img/close_redbj.png" @click="images.splice(index,1)">
+    </li><!--
+    --><li @click="chooseImg" v-show="images.length < 6">{{images.length + 1}}/6</li>
+  </ul>
+</template>
+<script>
+  export default {
+    props:{
+      images:{
+        type:Array,
+        required:true,
+      }
+    },
+    methods:{
+      chooseImg(){
+        this.images.push(1);
+        console.log(this.images);
+        return;
+        wx.chooseImage({
+          count: 6, // 默认9
+          sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+          sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+          success: (res) => {
+            const localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+            this.content.avater = localIds[0];
+            return;
+            wx.uploadImage({
+              localId: localIds[0], // 需要上传的图片的本地ID，由chooseImage接口获得
+              isShowProgressTips: 1, // 默认为1，显示进度提示
+              success: (res) => {
+                var serverId = res.serverId; // 返回图片的服务器端ID
+                //接下来将serverId传给后台
+                /*
+                 *
+                 *
+                 */
+              }
+            });
+          }
+        });
+      }
+    },
+    components: {}
+  }
+</script>

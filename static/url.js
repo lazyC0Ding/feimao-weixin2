@@ -65,4 +65,10 @@ const URL = {
   oauthRegister:'user/oauthRegister',
   getArticles:'community/getArticles',
   getWeixinInfo:'init/getWeixinInfo',
+  orderComment:'order/comment',
+  myPoint:'user/myPoint',
+  pointRecord:'user/pointRecord',
+  feedback:'user/feedback',
+  aboutUs:'setting/aboutUs',
+  agreement:'setting/agreement',
 };

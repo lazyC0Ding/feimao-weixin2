@@ -103,6 +103,7 @@
       font-size: .24rem;
     }
   }
+
 </style>
 <template>
   <ul>

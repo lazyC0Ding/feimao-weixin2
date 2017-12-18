@@ -48,20 +48,20 @@
 <template>
   <div>
     <ul class="pay-ul">
-      <li class="row">
+      <li class="row" @click="type=5">
         <img class="icon left" src="../../assets/img/pay_wechat.png">
         <span class="title">微信支付</span>
-        <span class="right"></span>
+        <span class="right" :class="{on:type==5}"></span>
       </li>
-      <li class="row">
+      <li class="row" @click="type=1">
         <img class="icon left" src="../../assets/img/pay_balance1.png">
         <span class="title">余额支付</span>
-        <span class="right"></span>
+        <span class="right" :class="{on:type==1}"></span>
       </li>
-      <li class="row">
+      <li class="row" @click="type=4">
         <img class="icon left" src="../../assets/img/pay_balance2.png">
         <span class="title">冻结余额支付</span>
-        <span class="right"></span>
+        <span class="right" :class="{on:type==4}"></span>
       </li>
     </ul>
     <div class="pay-footer">
@@ -78,11 +78,12 @@
       return {
         order_amount:0,
         order_sn:'',
+        type:5, //5:微信支付 1:余额支付 4:冻结余额支付(与后台对应,勿改)
       }
     },
     methods: {
       pay(){
-
+        
       }
     },
     created(){

@@ -19,6 +19,8 @@
           margin-left: .2rem;
           width: 1.8rem;
           height: 1.8rem;
+          background-image: url(../assets/img/default_goods.png);
+          background-size:100% 100%;
           > img {
             width: 100%;
             height: 100%;
@@ -29,6 +31,7 @@
         position: relative;
         height: 2.2rem;
         padding-left: .2rem;
+        padding-right:.3rem;
         overflow: hidden;
         > .a {
           height: .72rem;

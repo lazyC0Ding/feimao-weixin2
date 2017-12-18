@@ -11,8 +11,10 @@
         margin-right: .2rem;
       }
       > div.img {
-        height: 3.4rem;
         position:relative;
+        background-image: url(../assets/img/default_goods.png);
+        background-size:100% 100%;
+        height: 3.4rem;
         >img{
           width:100%;
           height:100%;

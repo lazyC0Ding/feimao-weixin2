@@ -66,8 +66,7 @@
   }
 
   .message {
-    height: 100%;
-    line-height: 1rem;
+    font-size:.28rem;
     margin-left: .2rem;
     width: 4.4rem;
     &::placeholder {

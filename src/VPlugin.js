@@ -59,29 +59,51 @@ export default {
     };
 
     // 指令
+    // 使用div等元素的backgroundImage显示图片
     Vue.directive('ratioImg', function (el, binding) {
+      const width = document.documentElement.clientWidth;
+      const minHeight = width / 1.5;
+      const maxHeight = width / 1.25;
+      el.style.height = minHeight + 'px';
+      el.style.background = 'url(./static/img/default_Article_pic.png) no-repeat center center';
+      el.style.backgroundSize = 'cover';
+
       const src = binding.value;
       let ratio;
 
       const widthStr = '/width_';
       const heightStr = '/height_';
       const wStartIdx = src.indexOf(widthStr);
-      if(wStartIdx > -1) {
-        const wEndIdx = src.indexOf('/', wStartIdx+1);
+      if (wStartIdx > -1) {
+        const wEndIdx = src.indexOf('/', wStartIdx + 1);
         const hStartIdx = src.indexOf(heightStr);
-        const hEndIdx = src.indexOf('/', hStartIdx+1);
+        const hEndIdx = src.indexOf('/', hStartIdx + 1);
         const srcWidth = src.slice(wStartIdx + widthStr.length, wEndIdx);
         const srcHeight = src.slice(hStartIdx + heightStr.length, hEndIdx);
 
         ratio = Number(srcWidth) / Number(srcHeight);
       }
+      let height = ratio ? width / ratio : minHeight;
+      height = height > maxHeight ? maxHeight : height;
+      let img = new Image();
+      img.onload = function () {
+        el.style.height = height + 'px';
+        el.style.backgroundImage = 'url(' + src + ')';
+      };
+      img.src = src;
+    });
 
-      const width = document.documentElement.clientWidth;
-      let height = ratio ? width / ratio : 250;
-      height = height > 300 ? 300 : height;
-      el.style.height = height + 'px';
-      el.style.background = 'url(' + src + ') no-repeat center center';
-      el.style.backgroundSize = 'cover';
+    Vue.directive('action', function (el, binding) {
+      el.onclick = function (e) {
+        if (binding.modifiers.stop) {
+          e.stopPropagation();
+          if (el == e.target) {
+            jumpAction(binding.value);
+          }
+        } else {
+          jumpAction(binding.value);
+        }
+      }
     });
 
     Vue.directive('action', function (el, binding) {

@@ -23,7 +23,7 @@
     <div class="textarea">
       <textarea v-model="contents" placeholder="请输入您对我们的意见或建议"></textarea>
     </div>
-    <!--<div class="btn-big" style="margin-top:.6rem;" @click="submit">提交</div>-->
+    <div class="btn-big" style="margin-top:.6rem;" @click="submit">提交</div>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>

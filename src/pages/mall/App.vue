@@ -2,20 +2,20 @@
   @import '../../common';
 
   .categorys {
-    height:1.7rem;
-    >ul{
-      width:100%;
-      height:1.7rem;
+    height: 1.7rem;
+    > ul {
+      width: 100%;
+      height: 1.7rem;
       background-color: #fff;
       overflow: hidden;
       box-sizing: border-box;
       padding-top: .24rem;
       .border-bottom-1px;
-      &.fixed{
-        position:fixed;
-        top:.9rem;
-        left:0;
-        z-index:10;
+      &.fixed {
+        position: fixed;
+        top: .9rem;
+        left: 0;
+        z-index: 10;
       }
       > li {
         float: left;
@@ -87,7 +87,7 @@
         white-space: normal;
         text-align: left;
         margin: .1rem .1rem 0;
-        min-height:.6rem;
+        min-height: .6rem;
         font-size: .24rem;
         line-height: .3rem;
         text-overflow: ellipsis;
@@ -133,9 +133,16 @@
   .sepcial {
     margin-top: .2rem;
     background-color: #fff;
-    > img {
-      display: block;
+    >.img{
+      background-image: url(../../assets/img/default_special.png);
+      background-size:100% 100%;
       height: 3rem;
+      overflow:hidden;
+      > img {
+        display: block;
+        width:100%;
+        height:100%;
+      }
     }
   }
 
@@ -158,6 +165,11 @@
       }
     }
   }
+
+  .swiper {
+    background: url(../../assets/img/default_banner.png);
+    background-size: 100% 100%;
+  }
 </style>
 <template>
   <div class="bottom-container" style="padding-top:.9rem;" ref="container">
@@ -166,6 +178,7 @@
       <img v-href.stop="'message'" src="../../assets/img/nav_message.png">
     </search-input>
     <swiper
+      class="swiper"
       :list="banner.list"
       v-model="banner.index"
       :aspect-ratio="8/15"
@@ -234,7 +247,9 @@
       </ul>
     </div>
     <div class="sepcial">
-      <img v-for="item in sepcial.cover" :src="item.image">
+      <div class="img">
+        <img v-for="item in sepcial.cover" :src="item.image">
+      </div>
       <ul class="seckill_goods-goods">
         <li v-for="item in sepcial.goods">
           <img :src="item.cover" v-href="['goods_detail', {goods_id:item.goods_id}]">
@@ -243,7 +258,8 @@
             <span class="activity_price">¥{{item.price}}</span>
           </div>
         </li><!--
-        --><li v-if="sepcial.goods && sepcial.goods.length > 3" @click="toGoods">
+        -->
+        <li v-if="sepcial.goods && sepcial.goods.length > 3" @click="toGoods">
           <img src="../../assets/img/goods_more.png">
           <div style="font-size:.24rem;margin-top:.1rem;">查看全部</div>
         </li>
@@ -272,7 +288,7 @@
   export default {
     data () {
       return {
-        clientWidth:document.documentElement.clientWidth,
+        clientWidth: document.documentElement.clientWidth,
         message_count: 0,
         banner: {
           list: [],
@@ -286,13 +302,13 @@
         goods: [],
         seckill_goods_D_time: 0,
         coupon_goods_D_time: 0,
-        isCategorysFixed:false,
+        isCategorysFixed: false,
       }
     },
     computed: {
       seckill_goods_time(){
         const time = this.seckill_goods.time[0];
-        if(!time) return;
+        if (!time) return;
         return {
           time: time,
           start: Number(time.date_start),
@@ -301,17 +317,17 @@
       },
       coupon_goods_time(){
         const time = this.coupon_goods.time[0];
-        if(!time) return;
+        if (!time) return;
         return {
-          time:time,
-          start:Number(time.date_start),
-          end:Number(time.date_end),
+          time: time,
+          start: Number(time.date_start),
+          end: Number(time.date_end),
         };
       },
       ifStarted(){
         return {
           seckill_goods: this.seckill_goods_time ? Date.parse(new Date()) / 1000 > this.seckill_goods_time.start : undefined,
-          coupon_goods:this.coupon_goods_time ? Date.parse(new Date()) / 1000 > this.coupon_goods_time.start : undefined,
+          coupon_goods: this.coupon_goods_time ? Date.parse(new Date()) / 1000 > this.coupon_goods_time.start : undefined,
         }
       }
     },
@@ -328,12 +344,12 @@
       },
       getD_timestamp(){
         const now = Date.parse(new Date()) / 1000;
-        if(this.seckill_goods_time){
+        if (this.seckill_goods_time) {
           this.seckill_goods_D_time = now < this.seckill_goods_time.start
             ? this.seckill_goods_time.start - now
             : this.seckill_goods_time.end - now;
         }
-        if(this.coupon_goods_time){
+        if (this.coupon_goods_time) {
           this.coupon_goods_D_time = now < this.coupon_goods_time.start
             ? this.coupon_goods_time.start - now
             : this.coupon_goods_time.end - now;
@@ -341,7 +357,7 @@
         setTimeout(this.getD_timestamp, 1000);
       },
       openCategorys(category_id){
-        openPage('categorys', {category_id, categorys:this.categorys})
+        openPage('categorys', {category_id, categorys: this.categorys})
       },
       fetch(){
         this.$post(URL.getGoodsHomeData)

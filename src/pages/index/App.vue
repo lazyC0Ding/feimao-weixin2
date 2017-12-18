@@ -91,6 +91,10 @@
     }
   }
 
+  .swiper {
+    background: url(../../assets/img/default_banner.png);
+    background-size: 100% 100%;
+  }
 </style>
 <template>
   <div class="bottom-container" style="padding-top:.9rem;">
@@ -99,6 +103,7 @@
       <img v-href.stop="'message'" src="../../assets/img/nav_message.png">
     </search-input>
     <swiper
+      class="swiper"
       :list="banner.list"
       v-model="banner.index"
       :aspect-ratio="8/15"

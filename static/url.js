@@ -71,4 +71,5 @@ const URL = {
   feedback:'user/feedback',
   aboutUs:'setting/aboutUs',
   agreement:'setting/agreement',
+  payorder:'order/payorder',
 };

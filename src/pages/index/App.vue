@@ -54,7 +54,6 @@
       overflow-y: hidden;
       overflow-x: scroll;
       white-space: nowrap;
-      -webkit-overflow-scrolling: touch;
       &::-webkit-scrollbar {
         width: 0;
         height: 0;

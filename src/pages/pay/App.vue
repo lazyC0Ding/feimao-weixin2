@@ -92,13 +92,15 @@
                 case 1:
                   flag = confirm('本次交易将从您的余额中扣除0.01元,确认支付吗');
                   if(flag) {
-                    replacePage('order_detail', {order_sn:content.order_sn});
+//                    replacePage('order_detail', {order_sn:content.order_sn});
+                    history.go(-1);
                   }
                   break;
                 case 4:
                   flag = confirm('本次交易将从您的冻结余额中扣除0.01元,确认支付吗');
                   if(flag) {
-                    replacePage('order_detail', {order_sn:content.order_sn});
+//                    replacePage('order_detail', {order_sn:content.order_sn});
+                    history.go(-1);
                   }
                   break;
                 case 5:
@@ -109,7 +111,8 @@
                     signType: content.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
                     paySign: content.paySign, // 支付签名
                     success: function (res) {
-                      replacePage('order_detail', {order_sn:content.order_sn});
+//                      replacePage('order_detail', {order_sn:content.order_sn});
+                      history.go(-1);
                     }
                   });
                   break;

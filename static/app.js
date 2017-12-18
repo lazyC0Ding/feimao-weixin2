@@ -74,7 +74,7 @@ function toast(msg) {
 
 function login() {
   const from = getPageName();
-  if (is_weixin()) {
+  if (isWeixin()) {
     const url = 'https://open.weixin.qq.com/connect/oauth2/authorize';
     const appid = 'wx739a1b97ce756bcd';
     const redirect_uri = encodeURIComponent('http://feimao-weixin.zertone2.com/setInfo.html');

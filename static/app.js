@@ -31,6 +31,7 @@ function setVue($_vue) {
                 'chooseImage',
                 'uploadImage',
                 'chooseWXPay',
+                'previewImage',
               ]
             });
           }else{

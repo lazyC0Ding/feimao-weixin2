@@ -69,7 +69,7 @@
   }
 </style>
 <template>
-  <div style="padding-top:.9rem;padding-bottom:.8rem;">
+  <div style="padding-top:.9rem;padding-bottom:.8rem;" v-if="content">
     <search-input v-model="key" placeholder="请输入要搜索的订单" :callback="fetch">
       <a @click="cancelSearch">取消</a>
     </search-input>
@@ -129,8 +129,8 @@
           state: 0,
           page: 1,
         },
-        key: '',
-        content: [],
+        key:'',
+        content: null,
       }
     },
     computed: {

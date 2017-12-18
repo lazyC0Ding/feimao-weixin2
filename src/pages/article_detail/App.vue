@@ -160,18 +160,24 @@
           margin-top: 0;
         }
       }
-      > img.image {
+      > div.image {
         margin-top: .4rem;
-        width: 100%;
-        &:first-child {
-          margin-top: 0;
+        min-height:4rem;
+        background-image: url(../../assets/img/default_pic.png);
+        background-size:100% 100%;
+        >img{
+          width:100%;
+          display: block;
+          &:first-child {
+            margin-top: 0;
+          }
         }
       }
       > div.video {
-        margin-top:.4rem;
-        height:5rem;
-        background:url(../../assets/img/default_pic.png);
-        background-size:100% 100%;
+        margin-top: .4rem;
+        height: 5rem;
+        background: url(../../assets/img/default_pic.png);
+        background-size: 100% 100%;
         > video {
           width: 100%;
           height: 100%;
@@ -446,7 +452,9 @@
         <div class="content">
           <template v-for="item in article.content">
             <div class="text" v-if="item.type === 'text'">{{item.content}}</div>
-            <img class="image" v-else-if="item.type === 'image'" :src="item.content">
+            <div class="image" v-else-if="item.type === 'image'" @click="previewImage(item)">
+              <img :src="item.content">
+            </div>
             <div class="url" v-else-if="item.type === 'url'">
               <img :src="item.goods.cover">
               <div>
@@ -536,6 +544,17 @@
           return this.content.article;
         }
       },
+      contentImages(){
+        if (this.article) {
+          const arr = [];
+          for (let i of this.article.content) {
+            if (i.type === 'image') {
+              arr.push(i.content);
+            }
+          }
+          return arr;
+        }
+      },
       topShowGoodsImg(){
         if (this.article) {
           const goods = this.article.goods;
@@ -546,6 +565,12 @@
       }
     },
     methods: {
+      previewImage(item){
+        wx.previewImage({
+          current: item.content, // 当前显示图片的http链接
+          urls: this.contentImages // 需要预览的图片http链接列表
+        });
+      },
       favor(){
         this.$post(URL.collection, {article_id: this.article_id})
           .then(res => {

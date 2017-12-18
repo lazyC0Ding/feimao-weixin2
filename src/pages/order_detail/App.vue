@@ -127,17 +127,15 @@
     padding: .14rem .2rem .24rem;
     font-size: .24rem;
     background-color: #fff;
+    .copy-span{
+      -webkit-user-select: auto;
+    }
     > div {
       margin-top: .1rem;
     }
     .btn {
       margin-left: .3rem;
-      width: .56rem;
-      height: .3rem;
-      line-height: .3rem;
-      text-align: center;
       font-size: .2rem;
-      border: 0.5px solid #111;
     }
   }
 
@@ -238,7 +236,7 @@
       <span>{{order.comment || '暂无留言'}}</span>
     </div>
     <div class="order_sn">
-      <div>订单号： {{order_sn}}<span class="btn">复制</span></div>
+      <div>订单号： <span class="copy-span">{{order_sn}}</span> <span class="btn">(长按订单号拷贝)</span></div>
       <div>订单创建时间： {{order.date_add | time}}</div>
       <div v-if="order.pay_name">支付方式：{{order.pay_name}}</div>
     </div>
@@ -330,7 +328,14 @@
           })
       },
       deleteOrder(){
-
+        this.$post(URL.deleteOrder, {order_sn:this.order_sn})
+          .then ( res => {
+            if(res.errcode == 0) {
+              history.go(-1);
+            }else{
+              errback(res);
+            }
+          })
       },
       fetch(){
         this.$post(URL.getOrderDetail, {order_sn: this.order_sn})

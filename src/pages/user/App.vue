@@ -25,7 +25,11 @@
         vertical-align: middle;
         overflow: hidden;
         > span:first-child {
+          width: 3.5rem;
           font-size: .36rem;
+          white-space: nowrap;
+          overflow:hidden;
+          text-overflow: ellipsis;
         }
         > span:last-child {
           margin-top: .5rem;
@@ -190,7 +194,7 @@
       <div class="info">
         <img v-href="['user_info', user_infoSearch]" class="avatar" :src="content.avater | avatar">
         <span v-href="['user_info', user_infoSearch]" class="text">
-          <span>{{content.nickname}}</span><br>
+          <span>{{content.nickname}}1234567890098764</span><br>
           <span>{{content.introduction || '介绍下自己'}}</span>
         </span>
         <img v-href="'qrcode'" class="qrcode" src="../../assets/img/qrcode_white.png">

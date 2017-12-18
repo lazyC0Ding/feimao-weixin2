@@ -10,12 +10,9 @@
   import AppPermanent from '@c/AppPermanent.vue'
   export default {
     data () {
-      return {
-
-      }
+      return {}
     },
     methods: {
-
     },
     created(){
 

@@ -77,26 +77,47 @@
       return {
         order_amount: 0,
         order_sn: '',
-        type: 5, //5:微信支付 1:余额支付 4:冻结余额支付(与后台对应,勿改)
+        type: 5, //1:余额支付 4:冻结余额支付 5:微信支付  (与后台对应,勿改)
       }
     },
     methods: {
       pay(){
-        switch (this.type) {
-          case 5:
-            break;
-          default:
-            this.$post(URL.payorder, {type: this.type, orders: this.order_sn})
-              .then(res => {
-                console.log(res);
-                if (res.errcode == 0) {
-                  replacePage('order_detail', {order_sn:res.content.order_sn})
-                }else{
-                  errback(res)
-                }
-              });
-            break;
-        }
+        this.$post(URL.payorder, {type: this.type, orders: this.order_sn})
+          .then(res => {
+            console.log(res);
+            if (res.errcode == 0) {
+              const content = res.content;
+              let flag;
+              switch (this.type) {
+                case 1:
+                  flag = confirm('本次交易将从您的余额中扣除0.01元,确认支付吗');
+                  if(flag) {
+                    replacePage('order_detail', {order_sn:content.order_sn});
+                  }
+                  break;
+                case 4:
+                  flag = confirm('本次交易将从您的冻结余额中扣除0.01元,确认支付吗');
+                  if(flag) {
+                    replacePage('order_detail', {order_sn:content.order_sn});
+                  }
+                  break;
+                case 5:
+                  wx.chooseWXPay({
+                    timestamp: content.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+                    nonceStr: content.nonceStr, // 支付签名随机串，不长于 32 位
+                    package: content.package, // 统一支付接口返回的prepay\_id参数值，提交格式如：prepay\_id=\*\*\*）
+                    signType: content.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+                    paySign: content.paySign, // 支付签名
+                    success: function (res) {
+                      replacePage('order_detail', {order_sn:content.order_sn});
+                    }
+                  });
+                  break;
+              }
+            }else{
+              errback(res)
+            }
+          });
       }
     },
     created(){

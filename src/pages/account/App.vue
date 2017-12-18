@@ -114,7 +114,6 @@
     },
     methods: {
       recharge(){
-
         openPage('recharge');
       },
       fetch(){

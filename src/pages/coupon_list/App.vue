@@ -3,11 +3,6 @@
   .coupon_list-ul{
     overflow:hidden;
     padding-top:.1rem;
-    &.off{
-      >li{
-        background-image: url(../../assets/img/Coupon_off.png);
-      }
-    }
     >li{
       position:relative;
       margin-top:.3rem;
@@ -19,6 +14,9 @@
       overflow:hidden;
       background-image: url(../../assets/img/Coupon_on.png);
       background-size:100% 100%;
+      &.off{
+        background-image: url(../../assets/img/Coupon_off.png);
+      }
       >em{
         position:absolute;
         right:.08rem;
@@ -73,8 +71,8 @@
 </style>
 <template>
   <div v-if="content">
-    <ul class="coupon_list-ul" :class="{off:coupon.off}">
-      <li v-for="item in coupon.coupons" :key="item.coupon_id">
+    <ul class="coupon_list-ul">
+      <li v-for="item in coupon.coupons" :key="item.coupon_id" :class="{off:coupon.off}">
         <em v-show="!ifShowCoupon1">已过期</em>
         <span class="left">¥<em>{{item.amount}}</em></span>
         <span class="right">

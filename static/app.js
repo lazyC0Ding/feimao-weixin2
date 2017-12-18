@@ -15,27 +15,29 @@ function setVue($_vue) {
     $vue = $_vue;
 
     // wx.config相关
-    const url = location.href.split('#')[0];
-    $vue.$post(URL.getWeixinInfo, {url})
-      .then (res => {
-        if(res.errcode == 0) {
-          const content = res.content;
-          wx.config({
-            debug: true,
-            appId: content.appId,
-            timestamp: content.timestamp,
-            nonceStr: content.nonceStr,
-            signature: content.signature,
-            jsApiList: [
-              'chooseImage',
-              'uploadImage',
-              'chooseWXPay',
-            ]
-          });
-        }else{
-          errback(res);
-        }
-      })
+    if(isWeixin()) {
+      const url = location.href.split('#')[0];
+      $vue.$post(URL.getWeixinInfo, {url})
+        .then (res => {
+          if(res.errcode == 0) {
+            const content = res.content;
+            wx.config({
+              debug: true,
+              appId: content.appId,
+              timestamp: content.timestamp,
+              nonceStr: content.nonceStr,
+              signature: content.signature,
+              jsApiList: [
+                'chooseImage',
+                'uploadImage',
+                'chooseWXPay',
+              ]
+            });
+          }else{
+            errback(res);
+          }
+        })
+    }
   }
 }
 

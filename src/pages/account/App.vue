@@ -60,7 +60,7 @@
       <div class="top-1">总余额(元)</div>
       <div class="top-2">{{content.total_account}}</div>
       <div class="top-3">
-        <span v-href="'recharge'">充值</span>
+        <span @click="recharge">充值</span>
       </div>
     </div>
     <ul class="spokesman-info">
@@ -113,6 +113,10 @@
       }
     },
     methods: {
+      recharge(){
+
+        openPage('recharge');
+      },
       fetch(){
         this.$post(URL.getMyAccount)
           .then(res => {

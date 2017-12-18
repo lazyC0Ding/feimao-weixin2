@@ -64,6 +64,9 @@
           width: 6rem;
           font-size: 1rem;
           border-bottom: 1px solid #ddd;
+          &::placeholder{
+            color:@light;
+          }
         }
       }
     }
@@ -75,7 +78,7 @@
       <div>充值金额</div>
       <div>
         <span>¥</span>
-        <input v-model.number="money" type="number">
+        <input placeholder="0.00" :value="money" @input="inputMoney($event.target.value)" ref="input">
       </div>
     </div>
     <ul class="pay-ul">
@@ -86,7 +89,7 @@
       </li>
     </ul>
     <div class="pay-footer">
-      <span class="a">应付: <span>¥{{money.toFixed(2)}}</span></span>
+      <span class="a">应付: <span>¥{{Number(money).toFixed(2)}}</span></span>
       <span class="b" @click="recharge">立即付款</span>
     </div>
     <app-permanent type="2"></app-permanent>
@@ -98,7 +101,7 @@
     data () {
       return {
         type: 5,
-        money: 0,
+        money: '',
       }
     },
     methods: {
@@ -107,12 +110,37 @@
           .then(res => {
             console.log(res)
             if (res.errcode == 0) {
-
+              const content = res.content;
+              wx.chooseWXPay({
+                timestamp: content.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+                nonceStr: content.nonceStr, // 支付签名随机串，不长于 32 位
+                package: content.package, // 统一支付接口返回的prepay\_id参数值，提交格式如：prepay\_id=\*\*\*）
+                signType: content.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+                paySign: content.paySign, // 支付签名
+                success: function (res) {
+                  replacePage('account');
+                }
+              });
             } else {
               errback(res);
             }
           })
-      }
+      },
+      inputMoney(value){
+        let formattedValue = value
+          .trim()
+          .slice(
+            0,
+            value.indexOf('.') === -1
+              ? value.length
+              : value.indexOf('.') + 3
+          );
+        if (formattedValue !== value) {
+          this.$refs.input.value = formattedValue;
+        }
+        this.money = formattedValue;
+        console.log(this.money);
+      },
     },
     components: {
       AppPermanent

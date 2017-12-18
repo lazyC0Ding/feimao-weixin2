@@ -72,4 +72,5 @@ const URL = {
   aboutUs:'setting/aboutUs',
   agreement:'setting/agreement',
   payorder:'order/payorder',
+  recharge:'user/recharge',
 };

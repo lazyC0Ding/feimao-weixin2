@@ -29,6 +29,7 @@ function setVue($_vue) {
             jsApiList: [
               'chooseImage',
               'uploadImage',
+              'chooseWXPay',
             ]
           });
         }else{
@@ -86,8 +87,6 @@ function login() {
   } else {
     openPage('login', {from});
   }
-
-  openPage('login', {from});
 }
 
 function errback(res) {

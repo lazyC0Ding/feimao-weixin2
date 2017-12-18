@@ -1,20 +1,19 @@
 <style type="text/less" lang="less">
   @import '../../common';
+
   .pay-ul {
-    margin-top:.2rem;
+    margin-top: .2rem;
     .row-container(1rem, .28rem);
-    >li{
-      >.right{
-        margin-top:.34rem;
-        width:.32rem;
-        height:.32rem;
+    > li {
+      > .right {
+        margin-top: .34rem;
+        width: .32rem;
+        height: .32rem;
         background-image: url(../../assets/img/selected_off.png);
-        background-size:100% 100%;
-        &.on{
+        background-size: 100% 100%;
+        &.on {
           background-image: url(../../assets/img/selected_on.png);
         }
-      }
-      >.icon{
       }
     }
   }
@@ -76,17 +75,28 @@
   export default {
     data () {
       return {
-        order_amount:0,
-        order_sn:'',
-        type:5, //5:微信支付 1:余额支付 4:冻结余额支付(与后台对应,勿改)
+        order_amount: 0,
+        order_sn: '',
+        type: 5, //5:微信支付 1:余额支付 4:冻结余额支付(与后台对应,勿改)
       }
     },
     methods: {
       pay(){
-        this.$post(URL.payorder, {type:this.type, orders:this.order_sn})
-          .then (res => {
-            console.log(res)
-          })
+        switch (this.type) {
+          case 5:
+            break;
+          default:
+            this.$post(URL.payorder, {type: this.type, orders: this.order_sn})
+              .then(res => {
+                console.log(res);
+                if (res.errcode == 0) {
+                  replacePage('order_detail', {order_sn:res.content.order_sn})
+                }else{
+                  errback(res)
+                }
+              });
+            break;
+        }
       }
     },
     created(){

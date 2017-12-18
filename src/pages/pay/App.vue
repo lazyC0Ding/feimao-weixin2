@@ -83,7 +83,10 @@
     },
     methods: {
       pay(){
-        
+        this.$post(URL.payorder, {type:this.type, orders:this.order_sn})
+          .then (res => {
+            console.log(res)
+          })
       }
     },
     created(){

@@ -8,10 +8,6 @@ if (!config.debug) {
 }
 
 // vue对象相关 ↓
-function getSinature() {
-
-}
-
 let $vue;
 
 function setVue($_vue) {
@@ -19,26 +15,26 @@ function setVue($_vue) {
     $vue = $_vue;
 
     // wx.config相关
-    // const url = location.href.split('#')[0];
-    // $vue.$post(URL.getWeixinInfo, {url})
-    //   .then (res => {
-    //     if(res.errcode == 0) {
-    //       const content = res.content;
-    //       wx.config({
-    //         debug: false,
-    //         appId: content.appId,
-    //         timestamp: content.timestamp,
-    //         nonceStr: content.nonceStr,
-    //         signature: content.signature,
-    //         jsApiList: [
-    //           'chooseImage',
-    //           'uploadImage',
-    //         ]
-    //       });
-    //     }else{
-    //       errback(res);
-    //     }
-    //   })
+    const url = location.href.split('#')[0];
+    $vue.$post(URL.getWeixinInfo, {url})
+      .then (res => {
+        if(res.errcode == 0) {
+          const content = res.content;
+          wx.config({
+            debug: false,
+            appId: content.appId,
+            timestamp: content.timestamp,
+            nonceStr: content.nonceStr,
+            signature: content.signature,
+            jsApiList: [
+              'chooseImage',
+              'uploadImage',
+            ]
+          });
+        }else{
+          errback(res);
+        }
+      })
   }
 }
 
@@ -77,19 +73,19 @@ function toast(msg) {
 
 function login() {
   const from = getPageName();
-  // if (is_weixin()) {
-  //   const url = 'https://open.weixin.qq.com/connect/oauth2/authorize';
-  //   const appid = 'wx739a1b97ce756bcd';
-  //   const redirect_uri = encodeURIComponent('http://feimao-weixin.zertone2.com/setInfo.html');
-  //   const response_type = 'code';
-  //   const scope = 'snsapi_userinfo';
-  //   let state = from;  // 自带参数
-  //
-  //   const to = `${url}?appid=${appid}&redirect_uri=${redirect_uri}&response_type=${response_type}&scope=${scope}&state=${state}#wechat_redirect`;
-  //   location.href = to;
-  // } else {
-  //   openPage('login', {from});
-  // }
+  if (is_weixin()) {
+    const url = 'https://open.weixin.qq.com/connect/oauth2/authorize';
+    const appid = 'wx739a1b97ce756bcd';
+    const redirect_uri = encodeURIComponent('http://feimao-weixin.zertone2.com/setInfo.html');
+    const response_type = 'code';
+    const scope = 'snsapi_userinfo';
+    let state = from;  // 自带参数
+
+    const to = `${url}?appid=${appid}&redirect_uri=${redirect_uri}&response_type=${response_type}&scope=${scope}&state=${state}#wechat_redirect`;
+    location.href = to;
+  } else {
+    openPage('login', {from});
+  }
 
   openPage('login', {from});
 }

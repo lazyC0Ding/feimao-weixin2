@@ -48,6 +48,7 @@ function openPage(url, paramsJson) {
   }
   url = url.endsWith('.html') ? url : url + '.html';
   const paramsStr = paramsJson ? '?' + formatParams(paramsJson) : '';
+  console.log(paramsStr);
   window.location.href = url + paramsStr;
 }
 

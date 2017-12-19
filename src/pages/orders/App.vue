@@ -184,7 +184,7 @@
           })
       },
       comment(item){
-        openPage('order_comment', {goods:item.goods});
+        openPage('order_comment', item.goods);
       },
       changeState(state){
         this.params.state = state;

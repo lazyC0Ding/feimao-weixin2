@@ -75,7 +75,7 @@
 </style>
 <template>
   <div v-if="search" style="position:relative;height:100%;">
-    <goods-list :goods="search.goods" cant-open-goods></goods-list>
+    <goods-list :goods="search" cant-open-goods></goods-list>
     <div class="score border-bottom">
       <span class="title">商品评分</span>
       <span class="star" :class="{on:star >= item}" @click="star=item" v-for="item in [1,2,3,4,5]"></span>

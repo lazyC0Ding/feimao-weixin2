@@ -163,7 +163,6 @@
       > div.image {
         margin-top: .4rem;
         min-height: 4rem;
-        background-image: url(../../assets/img/default_pic.png);
         background-size: 100% 100%;
         > img {
           width: 100%;
@@ -495,7 +494,7 @@
         <div class="content">
           <template v-for="item in article.content">
             <div class="text" v-if="item.type === 'text'">{{item.content}}</div>
-            <div class="image" v-else-if="item.type === 'image'" @click="previewImage(item)">
+            <div class="image" v-else-if="item.type === 'image'" @click="previewImage(item)" :style="{backgroundImage:'url(./static/img/default_pic.png)'}">
               <img :src="item.content">
             </div>
             <div class="url" v-else-if="item.type === 'url'" v-href="['goods_detail', {goods_id:item.goods.goods_id}]">

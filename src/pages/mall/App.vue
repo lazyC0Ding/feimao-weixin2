@@ -167,7 +167,6 @@
   }
 
   .swiper {
-    background: url(../../assets/img/default_banner.png);
     background-size: 100% 100%;
   }
 </style>
@@ -179,6 +178,7 @@
     </search-input>
     <swiper
       class="swiper"
+      :style="{backgroundImage:'url(./static/img/default_banner.png)'}"
       :list="banner.list"
       v-model="banner.index"
       :aspect-ratio="8/15"

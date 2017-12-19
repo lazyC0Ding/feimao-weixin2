@@ -86,7 +86,10 @@
                     localId:localId,
                     src:res.content.url,
                   });
-                  if(this.uploadIndex < this.localIds.length - 1) {
+                  if(this.uploadIndex === this.localIds.length - 1) {
+                    this.uploadIndex = 0;
+                    this.localIds = null;
+                  }else{
                     this.uploadIndex++;
                     this.upload();
                   }

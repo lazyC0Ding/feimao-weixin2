@@ -12,7 +12,6 @@
       }
       > div.img {
         position:relative;
-        background-image: url(../assets/img/default_goods.png);
         background-size:100% 100%;
         height: 3.4rem;
         >img{
@@ -82,7 +81,7 @@
 <template>
   <ul>
     <li v-for="item in goods" :key="item.goods_id">
-      <div class="img" @click="showDetail(item.goods_id)">
+      <div class="img" @click="showDetail(item.goods_id)" :style="{backgroundImage:'url(./static/img/default_goods.png)'}">
         <span v-if="time">
           <span>{{d_time | countdown}}</span>
           <span>后{{ifStarted ? '结束' : '开始'}}</span>

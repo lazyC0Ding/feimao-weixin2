@@ -410,6 +410,40 @@
       }
     }
   }
+
+  .comments-model{
+    position:fixed;
+    left:10%;
+    top:2.4rem;
+    width:80%;
+    overflow:hidden;
+    padding-bottom:.3rem;
+    z-index:9;
+    background-color:#fff;
+    >textarea{
+      width:100%;
+      height:3rem;
+      box-sizing: border-box;
+      padding:.3rem;
+      resize:none;
+      outline:none;
+      font-size:.28rem;
+      &::placeholder{
+        color:@light;
+      }
+    }
+    >.actions{
+      text-align: right;
+      >span{
+        width:.96rem;
+        height:.6rem;
+        line-height:.6rem;
+        text-align: center;
+        margin-right:.4rem;
+        border:0.5px solid #111;
+      }
+    }
+  }
 </style>
 <template>
   <div class="bottom-container article_detail-container" :class="{ hasRecommend:article && article.goods_count > 0 }">
@@ -424,12 +458,12 @@
           <span class="button" v-if="article.can_attention != 0" @click="follow">{{ article.is_attention == 0 ? '关注TA' : '已关注' }}</span>
           <span class="follows">{{article.attention_count}}人关注</span>
         </div>
-        <div class="recommend" v-if="article.goods_count > 0" @click="ifShowGoods = !ifShowGoods">
+        <div class="recommend" v-if="article.goods_count > 0" @click="shade.ifShowGoods = !shade.ifShowGoods">
           <img v-for="item in topShowGoodsImg" :src="item.cover">
           <span class="btn" :class="{active:ifShowGoods}">{{ifShowGoods ? '收起' : '展开'}}</span>
           <span>共推荐{{article.goods_count}}件商品</span>
         </div>
-        <ul v-show="ifShowGoods">
+        <ul v-show="shade.ifShowGoods">
           <li v-for="item in article.goods" v-href="['goods_detail', {goods_id:item.goods_id}]">
             <img :src="item.cover">
             <span>{{item.name}}</span>
@@ -513,14 +547,21 @@
       <ul class="footer">
         <li><span :class="{on:article.is_collection == 1}" @click="favor">收藏</span></li>
         <li><span :class="{on:article.is_like == 1}" @click="like">点赞</span></li>
-        <li><span>评论</span></li>
+        <li><span @click="shade.ifShowComment=true">评论</span></li>
       </ul>
     </div>
     <div v-if="cantFind" class="tip-nothing" style="margin-top:2rem;">
       <img src="../../assets/img/Tip_nothing.png">
       <div>未找到对应的文章信息</div>
     </div>
-    <the-shade v-show="ifShowGoods" @click.native="ifShowGoods = false"></the-shade>
+    <div class="comments-model" v-show="shade.ifShowComment">
+      <textarea placeholder="请输入评论内容"></textarea>
+      <div class="actions">
+        <span>取消</span>
+        <span>发送</span>
+      </div>
+    </div>
+    <the-shade v-show="ifShowShade" @click.native="hideShade"></the-shade>
     <app-permanent type="1"></app-permanent>
   </div>
 </template>
@@ -536,9 +577,21 @@
         content: null,
         ifShowGoods: false,
         ifShowRecommend: false,
+        shade:{
+          ifShowGoods:false,
+          ifShowComment:false,
+        }
       }
     },
     computed: {
+      ifShowShade(){
+        for (let i in this.shade) {
+          if(this.shade[i]) {
+            return true
+          }
+        }
+        return false;
+      },
       article(){
         if (this.content) {
           return this.content.article;
@@ -622,6 +675,11 @@
               this.cantFind = true;
             }
           })
+      },
+      hideShade(){
+        for (let i in this.shade) {
+          this.shade[i] = false;
+        }
       }
     },
     created(){

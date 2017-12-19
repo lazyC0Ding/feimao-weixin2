@@ -3,7 +3,7 @@
     background-color: #fff;
     padding-bottom: .3rem;
     font-size:0;
-    > li {
+    > li.li{
       position:relative;
       vertical-align: top;
       display: inline-block;
@@ -43,11 +43,11 @@
 </style>
 <template>
   <ul class="images">
-    <li v-for="(image, index) in images">
+    <li class="li" v-for="(image, index) in images">
       <img class="content" :src="image">
       <img class="close" src="../assets/img/close_redbj.png" @click="images.splice(index,1)">
     </li><!--
-    --><li @click="chooseImg" v-show="images.length < 6">{{images.length + 1}}/6</li>
+    --><li class="li" @click="chooseImg" v-show="images.length < 6">{{images.length + 1}}/6</li>
     <br><li class="test">{{test}}</li>
   </ul>
 </template>
@@ -72,13 +72,12 @@
           sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
           success: (res) => {
             const localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-            let media_id;
             for (let i of localIds) {
               wx.uploadImage({
                 localId: i, // 需要上传的图片的本地ID，由chooseImage接口获得
                 isShowProgressTips: 1, // 默认为1，显示进度提示
                 success: (res) => {
-                  media_id = res.serverId; // 返回图片的服务器端ID
+                  const media_id = res.serverId; // 返回图片的服务器端ID
                   this.$post(URL.upload_weixin, {media_id})
                     .then (res => {
                       if(res.errcode == 0) {

@@ -65,8 +65,6 @@
       <div class="btn-big" style="margin-top:.6rem;" @click="bind">完成绑定</div>
     </template>
     <div class="tip" v-if="!needBind" >正在跳转中...</div>
-    <!--<div>{{test1 || '测试数据1'}}</div>-->
-    <!--<div>{{test2 || '测试数据2'}}</div>-->
   </div>
 </template>
 <script>
@@ -84,8 +82,6 @@
           type: 5,
         },
         wxData: null,
-        test1:'',
-        test2:'',
       }
     },
     methods: {

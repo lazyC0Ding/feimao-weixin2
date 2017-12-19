@@ -66,7 +66,7 @@ export default {
       const maxHeight = width / 1.25;
       el.style.height = minHeight + 'px';
       el.style.background = 'url(./static/img/default_Article_pic.png) no-repeat center center';
-      el.style.backgroundSize = 'cover';
+      el.style.backgroundSize = '100%';
 
       const src = binding.value;
       let ratio;

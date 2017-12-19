@@ -3,7 +3,7 @@
     background-color: #fff;
     padding-bottom: .3rem;
     font-size: 0;
-    > li.li {
+    > li {
       position: relative;
       vertical-align: top;
       display: inline-block;
@@ -15,10 +15,16 @@
       text-align: center;
       font-size: .2rem;
       color: #9DA5A8;
-      background: url(../assets/img/upload_pic.png) no-repeat center .4rem;
-      background-size: .44rem .36rem;
       border: .5px solid #979797;
       box-sizing: border-box;
+      &.chooseImg{
+        background: url(../assets/img/upload_pic.png) no-repeat center .4rem;
+        background-size: .44rem .36rem;
+      }
+      &.image{
+        background:no-repeat center center;
+        background-size:100%;
+      }
       > .content {
         width: 100%;
         height: 100%;
@@ -32,22 +38,14 @@
       }
     }
   }
-
-  .test {
-    display: block;
-    width: 100%;
-    height: 100%;
-    font-size: .28rem;
-    -webkit-user-select: auto;
-  }
 </style>
 <template>
   <ul class="images">
-    <li class="li" v-for="(image, index) in images">
-      <img class="content" :src="image.localId">
-      <img class="close" src="../assets/img/close_redbj.png" @click="images.splice(index,1)">
+    <li class="image" v-for="(image, index) in images" :style="{backgroundImage:image.localId}">
+      <!--<img class="content" :src="image.localId">-->
+      <img class="close" src="../assets/img/close_redbj.png" @click.stop="images.splice(index,1)">
     </li><!--
-    --><li class="li" @click="chooseImg" v-show="images.length < 6">{{images.length + 1}}/6</li>
+    --><li class="chooseImg" @click="chooseImg" v-show="images.length < 6">{{images.length + 1}}/6</li>
   </ul>
 </template>
 <script>
@@ -82,7 +80,6 @@
           localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得
           isShowProgressTips: 1, // 默认为1，显示进度提示
           success: (res) => {
-            alert('uploadImage:' + JSON.stringify(res));
             const media_id = res.serverId; // 返回图片的服务器端ID
             this.$post(URL.upload_weixin, {media_id})
               .then(res => {

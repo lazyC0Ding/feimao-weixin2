@@ -67,11 +67,6 @@
     width: 100%;
   }
 
-  .test{
-    width:100%;
-    font-size:.28rem;
-    -webkit-user-select: auto;
-  }
 </style>
 <template>
   <div v-if="search" style="position:relative;height:100%;">
@@ -88,7 +83,6 @@
       <span class="title">上传图片</span>
     </div>
     <app-upload-img :images="images"></app-upload-img>
-    <div class="test">{{test}}</div>
     <footer>
       <div class="btn-big" style="margin-bottom:.1rem;" @click="submit">提交</div>
     </footer>
@@ -106,40 +100,11 @@
         images: [],
         comment: '',
         star:0,
-        test:'',
       }
     },
     methods: {
       submit(){
-        const url = location.href.split('#')[0];
-        console.log(url);
-        $vue.$post(URL.getWeixinInfo, {url})
-          .then (res => {
-            console.log(res);
-            return;
 
-
-
-
-            if(res.errcode == 0) {
-              const content = res.content;
-              wx.config({
-                debug: true,
-                appId: content.appId,
-                timestamp: content.timestamp,
-                nonceStr: content.nonceStr,
-                signature: content.signature,
-                jsApiList: [
-                  'chooseImage',
-                  'uploadImage',
-                  'chooseWXPay',
-                  'previewImage',
-                ]
-              });
-            }else{
-              errback(res);
-            }
-          })
       }
     },
     created(){

@@ -48,6 +48,7 @@
     > ul {
       width: 100%;
       height: 100%;
+      line-height:2.6rem;
       padding-top: .38rem;
       padding-left: .72rem;
       box-sizing: border-box;
@@ -130,8 +131,8 @@
             <dd><span>{{person.nickname}}</span></dd>
           </dl>
           <span @click="follow(person.customer_id)">关注TA</span>
-        </li>
-        <li v-if="attention.persons.length >= 9">
+        </li><!--
+        --><li v-if="attention.persons.length >= 9">
           <dl>
             <dt v-href="'follows'">
               <img src="../../assets/img/people_more.png">

@@ -24,6 +24,7 @@
         background-size: .44rem .36rem;
       }
       > .content {
+        display: block;
         width: 100%;
       }
       > .close {
@@ -85,10 +86,7 @@
                     localId:localId,
                     src:res.content.url,
                   });
-                  if(this.uploadIndex === this.localIds.length - 1) {
-                    this.localIds = null;
-                    this.uploadIndex = 0;
-                  }else{
+                  if(this.uploadIndex < this.localIds.length - 1) {
                     this.uploadIndex++;
                     this.upload();
                   }

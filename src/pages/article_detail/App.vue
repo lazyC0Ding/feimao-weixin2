@@ -175,7 +175,6 @@
       > div.video {
         margin-top: .4rem;
         height: 5rem;
-        background: url(../../assets/img/default_pic.png);
         background-size: 100% 100%;
         > video {
           width: 100%;
@@ -508,7 +507,7 @@
                 </div>
               </div>
             </div>
-            <div class="video" v-else-if="item.type === 'video'">
+            <div class="video" v-else-if="item.type === 'video'" :style="{backgroundImage:'url(./static/img/default_pic.png)'}">
               <video :src="item.content" preload="auto" controls="controls"></video>
             </div>
           </template>

@@ -133,8 +133,13 @@
         }else{
           params.refund_sn = this.refund_sn;
         }
-        if(this.images.length)
-            params.images = this.images.join(',');
+        if(this.images.length) {
+          const arr = [];
+          for (let i of this.images) {
+            arr.push(i.src);
+          }
+          params.images = arr.join(',');
+        }
         return params;
       }
     },

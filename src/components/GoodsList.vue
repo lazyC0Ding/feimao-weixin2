@@ -19,7 +19,6 @@
           margin-left: .2rem;
           width: 1.8rem;
           height: 1.8rem;
-          background-image: url(../assets/img/default_goods.png);
           background-size:100% 100%;
           > img {
             width: 100%;
@@ -97,7 +96,7 @@
   <ul>
     <li v-for="item in goods" :key="item.cart_id">
       <span>
-        <span class="img">
+        <span class="img" :style="{backgroundImage: 'url(../assets/img/default_goods.png)'}">
           <img @click="openGoodsDetail(item.goods_id)" :src="item.cover || item.image">
         </span>
       </span>

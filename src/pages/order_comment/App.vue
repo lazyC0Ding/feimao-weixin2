@@ -103,12 +103,16 @@
     },
     methods: {
       submit(){
-        const url = location.href.split('#')[0];
+        const url = decodeURIComponent(location.href.split('#')[0]);
         console.log(url);
         $vue.$post(URL.getWeixinInfo, {url})
           .then (res => {
             console.log(res);
             return;
+
+
+
+
             if(res.errcode == 0) {
               const content = res.content;
               wx.config({

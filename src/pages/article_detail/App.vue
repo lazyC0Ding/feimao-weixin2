@@ -557,7 +557,7 @@
     <div class="comments-model" v-show="shade.ifShowComment">
       <textarea placeholder="请输入评论内容"></textarea>
       <div class="actions">
-        <span>取消</span>
+        <span @click="shade.ifShowComment=false">取消</span>
         <span>发送</span>
       </div>
     </div>

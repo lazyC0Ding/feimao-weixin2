@@ -219,6 +219,7 @@
               isShowProgressTips: 1, // 默认为1，显示进度提示
               success: (res) => {
                 var serverId = res.serverId; // 返回图片的服务器端ID
+                alert(serverId);
                 //接下来将serverId传给后台
                 /*
                 *

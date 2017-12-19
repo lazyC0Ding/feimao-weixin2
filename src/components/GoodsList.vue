@@ -96,7 +96,7 @@
   <ul>
     <li v-for="item in goods" :key="item.cart_id">
       <span>
-        <span class="img" :style="{backgroundImage: 'url(../assets/img/default_goods.png)'}">
+        <span class="img" :style="{backgroundImage: 'url(./static/img/default_goods.png)'}">
           <img @click="openGoodsDetail(item.goods_id)" :src="item.cover || item.image">
         </span>
       </span>
@@ -168,7 +168,8 @@
       },
       clickShowRefund(item){
         if (!item.refund_state){
-          openPage('refund_apply', {goods:item, order_sn:this.order_sn});
+          setSession('refund_apply', {goods:item, order_sn:this.order_sn});
+          openPage('refund_apply');
           return;
         }
         switch (item.refund_state) {
@@ -179,7 +180,8 @@
       },
       clickIsRefund(item){
         if (!item.refund_state){
-          openPage('refund_apply', {goods:item, order_sn:this.order_sn, canSelectType:true});
+          setSession('refund_apply', {goods:item, order_sn:this.order_sn, canSelectType:true});
+          openPage('refund_apply');
           return;
         }
         switch (item.refund_state) {

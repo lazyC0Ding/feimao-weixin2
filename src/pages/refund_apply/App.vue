@@ -180,8 +180,8 @@
     },
     created(){
       document.title = '申请退款';
-      console.log(getSearchParams(location.search));
-      const {goods, order_sn, refund_sn, canSelectType} = getSearchParams(location.search);
+      console.log(getSession('refund_apply'));
+      const {goods, order_sn, refund_sn, canSelectType} = getSession('refund_apply');
       this.goods = goods;
       this.order_sn = order_sn;
       this.refund_sn = refund_sn;

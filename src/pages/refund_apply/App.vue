@@ -97,7 +97,6 @@
       </li>
       <app-upload-img :images="images"></app-upload-img>
     </ul>
-    <div>{{test}}</div>
     <div class="btn-big" style="margin-top:.7rem;" @click="apply">提交</div>
     <app-permanent type="2"></app-permanent>
   </div>
@@ -118,7 +117,6 @@
         money: '',
         images: [],
         canSelectType:false,
-        test:'',
       }
     },
     computed: {
@@ -147,13 +145,10 @@
     },
     methods: {
       apply(){
-        this.test = JSON.stringify(this.params);
-        return;
         if(!this.reason.trim()){
           toast('请输入退款原因');
           return;
         }
-
         if(Number(this.money) > this.content.refund_amount) {
           toast('可退款最大金额为' + this.content.refund_amount + '元');
           return;

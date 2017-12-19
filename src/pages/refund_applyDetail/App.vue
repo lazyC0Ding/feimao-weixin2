@@ -30,10 +30,10 @@
 <template>
   <div>
     <goods-list :goods="goods"></goods-list>
-    <div class="refund_applyDetail-row">退款原因
+    <div class="refund_applyDetail-row" style="margin-top:.1rem;border-bottom: 1px solid #e4e4e4;">退款原因
       <span>{{content.reason}}</span>
     </div>
-    <div class="refund_applyDetail-row">退款金额
+    <div class="refund_applyDetail-row" style="border-bottom: 1px solid #e4e4e4;">退款金额
       <span>{{content.price}}</span>
     </div>
     <div class="refund_applyDetail-row">上传的凭证</div>

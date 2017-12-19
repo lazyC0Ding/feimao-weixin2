@@ -82,6 +82,7 @@
             this.$post(URL.upload_weixin, {media_id})
               .then(res => {
                 if (res.errcode == 0) {
+                  alert(JSON.stringify(res.content));
                   this.images.push({
                     localId:localId,
                     src:res.content.url,

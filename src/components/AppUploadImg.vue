@@ -34,6 +34,9 @@
   }
 
   .test{
+    display: block;
+    width:100%;
+    height:100%;
     font-size:.28rem;
     -webkit-user-select: auto;
   }
@@ -45,7 +48,7 @@
       <img class="close" src="../assets/img/close_redbj.png" @click="images.splice(index,1)">
     </li><!--
     --><li @click="chooseImg" v-show="images.length < 6">{{images.length + 1}}/6</li>
-    <li class="test">{{test}}</li>
+    <br><li class="test">{{test}}</li>
   </ul>
 </template>
 <script>

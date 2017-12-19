@@ -213,7 +213,7 @@
         <span v-href="['activity_goods', {type:1, name:time.activity_name}]">查看全部</span>
       </div>
       <ul class="seckill_goods-goods">
-        <li v-for="item in seckill_goods.goods">
+        <li v-for="item in seckill_goods.goods" v-href="['goods_detail', {goods_id:item.goods_id}]">
           <img :src="item.cover">
           <div class="name">{{item.name}}</div>
           <div class="price">
@@ -236,7 +236,7 @@
         <span v-href="['activity_goods', {type:2, name:time.activity_name}]">查看全部</span>
       </div>
       <ul class="seckill_goods-goods">
-        <li v-for="item in coupon_goods.goods">
+        <li v-for="item in coupon_goods.goods" v-href="['goods_detail', {goods_id:item.goods_id}]">
           <img :src="item.cover">
           <div class="name">{{item.name}}</div>
           <div class="price">
@@ -258,8 +258,7 @@
             <span class="activity_price">¥{{item.price}}</span>
           </div>
         </li><!--
-        -->
-        <li v-if="sepcial.goods && sepcial.goods.length > 3" @click="toGoods">
+        --><li v-if="sepcial.goods && sepcial.goods.length > 3" @click="toGoods">
           <img src="../../assets/img/goods_more.png">
           <div style="font-size:.24rem;margin-top:.1rem;">查看全部</div>
         </li>

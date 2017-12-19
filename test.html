@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style type="text/css">
+    /*.m-demo{*/
+      /*position:relative;*/
+      /*width:70px;*/
+      /*height:70px;*/
+      /*overflow:hidden;*/
+      /*border:1px solid #ddd;*/
+    /*}*/
+    /*.m-demo p{*/
+      /*position:absolute;*/
+      /*top:50%;*/
+      /*left:50%;*/
+      /*margin:0;*/
+      /*padding:0;*/
+      /*width:100%;*/
+    /*}*/
+    /*.m-demo img{*/
+      /*position:absolute;*/
+      /*top:-50%;*/
+      /*left:-50%;*/
+      /*width:100%;*/
+    /*}*/
+    /*.m-demo img.hidden{*/
+      /*visibility:hidden;*/
+      /*position:static;*/
+    /*}*/
+
+    .a{
+      position:relative;
+      width:70px;
+      height:70px;
+      overflow:hidden;
+    }
+
+    .a .b{
+      position:absolute;
+      top:50%;
+      left:50%;
+      margin:0;
+      padding:0;
+      width:100%;
+    }
+
+    .a img{
+      position:absolute;
+      top:-50%;
+      left:-50%;
+      width:100%;
+    }
+
+    .a img.hidden{
+      visibility: hidden;
+      position:static;
+    }
+  </style>
+</head>
+<body>
+  <!--<div class="m-demo">-->
+    <!--<p>-->
+      <!--<img alt="" src="http://qiniu.feelmao.com/upload/portrait/2017_12_19/7294a4f3105696c0ea1b81b999b55866dd468f45.jpg?imageView2/2/w/200/h/200">-->
+      <!--<img class="hidden" src="http://qiniu.feelmao.com/upload/portrait/2017_12_19/7294a4f3105696c0ea1b81b999b55866dd468f45.jpg?imageView2/2/w/200/h/200">-->
+    <!--</p>-->
+  <!--</div>-->
+
+  <div style="overflow:hidden;">
+  <span class="a">
+    <span class="b">
+      <img src="http://qiniu.feelmao.com/upload/portrait/2017_12_19/7294a4f3105696c0ea1b81b999b55866dd468f45.jpg?imageView2/2/w/200/h/200">
+      <img class="hidden" src="http://qiniu.feelmao.com/upload/portrait/2017_12_19/7294a4f3105696c0ea1b81b999b55866dd468f45.jpg?imageView2/2/w/200/h/200">
+    </span>
+  </span>
+  </div>
+
+</body>
+</html>

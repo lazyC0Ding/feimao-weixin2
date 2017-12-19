@@ -19,16 +19,35 @@
       height:2rem;
       line-height:2rem;
       text-align: center;
-      >img{
-        vertical-align: middle;
+      >span{
+        position:relative;
         width:1.4rem;
         height:1.4rem;
+        overflow:hidden;
+        >span{
+          position:absolute;
+          top:50%;
+          left:50%;
+          margin:0;
+          padding:0;
+          width:100%;
+          >img{
+            position:absolute;
+            top:-50%;
+            left:-50%;
+            width:100%;
+          }
+          >img.hidden{
+            visibility: hidden;
+            position:static;
+          }
+        }
       }
     }
   }
 </style>
 <template>
-  <div>
+  <div v-if="content">
     <goods-list :goods="goods"></goods-list>
     <div class="refund_applyDetail-row" style="margin-top:.1rem;border-bottom: 1px solid #e4e4e4;">退款原因
       <span>{{content.reason}}</span>
@@ -39,7 +58,12 @@
     <div class="refund_applyDetail-row">上传的凭证</div>
     <ul class="refund_applyDetail-ul">
       <li v-for="item in content.images">
-        <img :src="item">
+        <span>
+          <span>
+            <img :src="item">
+            <img class="hidden" :src="item">
+          </span>
+        </span>
       </li>
     </ul>
     <app-permanent type="2"></app-permanent>

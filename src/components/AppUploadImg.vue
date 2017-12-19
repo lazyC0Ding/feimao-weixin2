@@ -36,7 +36,7 @@
 <template>
   <ul class="images">
     <li v-for="(image, index) in images">
-      <img class="content" :src="image.src | avatar">
+      <img class="content" :src="image">
       <img class="close" src="../assets/img/close_redbj.png" @click="images.splice(index,1)">
     </li><!--
     --><li @click="chooseImg" v-show="images.length < 6">{{images.length + 1}}/6</li>

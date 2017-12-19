@@ -145,11 +145,11 @@
         </li>
       </ul>
     </div>
-    <div v-if="!attention.articles.length" v-show="activeTag === 0" class="tip-nothing">
+    <div v-if="attention.articles && !attention.articles.length" v-show="activeTag === 0" class="tip-nothing">
       <img src="../../assets/img/Tip_nothing.png">
       <div>暂无关注</div>
     </div>
-    <app-articles v-show="activeTag === 0" :parentData="_data" :articles="attention.articles"></app-articles>
+    <app-articles v-if="attention.articles" v-show="activeTag === 0" :parentData="_data" :articles="attention.articles"></app-articles>
     <app-articles v-show="activeTag === 1" :parentData="_data" :articles="articles"></app-articles>
     <goods-container v-show="activeTag === 2" :parentData="_data" :goods="recommend" hidePrice></goods-container>
     <load-more
@@ -183,7 +183,7 @@
         },
         activeTag: 0,
         attention: {
-          articles: [],
+          articles: null,
           persons: [],
         },
         articles: [],

@@ -70,7 +70,7 @@
         <div class="text">
           <div class="title">
             <span class="title-1">{{item.title}}</span>
-            <span class="title-2" v-if="item.out_refund_sn">查看申请详情</span>
+            <span class="title-2" v-if="item.out_refund_sn" v-href="['refund_applyDetail', {refund_sn:item.refund_sn, return_message_id:item.id}]">查看申请详情</span>
           </div>
           <div class="content">
             <div>{{item.content}}</div>
@@ -133,7 +133,8 @@
             break;
           }
         }
-        openPage('refund_express', {address, name, refund_sn:this.refund_sn})
+        setSession('refund_express', {address, name, refund_sn: this.refund_sn});
+        openPage('refund_express')
       },
       cancel(){
         this.$post(URL.cancal_refund, {refund_sn: this.content.refund_sn})

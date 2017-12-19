@@ -138,7 +138,11 @@
         };
 
         if(this.images.length) {
-          params.images = this.images.join(',');
+          const arr = [];
+          for (let i of this.images) {
+            arr.push(i.src);
+          }
+          params.images = arr.join(',');
         }
         return params;
       }
@@ -179,7 +183,8 @@
     },
     created(){
       document.title = '上传快递单号';
-      const {refund_sn, address, name} = getSearchParams(location.search);
+//      const {refund_sn, address, name} = getSearchParams(location.search);
+      const {refund_sn, address, name} = getSession('refund_express');
       this.refund_sn = refund_sn;
       this.address = address;
       this.name = name;

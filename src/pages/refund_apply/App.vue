@@ -97,6 +97,7 @@
       </li>
       <app-upload-img :images="images"></app-upload-img>
     </ul>
+    <div>{{test}}</div>
     <div class="btn-big" style="margin-top:.7rem;" @click="apply">提交</div>
     <app-permanent type="2"></app-permanent>
   </div>
@@ -117,6 +118,7 @@
         money: '',
         images: [],
         canSelectType:false,
+        test:'',
       }
     },
     computed: {
@@ -145,6 +147,8 @@
     },
     methods: {
       apply(){
+        this.test = this.params.images;
+        return;
         if(!this.reason.trim()){
           toast('请输入退款原因');
           return;

@@ -76,4 +76,5 @@ const URL = {
   getComments:'article/getComments',
   upload_weixin:'upload/upload_weixin',
   recommendFood:'setting/recommendFood',
+  refundDetail:'order/refundDetail',
 };

@@ -47,10 +47,9 @@
       <img class="content" :src="image">
       <img class="close" src="../assets/img/close_redbj.png" @click="images.splice(index,1)">
     </li><!--
-    -->
-    <li class="li" @click="chooseImg" v-show="images.length < 6">{{images.length + 1}}/6</li>
+    --><li class="li" @click="chooseImg" v-show="images.length < 6">{{images.length + 1}}/6</li>
     <br>
-    <li class="test">{{test}}12312312312321</li>
+    <li class="test">{{test}}</li>
   </ul>
 </template>
 <script>
@@ -82,10 +81,9 @@
                   const media_id = res.serverId; // 返回图片的服务器端ID
                   this.$post(URL.upload_weixin, {media_id})
                     .then(res => {
-                      alert(res);
                       this.test = JSON.stringify(res);
                       if (res.errcode == 0) {
-                        this.images.push(res.content.url);
+                        this.images.push(i);
                       } else {
                         errback(res);
                       }

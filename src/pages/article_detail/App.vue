@@ -498,7 +498,7 @@
             <div class="image" v-else-if="item.type === 'image'" @click="previewImage(item)">
               <img :src="item.content">
             </div>
-            <div class="url" v-else-if="item.type === 'url'">
+            <div class="url" v-else-if="item.type === 'url'" v-href="['goods_detail', {goods_id:item.goods.goods_id}]">
               <img :src="item.goods.cover">
               <div>
                 <div class="a">{{item.goods.name}}</div>

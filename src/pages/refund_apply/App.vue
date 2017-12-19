@@ -95,12 +95,7 @@
       <li class="row no-border-bottom">
         <span class="title">上传凭证</span>
       </li>
-      <li class="images">
-        <span v-for="image in images">
-
-        </span><!--
-        --><span v-show="images.length < 6">{{images.length + 1}}/6</span>
-      </li>
+      <app-upload-img :images="images"></app-upload-img>
     </ul>
     <div class="btn-big" style="margin-top:.7rem;" @click="apply">提交</div>
     <app-permanent type="2"></app-permanent>
@@ -109,6 +104,7 @@
 <script>
   import AppPermanent from '@c/AppPermanent.vue'
   import GoodsList from '@c/GoodsList.vue'
+  import AppUploadImg from '@c/AppUploadImg.vue'
   export default {
     data () {
       return {
@@ -190,6 +186,7 @@
     components: {
       AppPermanent,
       GoodsList,
+      AppUploadImg,
     }
   }
 </script>

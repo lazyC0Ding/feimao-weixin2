@@ -85,12 +85,7 @@
       <li class="row no-border-bottom">
         <span class="title">上传图片</span>
       </li>
-      <li class="images">
-        <span v-for="image in images">
-
-        </span><!--
-        --><span v-show="images.length < 3">{{images.length + 1}}/3</span>
-      </li>
+      <app-upload-img :images="images"></app-upload-img>
     </ul>
     <div class="btn-big" style="margin-top:.8rem;" @click="apply">提交</div>
     <popup v-model="showExpress" style="overflow-y: visible;">
@@ -105,6 +100,7 @@
 <script>
   import {Picker, Popup} from 'vux';
   import AppPermanent from '@c/AppPermanent.vue'
+  import AppUploadImg from '@c/AppUploadImg.vue'
   export default {
     data () {
       return {
@@ -193,6 +189,7 @@
       AppPermanent,
       Picker,
       Popup,
+      AppUploadImg,
     }
   }
 </script>

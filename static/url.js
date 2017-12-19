@@ -74,4 +74,5 @@ const URL = {
   payorder:'order/payorder',
   recharge:'user/recharge',
   getComments:'article/getComments',
+  upload_weixin:'upload/upload_weixin',
 };

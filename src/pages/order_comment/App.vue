@@ -66,6 +66,12 @@
     bottom: 0;
     width: 100%;
   }
+
+  .test{
+    width:100%;
+    font-size:.28rem;
+    -webkit-user-select: auto;
+  }
 </style>
 <template>
   <div v-if="search" style="position:relative;height:100%;">
@@ -82,6 +88,7 @@
       <span class="title">上传图片</span>
     </div>
     <app-upload-img :images="images"></app-upload-img>
+    <div class="test">{{test}}</div>
     <footer>
       <div class="btn-big" style="margin-bottom:.1rem;" @click="submit">提交</div>
     </footer>
@@ -99,6 +106,7 @@
         images: [],
         comment: '',
         star:0,
+        test:'',
       }
     },
     methods: {
@@ -136,6 +144,7 @@
     },
     created(){
       document.title = '评价';
+      this.test = location.href.split('#')[0];
       this.search = getSearchParams(location.search);
     },
     components: {

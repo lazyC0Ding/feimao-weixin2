@@ -92,6 +92,11 @@
       }
     }
   }
+
+  .test{
+    font-size:.28rem;
+    -webkit-user-select: auto;
+  }
 </style>
 <template>
   <div>
@@ -135,6 +140,7 @@
         <img class="row-arrow" style="width:.28rem;height:.28rem;" src="../../assets/img/direction_right_black.png">
       </li>
     </ul>
+    <div class="test">{{test}}</div>
     <div class="nickname" v-show="show.nickname">
       <div>
         <input v-model="update.nickname" ref="inputNickname">
@@ -170,6 +176,7 @@
         },
         title: '',
         showSex: false,
+        test:'',
       }
     },
     computed: {
@@ -219,6 +226,7 @@
               isShowProgressTips: 1, // 默认为1，显示进度提示
               success: (res) => {
                 var serverId = res.serverId; // 返回图片的服务器端ID
+                this.test = serverId;
                 alert(serverId);
                 //接下来将serverId传给后台
                 /*
@@ -252,7 +260,6 @@
         }
         this.$post(URL.changeIntroduction, {introduction: this.update.introduction})
           .then (res => {
-            console.log(res);
             if(res.errcode == 0) {
               this.content.introduction = res.content;
               history.go(-1);
@@ -272,7 +279,6 @@
 
         this.$post(URL.changeSex, {type})
           .then (res => {
-            console.log(res);
             if(res.errcode == 0) {
               toast('修改性别成功');
               this.content.sex = res.content;

@@ -63,6 +63,8 @@
         display: inline-block;
         text-align: center;
         width: 1.52rem;
+        line-height:normal;
+        vertical-align: top;
         &:first-child {
           margin-left: .1rem;
         }

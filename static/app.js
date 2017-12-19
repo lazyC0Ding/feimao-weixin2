@@ -24,7 +24,7 @@ function setVue($_vue) {
           if(res.errcode == 0) {
             const content = res.content;
             wx.config({
-              debug: true,
+              debug: false,
               appId: content.appId,
               timestamp: content.timestamp,
               nonceStr: content.nonceStr,

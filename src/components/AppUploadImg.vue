@@ -48,8 +48,6 @@
       <img class="close" src="../assets/img/close_redbj.png" @click="images.splice(index,1)">
     </li><!--
     --><li class="li" @click="chooseImg" v-show="images.length < 6">{{images.length + 1}}/6</li>
-    <br>
-    <li class="test">{{test}}</li>
   </ul>
 </template>
 <script>
@@ -62,7 +60,8 @@
     },
     data(){
       return {
-        test: '',
+        localIds: null,
+        uploadIndex: 0,
       }
     },
     methods: {
@@ -72,25 +71,33 @@
           sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
           sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
           success: (res) => {
-            const localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-            for (let i of localIds) {
-              wx.uploadImage({
-                localId: i, // 需要上传的图片的本地ID，由chooseImage接口获得
-                isShowProgressTips: 1, // 默认为1，显示进度提示
-                success: (res) => {
-                  const media_id = res.serverId; // 返回图片的服务器端ID
-                  this.$post(URL.upload_weixin, {media_id})
-                    .then(res => {
-                      this.test = JSON.stringify(res);
-                      if (res.errcode == 0) {
-                        this.images.push(i);
-                      } else {
-                        errback(res);
-                      }
-                    })
+            this.localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+            this.upload();
+          }
+        });
+      },
+      upload(){
+        const localId = this.localIds[this.uploadIndex];
+        wx.uploadImage({
+          localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得
+          isShowProgressTips: 1, // 默认为1，显示进度提示
+          success: (res) => {
+            const media_id = res.serverId; // 返回图片的服务器端ID
+            this.$post(URL.upload_weixin, {media_id})
+              .then(res => {
+                if (res.errcode == 0) {
+                  this.images.push(res.content.url);
+                  if(this.uploadIndex === this.localIds.length - 1) {
+                    this.localIds = null;
+                    this.uploadIndex = 0;
+                  }else{
+                    this.uploadIndex++;
+                    this.upload();
+                  }
+                } else {
+                  errback(res);
                 }
-              });
-            }
+              })
           }
         });
       }

@@ -44,7 +44,7 @@
 <template>
   <ul class="images">
     <li class="li" v-for="(image, index) in images">
-      <img class="content" :src="image">
+      <img class="content" :src="image.localId">
       <img class="close" src="../assets/img/close_redbj.png" @click="images.splice(index,1)">
     </li><!--
     --><li class="li" @click="chooseImg" v-show="images.length < 6">{{images.length + 1}}/6</li>
@@ -86,7 +86,10 @@
             this.$post(URL.upload_weixin, {media_id})
               .then(res => {
                 if (res.errcode == 0) {
-                  this.images.push(res.content.url);
+                  this.images.push({
+                    localId:localId,
+                    src:res.content.url,
+                  });
                   if(this.uploadIndex === this.localIds.length - 1) {
                     this.localIds = null;
                     this.uploadIndex = 0;

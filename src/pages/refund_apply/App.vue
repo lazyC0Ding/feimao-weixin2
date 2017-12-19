@@ -147,7 +147,7 @@
     },
     methods: {
       apply(){
-        this.test = this.params.images;
+        this.test = JSON.stringify(this.params);
         return;
         if(!this.reason.trim()){
           toast('请输入退款原因');

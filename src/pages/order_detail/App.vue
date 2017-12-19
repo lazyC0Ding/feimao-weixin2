@@ -160,7 +160,7 @@
   }
 </style>
 <template>
-  <div v-if="order">
+  <div v-if="order" style="padding-bottom:1rem;">
     <div class="order_detail-top" v-if="order.order_state == 1">
       <img src="../../assets/img/Orderdet_fukuan.png">
       <span>

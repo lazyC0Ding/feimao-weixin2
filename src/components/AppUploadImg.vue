@@ -84,7 +84,7 @@
                 if (res.errcode == 0) {
                   this.images.push({
                     localId:localId,
-                    src:res.content.content.url,
+                    src:res.content.content.name,
                   });
                   if(this.uploadIndex === this.localIds.length - 1) {
                     this.uploadIndex = 0;

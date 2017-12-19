@@ -227,7 +227,6 @@
               success: (res) => {
                 var serverId = res.serverId; // 返回图片的服务器端ID
                 this.test = serverId;
-                alert(serverId);
                 //接下来将serverId传给后台
                 /*
                 *

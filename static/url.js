@@ -73,4 +73,5 @@ const URL = {
   agreement:'setting/agreement',
   payorder:'order/payorder',
   recharge:'user/recharge',
+  getComments:'article/getComments',
 };

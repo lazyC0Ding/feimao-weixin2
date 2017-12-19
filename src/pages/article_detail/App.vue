@@ -162,11 +162,11 @@
       }
       > div.image {
         margin-top: .4rem;
-        min-height:4rem;
+        min-height: 4rem;
         background-image: url(../../assets/img/default_pic.png);
-        background-size:100% 100%;
-        >img{
-          width:100%;
+        background-size: 100% 100%;
+        > img {
+          width: 100%;
           display: block;
           &:first-child {
             margin-top: 0;
@@ -327,6 +327,15 @@
     > li {
       position: relative;
       overflow: hidden;
+      padding-left:1.1rem;
+      &:last-child{
+        >div.content{
+          &:after{
+            width:0;
+            height:0;
+          }
+        }
+      }
       > img.avatar {
         position: absolute;
         top: .24rem;
@@ -338,7 +347,7 @@
       > div.content {
         position: relative;
         overflow: hidden;
-        padding: .28rem 0 .32rem 1.1rem;
+        padding:.28rem 0 .32rem;
         .border-bottom-1px;
         > .a {
           > .a-1 {
@@ -411,36 +420,36 @@
     }
   }
 
-  .comments-model{
-    position:fixed;
-    left:10%;
-    top:2.4rem;
-    width:80%;
-    overflow:hidden;
-    padding-bottom:.3rem;
-    z-index:9;
-    background-color:#fff;
-    >textarea{
-      width:100%;
-      height:3rem;
+  .comments-model {
+    position: fixed;
+    left: 10%;
+    top: 2.4rem;
+    width: 80%;
+    overflow: hidden;
+    padding-bottom: .3rem;
+    z-index: 9;
+    background-color: #fff;
+    > textarea {
+      width: 100%;
+      height: 3rem;
       box-sizing: border-box;
-      padding:.3rem;
-      resize:none;
-      outline:none;
-      font-size:.28rem;
-      &::placeholder{
-        color:@light;
+      padding: .3rem;
+      resize: none;
+      outline: none;
+      font-size: .28rem;
+      &::placeholder {
+        color: @light;
       }
     }
-    >.actions{
+    > .actions {
       text-align: right;
-      >span{
-        width:.96rem;
-        height:.6rem;
-        line-height:.6rem;
+      > span {
+        width: .96rem;
+        height: .6rem;
+        line-height: .6rem;
         text-align: center;
-        margin-right:.4rem;
-        border:0.5px solid #111;
+        margin-right: .4rem;
+        border: 0.5px solid #111;
       }
     }
   }
@@ -505,6 +514,7 @@
             </div>
           </template>
         </div>
+        <!-- 文章推荐 -->
         <div v-if="article.articles_count > 0" class="recommend-articles">
           <div>文章推荐</div>
           <div>
@@ -515,6 +525,7 @@
           </div>
         </div>
       </div>
+      <!-- 点赞列表 -->
       <div class="likes" v-if="content.likes_count>0">
         <img src="../../assets/img/direction_right_black.png">
         <span>{{content.likes_count}}</span>
@@ -522,14 +533,15 @@
           <li v-for="item in content.likes"><img :src="item.avater | avatar"></li>
         </ul>
       </div>
+      <!-- 评论列表 -->
       <ul class="comments">
-        <li v-for="comment in content.comments">
+        <li v-for="comment in content.comments" v-href="['comment_list', {comment_id:comment.comment_id}]">
           <img class="avatar" :src="comment.avater | avatar">
           <div class="content">
-            <img class="reply" src="../../assets/img/Article_reply.png">
+            <img class="reply" src="../../assets/img/Article_reply.png" @click.stop="showComment(comment.comment_id)">
             <div class="a">
               <span class="a-1">{{comment.nickname}}</span>
-              <span class="a-2">{{comment.date_add | time_2}}</span>
+              <span class="a-2">{{comment.date_add | time_3}}</span>
             </div>
             <div class="b">{{comment.content}}</div>
             <div class="c" v-if="comment.reply_count > 0">查看回复({{comment.reply_count}})</div>
@@ -547,7 +559,7 @@
       <ul class="footer">
         <li><span :class="{on:article.is_collection == 1}" @click="favor">收藏</span></li>
         <li><span :class="{on:article.is_like == 1}" @click="like">点赞</span></li>
-        <li><span @click="shade.ifShowComment=true">评论</span></li>
+        <li><span @click="showComment(0)">评论</span></li>
       </ul>
     </div>
     <div v-if="cantFind" class="tip-nothing" style="margin-top:2rem;">
@@ -555,10 +567,10 @@
       <div>未找到对应的文章信息</div>
     </div>
     <div class="comments-model" v-show="shade.ifShowComment">
-      <textarea placeholder="请输入评论内容"></textarea>
+      <textarea placeholder="请输入评论内容" v-model="comment"></textarea>
       <div class="actions">
-        <span @click="shade.ifShowComment=false">取消</span>
-        <span>发送</span>
+        <span @click="hideComment">取消</span>
+        <span @click="sendComment">发送</span>
       </div>
     </div>
     <the-shade v-show="ifShowShade" @click.native="hideShade"></the-shade>
@@ -577,16 +589,18 @@
         content: null,
         ifShowGoods: false,
         ifShowRecommend: false,
-        shade:{
-          ifShowGoods:false,
-          ifShowComment:false,
-        }
+        shade: {
+          ifShowGoods: false,
+          ifShowComment: false,
+        },
+        comment: '',
+        replyComment_id:0,
       }
     },
     computed: {
       ifShowShade(){
         for (let i in this.shade) {
-          if(this.shade[i]) {
+          if (this.shade[i]) {
             return true
           }
         }
@@ -618,6 +632,38 @@
       }
     },
     methods: {
+      showComment(comment_id){
+        this.replyComment_id = comment_id;
+        this.shade.ifShowComment = true;
+      },
+      hideComment(){
+        this.shade.ifShowComment = false;
+        this.comment = '';
+      },
+      sendComment(){
+        if (!this.comment.trim()) {
+          return;
+        }
+        this.$post(URL.comment, {article_id: this.article_id, comment: this.comment, comment_id: this.replyComment_id})
+          .then(res => {
+            if (res.errcode == 0) {
+              if (this.replyComment_id == 0) {
+                location.reload();
+              } else {
+                toast(res.message);
+                this.hideComment();
+                for (let i of this.content.comments){
+                  if(i.comment_id === this.replyComment_id) {
+                    i.reply_count++;
+                    break;
+                  }
+                }
+              }
+            } else {
+              errback(res);
+            }
+          })
+      },
       previewImage(item){
         wx.previewImage({
           current: item.content, // 当前显示图片的http链接

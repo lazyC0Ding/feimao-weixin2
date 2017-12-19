@@ -16,7 +16,7 @@ function setVue($_vue) {
 
     // wx.config相关
     if(isWeixin()) {
-      const url = encodeURIComponent(location.href.split('#')[0]);
+      const url = location.href.split('#')[0];
       $vue.$post(URL.getWeixinInfo, {url})
         .then (res => {
           if(res.errcode == 0) {

@@ -3,6 +3,7 @@
     background-color: #fff;
     padding-bottom: .3rem;
     font-size: 0;
+    overflow:hidden;
     > li {
       position: relative;
       vertical-align: top;
@@ -17,17 +18,13 @@
       color: #9DA5A8;
       border: .5px solid #979797;
       box-sizing: border-box;
+      overflow:hidden;
       &.chooseImg{
         background: url(../assets/img/upload_pic.png) no-repeat center .4rem;
         background-size: .44rem .36rem;
       }
-      &.image{
-        background:no-repeat center center;
-        background-size:100%;
-      }
       > .content {
         width: 100%;
-        height: 100%;
       }
       > .close {
         position: absolute;
@@ -41,8 +38,8 @@
 </style>
 <template>
   <ul class="images">
-    <li class="image" v-for="(image, index) in images" :style="{backgroundImage:image.localId}">
-      <!--<img class="content" :src="image.localId">-->
+    <li class="image" v-for="(image, index) in images">
+      <img class="content" :src="image.localId">
       <img class="close" src="../assets/img/close_redbj.png" @click.stop="images.splice(index,1)">
     </li><!--
     --><li class="chooseImg" @click="chooseImg" v-show="images.length < 6">{{images.length + 1}}/6</li>

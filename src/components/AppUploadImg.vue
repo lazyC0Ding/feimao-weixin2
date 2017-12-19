@@ -2,9 +2,9 @@
   .images {
     background-color: #fff;
     padding-bottom: .3rem;
-    font-size:0;
-    > li.li{
-      position:relative;
+    font-size: 0;
+    > li.li {
+      position: relative;
       vertical-align: top;
       display: inline-block;
       margin-bottom: .2rem;
@@ -19,25 +19,25 @@
       background-size: .44rem .36rem;
       border: .5px solid #979797;
       box-sizing: border-box;
-      >.content{
-        width:100%;
-        height:100%;
+      > .content {
+        width: 100%;
+        height: 100%;
       }
-      >.close{
-        position:absolute;
-        top:0;
-        right:0;
-        width:.28rem;
-        height:.28rem;
+      > .close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: .28rem;
+        height: .28rem;
       }
     }
   }
 
-  .test{
+  .test {
     display: block;
-    width:100%;
-    height:100%;
-    font-size:.28rem;
+    width: 100%;
+    height: 100%;
+    font-size: .28rem;
     -webkit-user-select: auto;
   }
 </style>
@@ -47,27 +47,29 @@
       <img class="content" :src="image">
       <img class="close" src="../assets/img/close_redbj.png" @click="images.splice(index,1)">
     </li><!--
-    --><li class="li" @click="chooseImg" v-show="images.length < 6">{{images.length + 1}}/6</li>
-    <br><li class="test">{{test}}</li>
+    -->
+    <li class="li" @click="chooseImg" v-show="images.length < 6">{{images.length + 1}}/6</li>
+    <br>
+    <li class="test">{{test}}12312312312321</li>
   </ul>
 </template>
 <script>
   export default {
-    props:{
-      images:{
-        type:Array,
-        required:true,
+    props: {
+      images: {
+        type: Array,
+        required: true,
       }
     },
     data(){
       return {
-        test:'',
+        test: '',
       }
     },
-    methods:{
+    methods: {
       chooseImg(){
         wx.chooseImage({
-          count: 6-this.images.length, // 默认9
+          count: 6 - this.images.length, // 默认9
           sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
           sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
           success: (res) => {
@@ -79,11 +81,12 @@
                 success: (res) => {
                   const media_id = res.serverId; // 返回图片的服务器端ID
                   this.$post(URL.upload_weixin, {media_id})
-                    .then (res => {
-                      if(res.errcode == 0) {
-                        this.test = res.content.url;
+                    .then(res => {
+                      alert(res);
+                      this.test = JSON.stringify(res);
+                      if (res.errcode == 0) {
                         this.images.push(res.content.url);
-                      }else{
+                      } else {
                         errback(res);
                       }
                     })

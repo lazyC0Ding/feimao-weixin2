@@ -32,6 +32,11 @@
       }
     }
   }
+
+  .test{
+    font-size:.28rem;
+    -webkit-user-select: auto;
+  }
 </style>
 <template>
   <ul class="images">
@@ -40,6 +45,7 @@
       <img class="close" src="../assets/img/close_redbj.png" @click="images.splice(index,1)">
     </li><!--
     --><li @click="chooseImg" v-show="images.length < 6">{{images.length + 1}}/6</li>
+    <li class="test">{{test}}</li>
   </ul>
 </template>
 <script>
@@ -48,6 +54,11 @@
       images:{
         type:Array,
         required:true,
+      }
+    },
+    data(){
+      return {
+        test:'',
       }
     },
     methods:{
@@ -68,6 +79,7 @@
                   this.$post(URL.upload_weixin, {media_id})
                     .then (res => {
                       if(res.errcode == 0) {
+                        this.test = res.content.url;
                         this.images.push(res.content.url);
                       }else{
                         errback(res);

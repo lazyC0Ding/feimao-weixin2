@@ -87,6 +87,7 @@
                     localId:localId,
                     src:res.content.url,
                   });
+                  alert(JSON.stringify(this.images));
                   if(this.uploadIndex === this.localIds.length - 1) {
                     this.uploadIndex = 0;
                     this.localIds = null;

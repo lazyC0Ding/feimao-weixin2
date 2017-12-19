@@ -144,8 +144,7 @@
     },
     created(){
       document.title = '评价';
-      this.test = location.href.split('#')[0];
-      this.search = getSearchParams(location.search);
+      this.search = getSession('order_comment');
     },
     components: {
       AppPermanent,

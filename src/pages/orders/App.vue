@@ -184,7 +184,8 @@
           })
       },
       comment(item){
-        openPage('order_comment', item.goods);
+        setSession('order_comment', item.goods);
+        openPage('order_comment');
       },
       changeState(state){
         this.params.state = state;

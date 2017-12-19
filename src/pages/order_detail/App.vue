@@ -305,7 +305,8 @@
           })
       },
       comment(){
-        openPage('order_comment', {goods:this.order.goods});
+        setSession('order_comment', this.order.goods);
+        openPage('order_comment');
       },
       pay(){
         const params = {

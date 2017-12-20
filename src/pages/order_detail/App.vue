@@ -26,6 +26,42 @@
     }
   }
 
+  .express {
+    position: relative;
+    height: 1.4rem;
+    line-height: 1.4rem;
+    background: #fff url(../../assets/img/order_logistics.png) no-repeat .3rem center;
+    background-size: .28rem .24rem;
+    padding-left: .8rem;
+    padding-right: .8rem;
+    overflow: hidden;
+    .border-bottom-1px;
+    > img {
+      position: absolute;
+      top: 50%;
+      margin-top: -.12rem;
+      right: .28rem;
+      width: .24rem;
+      height: .24rem;
+    }
+    > .info {
+      line-height: normal;
+      vertical-align: middle;
+      > .a {
+        font-size:.24rem;
+        color:@light;
+      }
+      > .b {
+        max-width:5rem;
+        margin-top: .1rem;
+        font-size: .28rem;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+    }
+  }
+
   .address {
     position: relative;
     height: 1.6rem;
@@ -35,19 +71,6 @@
     padding-left: .8rem;
     padding-right: .8rem;
     overflow: hidden;
-    > img {
-      position: absolute;
-      top: 50%;
-      margin-top: -.12rem;
-      right: .28rem;
-      width: .24rem;
-      height: .24rem;
-    }
-    > .placeholder {
-      font-size: .26rem;
-      color: @light;
-      vertical-align: middle;
-    }
     > .info {
       line-height: normal;
       vertical-align: middle;
@@ -161,6 +184,7 @@
 </style>
 <template>
   <div v-if="order" style="padding-bottom:1rem;">
+    <!-- 头部各种state -->
     <div class="order_detail-top" v-if="order.order_state == 1">
       <img src="../../assets/img/Orderdet_fukuan.png">
       <span>
@@ -199,6 +223,15 @@
         <span class="span-1">订单已关闭</span><br>
       </span>
     </div>
+    <!-- 物流信息 -->
+    <div class="express" v-if="express" v-href="['logistics', {order_sn:order_sn}]">
+      <img src="../../assets/img/direction_right_gray.png">
+      <span class="info">
+        <span class="a">{{express[0].time}}</span><br>
+        <span class="b">{{express[0].context}}</span>
+      </span>
+    </div>
+    <!-- 地址 -->
     <div class="address">
       <span class="info">
         <span class="a">{{order.address_name}}<span>{{order.address_phone}}</span></span><br>
@@ -224,7 +257,7 @@
       </li>
       <li>
         <span>优惠</span>
-        <span>¥{{order.coupon_amount.toFixed(2)}}</span>
+        <span>¥{{order.coupon_amount}}</span>
       </li>
       <li>
         <span>实付款</span>

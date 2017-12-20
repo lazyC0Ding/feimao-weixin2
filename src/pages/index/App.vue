@@ -277,7 +277,6 @@
       })
     },
     mounted(){
-      toast('index');
       console.log(this._data);
     },
     components: {

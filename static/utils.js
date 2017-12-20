@@ -44,7 +44,7 @@ function getSearchParams(str) {
 // 页面相关
 function openPage(url, paramsJson) {
   if(url.startsWith('order_confirm')){
-    $vue.$setPage('order_confirm', null, true);
+    window.theVue.$setPage('order_confirm', null, true);
   }
   url = url.endsWith('.html') ? url : url + '.html';
   var paramsStr = paramsJson ? '?' + formatParams(paramsJson) : '';
@@ -54,7 +54,7 @@ function openPage(url, paramsJson) {
 
 function replacePage(url, paramsJson) {
   if(url.startsWith('order_confirm')){
-    $vue.$setPage('order_confirm', null, true);
+    window.theVue.$setPage('order_confirm', null, true);
   }
   url = url.endsWith('.html') ? url : url + '.html';
   var paramsStr = paramsJson ? '?' + formatParams(paramsJson) : '';

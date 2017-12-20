@@ -73,7 +73,15 @@
 
 </body>
 <script>
-  window.a = 1;
-  console.log(window.a);
+  var json1 = {
+    a:1,
+    b:2,
+    c:3
+  }
+  var str1 = JSON.stringify(json1);
+  var json2 = JSON.parse(str1);
+  json2.a = 4;
+  console.log(json1);
+  console.log(json2);
 </script>
 </html>

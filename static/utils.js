@@ -15,7 +15,8 @@ function canJSONParse(str) {
 // json => location.search
 function formatParams(json) {
   var keys = [];
-  json = Object.assign({}, json);
+  var str = JSON.stringify(json);
+  json = JSON.parse(str);
   for (var i in json) {
     json[i] = typeof json[i] === 'object' ? JSON.stringify(json[i]) : json[i];
     keys.push(i + '=' + json[i]);

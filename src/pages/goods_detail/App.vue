@@ -146,21 +146,21 @@
         background: no-repeat center;
         background-size: 100%;
       }
-      &.img-1{
+      &.img-1 {
         margin-left: .28rem;
         background-image: url(../../assets/img/goods_share.png)
       }
-      &.img-2{
-        margin-left:.7rem;
+      &.img-2 {
+        margin-left: .7rem;
         background-image: url(../../assets/img/goods_shoucang_off.png);
         &.active {
           background-image: url(../../assets/img/goods_shoucang_on.png);
         }
       }
-      &.btn-1{
+      &.btn-1 {
         background-color: #000;
       }
-      &.btn-2{
+      &.btn-2 {
         background-color: #F58C23;
       }
     }
@@ -239,7 +239,7 @@
               vertical-align: top;
               font-size: .26rem;
               max-width: 2rem;
-              overflow:hidden;
+              overflow: hidden;
               white-space: nowrap;
               text-overflow: ellipsis;
             }
@@ -408,24 +408,24 @@
   }
 
   .countdown {
-    position:absolute;
-    bottom:.5rem;
-    left:50%;
-    margin-left:-2.2rem;
+    position: absolute;
+    bottom: .5rem;
+    left: 50%;
+    margin-left: -2.2rem;
     width: 4.4rem;
     height: .8rem;
-    line-height:.8rem;
+    line-height: .8rem;
     border-radius: 2rem;
     background: rgba(0, 0, 0, .4) url(../../assets/img/Countdown.png) no-repeat .46rem center;
-    background-size:.32rem .32rem;
-    color:#fff;
-    font-size:.36rem;
-    z-index:10;
+    background-size: .32rem .32rem;
+    color: #fff;
+    font-size: .36rem;
+    z-index: 10;
     box-sizing: border-box;
-    padding-left:1rem;
-    >span:nth-child(2) {
-      margin-left:.05rem;
-      font-size:.28rem;
+    padding-left: 1rem;
+    > span:nth-child(2) {
+      margin-left: .05rem;
+      font-size: .28rem;
       vertical-align: top;
     }
   }
@@ -436,7 +436,7 @@
       <div class="goods_detail-top">
         <div style="position:relative;">
         <span class="countdown" v-if="activity">
-          <span >{{d_time | countdown}}</span>
+          <span>{{d_time | countdown}}</span>
           <span>后{{ifStarted ? '结束' : '开始'}}</span>
         </span>
           <swiper
@@ -564,6 +564,14 @@
       <img src="../../assets/img/Tip_nothing.png">
       <div>未找到对应的商品信息</div>
     </div>
+    <load-more
+      :url="getBuyRecord.url"
+      :page="getBuyRecord.page"
+      :params="getBuyRecord.params"
+      :callback="loadMore"
+      :no-listen="activeTag!=1 || !hasMore"
+    >
+    </load-more>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>
@@ -571,6 +579,8 @@
   import AppPermanent from '@c/AppPermanent.vue'
   import GoodsContainer from '@c/GoodsContainer.vue'
   import {Swiper, Popup} from 'vux'
+  import LoadMore from '@c/LoadMore.vue'
+
   export default {
     data () {
       return {
@@ -583,21 +593,43 @@
         isTagsFixed: false,
         before_mai: null,
         ifShowSelect: false,
-        buyType:0,
-        now:0,
+        buyType: 0,
+        now: 0,
         params: {
-          goods_id:'',
+          goods_id: '',
           quantity: 1,
           option_id: 0,
           is_collect: 1,
         },
-        cantFind:false,
+        cantFind: false,
+        page:1,
+        hasMore: true,
       }
     },
-    watch:{
+    computed: {
+      getBuyRecord(){
+        return {
+          url: URL.getBuyRecord,
+          page: this.page,
+          params: {
+            goods_id: this.params.goods_id
+          }
+        }
+      },
+      ifStarted(){
+        return this.now >= Number(this.activity.date_start);
+      },
+      d_time(){
+        if (!this.activity) return;
+        return this.now < this.activity.date_start
+          ? this.activity.date_start - this.now
+          : this.activity.date_end - this.now;
+      },
+    },
+    watch: {
       content(n){
-        if(n) {
-          this.$nextTick( () => {
+        if (n) {
+          this.$nextTick(() => {
             this.before_mai = this.$refs.before_mai;
             window.addEventListener('scroll', () => {
               this.isTagsFixed = window.scrollY > this.before_mai.offsetTop + this.before_mai.clientHeight;
@@ -606,25 +638,22 @@
         }
       }
     },
-    computed:{
-      ifStarted(){
-        return this.now >= Number(this.activity.date_start);
-      },
-      d_time(){
-        if(!this.activity) return;
-        return this.now < this.activity.date_start
-          ? this.activity.date_start - this.now
-          : this.activity.date_end - this.now;
-      },
-    },
     methods: {
+      loadMore(content){
+        if(content.length) {
+          this.content.records.push(...content);
+          this.page++
+        }else{
+          this.hasMore = false;
+        }
+      },
       goodsCollection(){
-        this.$post(URL.goodsCollection, {goods_id:this.params.goods_id})
-          .then( res => {
-            if(res.errcode == 0) {
+        this.$post(URL.goodsCollection, {goods_id: this.params.goods_id})
+          .then(res => {
+            if (res.errcode == 0) {
               toast(res.message);
               this.content.is_collection = this.content.is_collection == 0 ? 1 : 0;
-            }else{
+            } else {
               errback(res);
             }
           })
@@ -636,16 +665,16 @@
       buy(){
         // 匹配option_id
         const specsArr = [];
-        if(this.specs.length) {
+        if (this.specs.length) {
           for (let i of this.specs) {
-            if(!i.active_id) {
+            if (!i.active_id) {
               return toast('请选择商品规格');
             }
             specsArr.push(i.active_id);
           }
           const specsStr = specsArr.join('_');
           for (let i of this.content.options) {
-            if(i.specs == specsStr) {
+            if (i.specs == specsStr) {
               this.params.option_id = i.id;
               break;
             }
@@ -656,33 +685,33 @@
         switch (this.buyType) {
           // 加入购物车
           case 1:
-              url = URL.addcart;
-              params = this.params;
-              callback = (res) => {
-                if(res.errcode == 0) {
-                  toast(res.message);
-                  this.ifShowSelect = false;
-                }else{
-                  errback(res);
-                }
-              };
-              break;
+            url = URL.addcart;
+            params = this.params;
+            callback = (res) => {
+              if (res.errcode == 0) {
+                toast(res.message);
+                this.ifShowSelect = false;
+              } else {
+                errback(res);
+              }
+            };
+            break;
           // 立即购买
           case 2:
-              url = URL.settlement;
-              const data = JSON.stringify([this.params]);
-              params = { data, type:1 };
-              callback = (res) => {
-                if(res.errcode == 0) {
-                  openPage('order_confirm', res.content);
-                }else{
-                  errback(res);
-                }
-              };
-              break;
+            url = URL.settlement;
+            const data = JSON.stringify([this.params]);
+            params = {data, type: 1};
+            callback = (res) => {
+              if (res.errcode == 0) {
+                openPage('order_confirm', res.content);
+              } else {
+                errback(res);
+              }
+            };
+            break;
         }
         this.$post(url, params)
-          .then( callback);
+          .then(callback);
       },
       selectSpec(spec, item_id){
         if (!spec.active_id) {
@@ -705,7 +734,7 @@
               const {recommend_goods, specs, activity} = res.content;
               this.recommend_goods = recommend_goods;
               this.specs = specs;
-              if(activity) {
+              if (activity) {
                 activity.date_start = Number(activity.date_start);
                 activity.date_end = Number(activity.date_end);
                 this.activity = activity;
@@ -724,9 +753,9 @@
     },
     created(){
       document.title = '商品详情';
-      const { goods_id, customer_id } = getSearchParams(location.search);
+      const {goods_id, customer_id} = getSearchParams(location.search);
       this.params.goods_id = goods_id;
-      if(customer_id) {
+      if (customer_id) {
         setSession('customer_id', customer_id);
       }
       this.fetch();
@@ -736,6 +765,7 @@
       GoodsContainer,
       Swiper,
       Popup,
+      LoadMore,
     }
   }
 </script>

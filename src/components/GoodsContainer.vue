@@ -115,7 +115,7 @@
         required: true
       },
       hidePrice: Boolean, //是否显示价格
-      type:String,  // 1,2:activity_goods专用 3:商品收藏
+      type:[String, Number],  // 1,2:activity_goods专用 3:商品收藏
       time:Object,  //activity_goods专用
       parentData: Object,  // 用于文章后退不刷新父级页面
     },

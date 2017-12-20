@@ -133,15 +133,15 @@
   .sepcial {
     margin-top: .2rem;
     background-color: #fff;
-    >.img{
+    > .img {
       background-image: url(../../assets/img/default_special.png);
-      background-size:100% 100%;
+      background-size: 100% 100%;
       height: 3rem;
-      overflow:hidden;
+      overflow: hidden;
       > img {
         display: block;
-        width:100%;
-        height:100%;
+        width: 100%;
+        height: 100%;
       }
     }
   }
@@ -258,7 +258,8 @@
             <span class="activity_price">¥{{item.price}}</span>
           </div>
         </li><!--
-        --><li v-if="sepcial.goods && sepcial.goods.length > 3" @click="toGoods">
+        -->
+        <li v-if="sepcial.goods && sepcial.goods.length > 3" @click="toGoods">
           <img src="../../assets/img/goods_more.png">
           <div style="font-size:.24rem;margin-top:.1rem;">查看全部</div>
         </li>
@@ -272,6 +273,13 @@
       </div>
       <goods-container style="padding-top:0;" :goods="goods"></goods-container>
     </div>
+    <load-more
+      :url="url"
+      :page="page"
+      :callback="loadMore"
+      :no-listen="!hasMore"
+    >
+    </load-more>
     <the-footer current="1"></the-footer>
     <app-permanent type="2"></app-permanent>
   </div>
@@ -283,6 +291,7 @@
   import ScrollNotice from '@c/ScrollNotice.vue'
   import GoodsContainer from '@c/GoodsContainer.vue'
   import {Swiper} from 'vux'
+  import LoadMore from '@c/LoadMore.vue'
 
   export default {
     data () {
@@ -302,6 +311,9 @@
         seckill_goods_D_time: 0,
         coupon_goods_D_time: 0,
         isCategorysFixed: false,
+        url: URL.getHomeGoods,
+        page: 1,
+        hasMore: true,
       }
     },
     computed: {
@@ -331,6 +343,14 @@
       }
     },
     methods: {
+      loadMore(content){
+        if (content.length) {
+          this.goods.push(...content);
+          this.page++;
+        } else {
+          this.hasMore = false;
+        }
+      },
       clickBanner(){
         const action = this.banner.list[this.banner.index].action;
         jumpAction(action);
@@ -402,6 +422,7 @@
       Swiper,
       ScrollNotice,
       GoodsContainer,
+      LoadMore,
     }
   }
 </script>

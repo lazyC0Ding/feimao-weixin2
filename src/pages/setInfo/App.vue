@@ -149,7 +149,7 @@
               setToken(res.content.access_token);
               replacePage(this.from || 'index');
             } else {
-
+              errback(res);
             }
           })
       }

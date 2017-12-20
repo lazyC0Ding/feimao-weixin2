@@ -78,4 +78,6 @@ const URL = {
   recommendFood:'setting/recommendFood',
   refundDetail:'order/refundDetail',
   getLogistics:'order/getLogistics',
+  getHomeGoods:'mall/getHomeGoods',
+  getBuyRecord:'goods/getBuyRecord',
 };

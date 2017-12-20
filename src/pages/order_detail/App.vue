@@ -247,7 +247,7 @@
       <span v-href="['logistics', {order_sn:order_sn}]">查看物流</span><span @click="delivery">确认收货</span>
     </div>
     <div class="order_detail-footer" v-else-if="order.order_state == 4">
-      <span @click="deleteOrder">删除订单</span><span @click="comment">去评价</span>
+      <span @click="deleteOrder">删除订单</span><span v-href="['logistics', {order_sn:order_sn}]">查看物流</span><span @click="comment">去评价</span>
     </div>
     <div class="order_detail-footer" v-else-if="order.order_state ==  5 || order.order_state == 6">
       <span @click="deleteOrder">删除订单</span>

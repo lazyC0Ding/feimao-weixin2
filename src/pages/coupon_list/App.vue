@@ -117,7 +117,7 @@
     computed: {
       liStyle(){
         return {
-          backgroundImage: this.ifShowCoupon1 ? './static/img/Coupon_on.png' : './static/img/Coupon_off.png'
+          backgroundImage: this.ifShowCoupon1 ? 'url(./static/img/Coupon_on.png)' : 'url(./static/img/Coupon_off.png)'
         };
       },
       coupon(){

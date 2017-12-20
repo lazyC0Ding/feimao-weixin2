@@ -109,7 +109,7 @@
         this.$post(URL.saveAddress, params)
           .then(res => {
             if (res.errcode == 0) {
-              history.go(-1);
+              replacePage(document.referrer);
             } else {
               errback(res);
             }

@@ -73,7 +73,7 @@
   <div v-if="content">
     <ul class="coupon_list-ul">
       <li v-for="item in coupon.coupons" :key="item.coupon_id" :class="{off:coupon.off}">
-        <em v-show="!ifShowCoupon1">已过期</em>
+        <em v-show="!ifShowCoupon1">{{item.state_name}}</em>
         <span class="left">¥<em>{{item.amount}}</em></span>
         <span class="right">
           <span class="right-1">{{item.name}}</span><br>

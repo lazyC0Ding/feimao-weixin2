@@ -79,7 +79,7 @@
 <template>
   <div v-if="search" style="position:relative;padding-bottom:1.1rem;">
     <ul class="order_comment-ul">
-      <li v-for="(item, index) in search">
+      <li v-for="(item, index) in goods">
         <goods-list :goods="[item]" cant-open-goods></goods-list>
         <div class="score border-bottom">
           <span class="title">商品评分</span>

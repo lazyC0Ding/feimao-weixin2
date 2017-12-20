@@ -247,12 +247,12 @@ export default {
 
     Vue.mixin({
       created(){
-        if(!$vue){
-          setVue(this);
+        if(!window.theVue){
+          window.theVue = this;
           // wx.config相关
           if (isWeixin()) {
             const url = location.href.split('#')[0];
-            $vue.$post(URL.getWeixinInfo, {url})
+            window.theVue.$post(URL.getWeixinInfo, {url})
               .then(res => {
                 if (res.errcode == 0) {
                   const content = res.content;

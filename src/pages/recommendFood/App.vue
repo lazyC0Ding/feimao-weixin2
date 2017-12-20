@@ -42,11 +42,11 @@
     </div>
     <div class="the-row">上传图片</div>
     <app-upload-img :images="images"></app-upload-img>
-    <div class="the-row" v-model="name" style="margin-top:.2rem;border-bottom: 1px solid #e4e4e4;">您的姓名
-      <input placeholder="请输入您的姓名">
+    <div class="the-row" style="margin-top:.2rem;border-bottom: 1px solid #e4e4e4;">您的姓名
+      <input v-model="name" placeholder="请输入您的姓名">
     </div>
-    <div class="the-row" v-model="phone">联系电话
-      <input placeholder="请输入您的电话">
+    <div class="the-row">联系电话
+      <input v-model="phone" placeholder="请输入您的电话">
     </div>
     <div class="btn-big" style="margin-top:.6rem;" @click="submit">提交</div>
     <app-permanent type="2"></app-permanent>

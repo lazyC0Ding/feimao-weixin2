@@ -7,15 +7,6 @@ if (!config.debug) {
   };
 }
 
-// vue对象相关 ↓
-var $vue;
-
-function setVue($_vue) {
-  if (!$vue) {
-    $vue = $_vue;
-  }
-}
-
 // Loading相关
 var hasLoading = false;
 function showLoading() {
@@ -27,7 +18,7 @@ function showLoading() {
 
 function _showLoading() {
   if (hasLoading) {
-    $vue.$vux.loading.show({
+    window.theVue.$vux.loading.show({
       text: 'Loading'
     })
   }
@@ -35,14 +26,14 @@ function _showLoading() {
 
 function hideLoading() {
   if (hasLoading) {
-    $vue.$vux.loading.hide();
+    window.theVue.$vux.loading.hide();
     hasLoading = false;
   }
 }
 
 function toast(msg) {
-  if ($vue) {
-    $vue.$vux.toast.show({
+  if (window.theVue) {
+    window.theVue.$vux.toast.show({
       text: msg,
       type: 'text',
     })

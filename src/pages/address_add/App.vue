@@ -11,7 +11,7 @@
           & + input {
             float: left;
             height: 100%;
-            font-size:.28rem;
+            font-size: .28rem;
             &::placeholder {
               color: @light;
             }
@@ -30,7 +30,7 @@
         padding: 0 .3rem;
         outline: none;
         resize: none;
-        font-size:.28rem;
+        font-size: .28rem;
         &::-webkit-scrollbar {
           width: 0;
           height: 0;
@@ -68,7 +68,8 @@
         <span class="title input">联系电话</span>
         <input v-model="phone" placeholder="请输入联系电话">
       </li>
-      <!--<select-address :province="province" :city="city" :district="district" @updateAddress="updateAddress"></select-address>-->
+      <select-address :province="province" :city="city" :district="district"
+                      @updateAddress="updateAddress"></select-address>
       <li class="row-textarea">
         <textarea v-model="address" placeholder="详细地址"></textarea>
       </li>
@@ -85,7 +86,7 @@
 </template>
 <script>
   import AppPermanent from '@c/AppPermanent.vue'
-//  import SelectAddress from '@c/SelectAddress.vue'
+  import SelectAddress from '@c/SelectAddress.vue'
   export default {
     data () {
       return {
@@ -101,7 +102,11 @@
     },
     methods: {
       save(){
-        this.$post(URL.saveAddress, this._data)
+        const params = Object.assign({}, this._data);
+        if(this.address_id === 0) {
+          delete params.address_id;
+        }
+        this.$post(URL.saveAddress, params)
           .then(res => {
             if (res.errcode == 0) {
               history.go(-1);
@@ -130,7 +135,7 @@
     },
     components: {
       AppPermanent,
-//      SelectAddress,
+      SelectAddress,
     }
   }
 </script>

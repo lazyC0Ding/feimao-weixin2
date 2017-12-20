@@ -54,7 +54,7 @@
 <template>
   <div style="padding-top:.74rem;">
     <span class="btn-corner" v-href="'address_add'">新增</span>
-    <ul class="address_list-ul">
+    <ul v-if="content.length" class="address_list-ul">
       <li @click="selectAddress(address)" v-for="address in content" :key="address.address_id">
         <span>
           <span class="a">
@@ -66,6 +66,10 @@
         </span>
       </li>
     </ul>
+    <div v-else class="tip-nothing" style="margin-top:2rem;">
+      <img src="../../assets/img/Tip_nothing.png">
+      <div>您还没有设置地址</div>
+    </div>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>

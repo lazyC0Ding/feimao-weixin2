@@ -137,6 +137,7 @@
             goods_id:i.goods_id,
             option_id:i.option_id || 0,
             score:i.score,
+            comment:i.comment
           };
           if(i.images.length) {
             const arr = [];
@@ -144,9 +145,8 @@
               arr.push(j.src);
             }
             item.images = arr.join(',');
-          }
-          if(i.comment.trim()) {
-            item.comment = i.comment;
+          }else{
+            item.images = '';
           }
           data.push(item);
         }

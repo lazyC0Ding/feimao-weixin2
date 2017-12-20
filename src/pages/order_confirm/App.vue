@@ -178,17 +178,19 @@
     },
     computed: {
       generateParams(){
-        const params = {
-          address_id:this.search.address.address_id,
-          data:this.data,
-        };
-        if(this.message) params.comment = this.message;
-        if(this.discount.point) {
-          params.point = 1;
-        }else if(this.discount.coupon) {
-          params.coupon_id=this.coupon ? this.coupon.coupon_id : 0;
+        if(this.search && this.search.address){
+          const params = {
+            address_id:this.search.address.address_id,
+            data:this.data,
+          };
+          if(this.message) params.comment = this.message;
+          if(this.discount.point) {
+            params.point = 1;
+          }else if(this.discount.coupon) {
+            params.coupon_id=this.coupon ? this.coupon.coupon_id : 0;
+          }
+          return params;
         }
-        return params;
       },
       data(){
         const data = [];
@@ -207,10 +209,12 @@
         return JSON.stringify(data);
       },
       getExpressFeeParams(){
-        return {
-          address_id: this.search.address.address_id,
-          total_fee: this.search.total_fee,
-          data: this.data,
+        if(this.search.address) {
+          return {
+            address_id: this.search.address.address_id,
+            total_fee: this.search.total_fee,
+            data: this.data,
+          }
         }
       },
       payment(){
@@ -236,16 +240,20 @@
         }
       },
       getExpressFee(){
-        this.$post(URL.getExpressFee, this.getExpressFeeParams)
-          .then(res => {
-            console.log(res)
-            if (res.errcode == 0) {
-              this.expressFee = Number(res.content).toFixed(2);
-              this.$setPage();
-            } else {
-              errback(res);
-            }
-          })
+        if(this.search.address) {
+          this.$post(URL.getExpressFee, this.getExpressFeeParams)
+            .then(res => {
+              console.log(res)
+              if (res.errcode == 0) {
+                this.expressFee = Number(res.content).toFixed(2);
+                this.$setPage();
+              } else {
+                errback(res);
+              }
+            })
+        }else{
+          this.expressFee = '0.00';
+        }
       },
       keepAlive(){
         const data = getSession(getPageName());
@@ -255,12 +263,12 @@
         this.getExpressFee();
       },
       init(){
+        console.log(getSearchParams(location.search));
         this.search = getSearchParams(location.search);
         if(getSession('coupon')){
           this.coupon = getSession('coupon');
         }
         this.getExpressFee();
-        console.log(this.search);
       }
     },
     created(){

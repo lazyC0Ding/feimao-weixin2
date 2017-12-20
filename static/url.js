@@ -81,4 +81,5 @@ var URL = {
   getHomeGoods:'mall/getHomeGoods',
   getBuyRecord:'goods/getBuyRecord',
   reply:'goods/reply',
+  deleteAddress:'address/deleteAddress',
 };

@@ -61,7 +61,7 @@
   <div style="padding-top:.7rem;">
     <span class="btn-corner" v-href="'address_add'">新增</span>
     <ul class="address_edit-ul">
-      <li v-for="item in content" :key="item.address_id">
+      <li v-for="(item, index) in content" :key="item.address_id">
         <div class="info">
           <div class="info-1">
             <span>{{item.name}}</span>
@@ -71,7 +71,7 @@
         </div>
         <div class="action">
           <span class="action-1" @click="editStatus(item)" :class="{on:item.status == 1}">默认地址</span>
-          <span class="action-3">删除</span>
+          <span class="action-3" @click="deleteAddress(item.address_id, index)">删除</span>
           <span class="action-2" v-href="['address_add', item]">编辑</span>
         </div>
       </li>
@@ -88,6 +88,20 @@
       }
     },
     methods: {
+      deleteAddress(address_id, index){
+        const flag = confirm('确认删除该地址吗?');
+        if(!flag) return;
+        this.$post(URL.deleteAddress, {address_id})
+          .then ( res => {
+            console.log(res);
+            if(res.errcode == 0) {
+              this.content.splice(index, 1);
+              toast(res.message);
+            }else{
+              errback(res);
+            }
+          })
+      },
       editStatus(item){
         this.$post(URL.editStatus, {address_id: item.address_id})
           .then ( res => {

@@ -73,7 +73,7 @@
 <template>
   <div v-if="content">
     <ul class="coupon_list-ul">
-      <li v-for="item in coupon.coupons" :key="item.coupon_id" :class="{off:coupon.off}" @click="select(item)">
+      <li v-for="item in coupon.coupons" :key="item.coupon_id" :class="{off:coupon.off}" @click="select(item)" :style="liStyle">
         <em v-show="!ifShowCoupon1">{{item.state_name}}</em>
         <span class="left">¥<em>{{item.amount}}</em></span>
         <span class="right">
@@ -115,6 +115,11 @@
       }
     },
     computed: {
+      liStyle(){
+        return {
+          backgroundImage: this.ifShowCoupon1 ? './static/img/Coupon_on.png' : './static/img/Coupon_off.png'
+        };
+      },
       coupon(){
         if (!this.content) return;
         const obj = this.ifShowCoupon1
@@ -129,9 +134,9 @@
     },
     methods: {
       select(coupon){
-//        if(!this.ifShowCoupon1) {
-//          return
-//        }
+        if(!this.ifShowCoupon1) {
+          return
+        }
         setSession('coupon', {
           name:coupon.name,
           coupon_id:coupon.coupon_id

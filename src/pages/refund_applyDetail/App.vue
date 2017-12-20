@@ -17,7 +17,6 @@
       float:left;
       width:25%;
       height:2rem;
-      line-height:2rem;
       text-align: center;
       >span{
         position:relative;

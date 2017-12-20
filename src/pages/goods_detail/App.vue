@@ -429,6 +429,40 @@
       vertical-align: top;
     }
   }
+
+  .comments-model {
+    position: fixed;
+    left: 10%;
+    top: 2.4rem;
+    width: 80%;
+    overflow: hidden;
+    padding-bottom: .3rem;
+    z-index: 9;
+    background-color: #fff;
+    > textarea {
+      width: 100%;
+      height: 3rem;
+      box-sizing: border-box;
+      padding: .3rem;
+      resize: none;
+      outline: none;
+      font-size: .28rem;
+      &::placeholder {
+        color: @light;
+      }
+    }
+    > .actions {
+      text-align: right;
+      > span {
+        width: .96rem;
+        height: .6rem;
+        line-height: .6rem;
+        text-align: center;
+        margin-right: .4rem;
+        border: 0.5px solid #111;
+      }
+    }
+  }
 </style>
 <template>
   <div style="padding-bottom:.8rem;">
@@ -507,7 +541,7 @@
               <div>
                 <span>{{record.nickname}}</span>
                 <span>购买了{{record.quantity}}件</span>
-                <span>回复</span>
+                <span @click="showComment(record.customer_id)">回复</span>
                 <span>{{record.date_add | time_3}}</span>
               </div>
             </li>
@@ -615,7 +649,7 @@
         hasMore: true,
         ifShowComment:false,
         comment:'',
-        replyComment_id:'',
+        replyCustomer_id:'',
       }
     },
     computed: {
@@ -651,8 +685,8 @@
       }
     },
     methods: {
-      showComment(comment_id){
-        this.replyComment_id = comment_id;
+      showComment(customer_id){
+        this.replyCustomer_id = customer_id;
         this.ifShowComment = true;
       },
       hideComment(){
@@ -663,7 +697,7 @@
         if (!this.comment.trim()) {
           return;
         }
-        this.$post(URL.comment, {comment: this.comment, comment_id: this.replyComment_id})
+        this.$post(URL.reply, {comment: this.comment, pid: this.replyCustomer_id, goods_id:this.params.goods_id})
           .then(res => {
             if (res.errcode == 0) {
               toast(res.message);

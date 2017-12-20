@@ -30,7 +30,7 @@ function formatParams(json) {
 function getSearchParams(str) {
   if(!str) return;
 
-  str = str.startsWith('?') ? str.slice(1) : str;
+  str = str[0] === '?' ? str.slice(1) : str;
   var params = decodeURI(str).split('&');
 
   var entry;

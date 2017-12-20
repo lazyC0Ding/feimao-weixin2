@@ -12,45 +12,43 @@
         type: String,
         required: true,
       },
-      params: {
-        type: Object,
-        required: true,
+      page:{
+        type:Number,
+        required:true,
       },
+      params: Object,
       callback: {
         type: Function,
         required: true,
       },
-      ifListen: Boolean, //是否监听滚动事件
+      noListen: Boolean, //是否监听滚动事件
     },
     data(){
       return {
         busy: false,
-        hasMore: true,
       }
     },
     methods: {
       loadMore(){
-        if (!this.hasMore) {
-          return;
-        }
         this.busy = true;
         console.log('开始加载');
-        this.$post(this.url, this.params)
+        let params = {page: this.page + 1};
+        if(this.params) {
+          params = Object.assign(params, this.params);
+        }
+        this.$post(this.url, params)
           .then(res => {
             this.busy = false;
+            console.log(res);
             if (res.errcode == 0) {
-              if (res.content && res.content.length) {
-                this.callback(res.content);
-              } else {
-                this.hasMore = false;
-              }
+              this.callback(res.content);
             } else {
               errback(res);
             }
           })
       },
       doScroll(){
-        if (!this.ifListen || this.busy) {
+        if (this.noListen || this.busy) {
           return;
         }
         if (Math.ceil(window.scrollY) + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {

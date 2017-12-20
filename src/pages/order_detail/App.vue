@@ -224,7 +224,7 @@
       </span>
     </div>
     <!-- 物流信息 -->
-    <div class="express" v-if="express" v-href="['logistics', {order_sn:order_sn}]">
+    <div class="express" v-if="express && express.length" v-href="['logistics', {order_sn:order_sn}]">
       <img src="../../assets/img/direction_right_gray.png">
       <span class="info">
         <span class="a">{{express[0].time}}</span><br>

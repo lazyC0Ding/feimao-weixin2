@@ -46,7 +46,7 @@
   <div style="padding-top:.8rem;">
     <ul class="categorys-tags">
       <li v-for="item in categorys"
-          :class="{active:params.category_id == item.category_id}"
+          :class="{active:category_id == item.category_id}"
           :style="{width:100/categorys.length + '%'}"
           @click="change(item.category_id)"
       >
@@ -54,33 +54,52 @@
       </li>
     </ul>
     <img class="cover" :src="cover.image">
-    <goods-container :parentData="_data" :goods="goods"></goods-container>
+    <goods-container v-if="goods.length" :parentData="_data" :goods="goods"></goods-container>
+    <load-more
+      :url="url"
+      :page="page"
+      :params="{category_id:category_id}"
+      :callback="loadMore"
+      :no-listen="!hasMore"
+    >
+    </load-more>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>
 <script>
   import AppPermanent from '@c/AppPermanent.vue'
   import GoodsContainer from '@c/GoodsContainer.vue'
+  import LoadMore from '@c/LoadMore.vue'
+
   export default {
     data () {
       return {
         categorys: [],
-        params: {
-          page: 1,
-          category_id: '',
-        },
+        url: URL.getCategoryGoods,
+        page: 1,
+        category_id: '',
         cover: {},
         goods: [],
+        hasMore:true,
       }
     },
     methods: {
+      loadMore(content){
+        if (content.goods.length) {
+          this.goods.push(...content);
+          this.page++;
+        }else{
+          this.hasMore = false;
+        }
+      },
       change(category_id){
-        this.params.category_id = category_id;
-        this.params.page = 1;
+        this.category_id = category_id;
+        this.page = 1;
+        this.hasMore=true;
         this.fetch();
       },
       fetch(){
-        this.$post(URL.getCategoryGoods, this.params)
+        this.$post(URL.getCategoryGoods, {category_id: this.category_id, page: 1})
           .then(res => {
             if (res.errcode == 0) {
               console.log(res);
@@ -107,17 +126,17 @@
       const {category_id, categorys} = getSearchParams(location.search);
 
       if (category_id) {
-        this.params.category_id = category_id;
+        this.category_id = category_id;
         this.categorys = categorys;
         this.fetch();
       } else {
         this.keepAlive();
       }
-//      history.replaceState(null, '', 'categorys.html');
     },
     components: {
       AppPermanent,
       GoodsContainer,
+      LoadMore,
     }
   }
 </script>

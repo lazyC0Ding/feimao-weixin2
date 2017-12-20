@@ -15,13 +15,13 @@ function setVue($_vue) {
     $vue = $_vue;
 
     // wx.config相关
-    if(isWeixin()) {
+    if (isWeixin()) {
       const url = location.href.split('#')[0];
 
 
       $vue.$post(URL.getWeixinInfo, {url})
-        .then (res => {
-          if(res.errcode == 0) {
+        .then(res => {
+          if (res.errcode == 0) {
             const content = res.content;
             wx.config({
               debug: false,
@@ -36,7 +36,7 @@ function setVue($_vue) {
                 'previewImage',
               ]
             });
-          }else{
+          } else {
             errback(res);
           }
         })
@@ -128,7 +128,11 @@ function jumpAction(action) {
     case '1':
       break;
     case '3':
-      location.replace(action.jump + '.html');
+      if (action.jump === '/') {
+        location.replace(action.jump);
+      }else{
+        location.replace(action.jump + '.html');
+      }
       break;
     case '4':
       location.replace(action.jump + '.html');

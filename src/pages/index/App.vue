@@ -154,9 +154,9 @@
     <goods-container v-show="activeTag === 2" :parentData="_data" :goods="recommend" hidePrice></goods-container>
     <load-more
       :url="loadMoreAttr.url"
-      :params="loadMoreAttr.params"
+      :page="loadMoreAttr.page"
       :callback="loadMore"
-      :if-listen="activeTag===1"
+      :no-listen="activeTag!==1 || !hasMore"
     >
     </load-more>
     <the-footer current="0"></the-footer>
@@ -189,10 +189,9 @@
         articles: [],
         loadMoreAttr: {
           url: URL.getArticles,
-          params: {
-            page: 2
-          }
+          page:1
         },
+        hasMore:true,
         recommend: [],
         message_count: 0,
         $_follow: false,
@@ -200,8 +199,12 @@
     },
     methods: {
       loadMore(content){
-        this.articles.push(...content);
-        this.loadMoreAttr.params.page++;
+        if(content.length) {
+          this.articles.push(...content);
+          this.loadMoreAttr.page++;
+        }else{
+          this.hasMore = false;
+        }
       },
       clickBanner(){
         const action = this.banner.list[this.banner.index].action;

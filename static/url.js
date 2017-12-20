@@ -1,4 +1,4 @@
-const URL = {
+var URL = {
   getGoodsHomeData:'mall/getGoodsHomeData',
   getBaseData:'community/getBaseData',
   sendcode:'user/sendcode',

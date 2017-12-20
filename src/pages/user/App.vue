@@ -303,7 +303,7 @@
         <span class="right">查看全部</span>
       </li>
     </ul>
-    <ul class="collections">
+    <ul class="collections" v-if="content.collections && content.collections.length">
       <li v-for="item in content.collections">
         <img :src="item.cover" v-href="['goods_detail', {goods_id:item.goods_id}]">
         <div class="name">{{item.name}}</div>

@@ -121,6 +121,9 @@
       >.right{
         color:@light;
       }
+      >.icon{
+        border-radius: 50%;
+      }
     }
   }
 </style>
@@ -172,9 +175,9 @@
         <span class="title" style="font-size:.32rem;">粉丝列表</span>
       </li>
       <li class="row" v-for="fan in content.fans">
-        <img class="icon" :src="fan.avater | avatar">
+        <img class="icon left" :src="fan.avater | avatar">
         <span class="title">{{fan.nickname}}</span>
-        <span class="right">{{fan.date_add | time_4}}</span>
+        <span class="right">{{fan.date_add | time_2}}</span>
       </li>
     </ul>
     <app-permanent type="2"></app-permanent>

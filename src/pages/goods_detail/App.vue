@@ -564,6 +564,14 @@
       <img src="../../assets/img/Tip_nothing.png">
       <div>未找到对应的商品信息</div>
     </div>
+    <div class="comments-model" v-show="ifShowComment">
+      <textarea placeholder="请输入评论内容" v-model="comment"></textarea>
+      <div class="actions">
+        <span @click="hideComment">取消</span>
+        <span @click="sendComment">发送</span>
+      </div>
+    </div>
+    <the-shade v-show="ifShowComment" @click.native="hideComment"></the-shade>
     <load-more
       :url="getBuyRecord.url"
       :page="getBuyRecord.page"
@@ -580,6 +588,7 @@
   import GoodsContainer from '@c/GoodsContainer.vue'
   import {Swiper, Popup} from 'vux'
   import LoadMore from '@c/LoadMore.vue'
+  import TheShade from '@c/TheShade.vue'
 
   export default {
     data () {
@@ -604,6 +613,9 @@
         cantFind: false,
         page:1,
         hasMore: true,
+        ifShowComment:false,
+        comment:'',
+        replyComment_id:'',
       }
     },
     computed: {
@@ -639,6 +651,28 @@
       }
     },
     methods: {
+      showComment(comment_id){
+        this.replyComment_id = comment_id;
+        this.ifShowComment = true;
+      },
+      hideComment(){
+        this.ifShowComment = false;
+        this.comment = '';
+      },
+      sendComment(){
+        if (!this.comment.trim()) {
+          return;
+        }
+        this.$post(URL.comment, {comment: this.comment, comment_id: this.replyComment_id})
+          .then(res => {
+            if (res.errcode == 0) {
+              toast(res.message);
+              this.hideComment();
+            } else {
+              errback(res);
+            }
+          })
+      },
       loadMore(content){
         if(content.length) {
           this.content.records.push(...content);
@@ -766,6 +800,7 @@
       Swiper,
       Popup,
       LoadMore,
+      TheShade,
     }
   }
 </script>

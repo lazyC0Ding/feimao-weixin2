@@ -145,7 +145,7 @@
       <li v-href="'coupon_list'" v-show="discount.coupon" class="row">
         <span class="title">优惠券</span>
         <img class="row-arrow" src="../../assets/img/direction_right_gray.png">
-        <span class="light right">{{coupon || '请选择'}}</span>
+        <span class="light right">{{coupon ? coupon.name : '请选择'}}</span>
       </li>
       <li class="row" @click="selectDiscount('point')">
         <span class="title">使用积分</span>
@@ -173,7 +173,7 @@
           point: false,
           coupon: false,
         },
-        coupon: '',
+        coupon: null,
       }
     },
     computed: {
@@ -183,6 +183,11 @@
           data:this.data,
         };
         if(this.message) params.comment = this.message;
+        if(this.discount.point) {
+          params.point = 1;
+        }else if(this.discount.coupon) {
+          params.coupon_id=this.coupon ? this.coupon.coupon_id : 0;
+        }
         return params;
       },
       data(){
@@ -251,6 +256,9 @@
       },
       init(){
         this.search = getSearchParams(location.search);
+        if(getSession('coupon')){
+          this.coupon = getSession('coupon');
+        }
         this.getExpressFee();
         console.log(this.search);
       }

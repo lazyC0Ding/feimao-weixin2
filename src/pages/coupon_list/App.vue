@@ -1,52 +1,53 @@
 <style type="text/less" lang="less">
   @import '../../common';
-  .coupon_list-ul{
-    overflow:hidden;
-    padding-top:.1rem;
-    >li{
-      position:relative;
-      margin-top:.3rem;
-      margin-left:.36rem;
-      width:6.8rem;
-      height:1.8rem;
-      line-height:1.8rem;
-      font-size:0;
-      overflow:hidden;
+
+  .coupon_list-ul {
+    overflow: hidden;
+    padding-top: .1rem;
+    > li {
+      position: relative;
+      margin-top: .3rem;
+      margin-left: .36rem;
+      width: 6.8rem;
+      height: 1.8rem;
+      line-height: 1.8rem;
+      font-size: 0;
+      overflow: hidden;
       background-image: url(../../assets/img/Coupon_on.png);
-      background-size:100% 100%;
-      &.off{
+      background-size: 100% 100%;
+      &.off {
         background-image: url(../../assets/img/Coupon_off.png);
       }
-      >em{
-        position:absolute;
-        right:.08rem;
-        top:.06rem;
+      > em {
+        position: absolute;
+        right: .08rem;
+        top: .06rem;
         font-size: 12px;
         color: #D0021B;
-        line-height:normal;
+        line-height: normal;
       }
-      >span{
+      > span {
         vertical-align: middle;
         &.left {
-          width:2.4rem;
-          height:100%;
+          width: 2.4rem;
+          height: 100%;
           text-align: center;
-          font-size:.32rem;
-          color:#fff;
-          >em{
-            font-size:.8rem;
+          font-size: .32rem;
+          color: #fff;
+          > em {
+            font-size: .8rem;
           }
         }
-        &.right{
-          margin-left:.4rem;
-          font-size:.32rem;
-          line-height:normal;
-          >.right-2{
-            margin-top:.2rem;
-            font-size:.24rem;
-            >em{
-              margin-left:.3rem;
-              color:@light;
+        &.right {
+          margin-left: .4rem;
+          font-size: .32rem;
+          line-height: normal;
+          > .right-2 {
+            margin-top: .2rem;
+            font-size: .24rem;
+            > em {
+              margin-left: .3rem;
+              color: @light;
             }
           }
         }
@@ -54,17 +55,17 @@
     }
   }
 
-  .nothing{
-    margin-top:2rem;
-    font-size:.36rem;
-    text-align:center;
+  .nothing {
+    margin-top: 2rem;
+    font-size: .36rem;
+    text-align: center;
   }
 
-  .text{
-    text-align:center;
-    margin-top:1.4rem;
-    font-size:.24rem;
-    color:@light;
+  .text {
+    text-align: center;
+    margin-top: 1.4rem;
+    font-size: .24rem;
+    color: @light;
     text-decoration: underline;
   }
 
@@ -72,7 +73,7 @@
 <template>
   <div v-if="content">
     <ul class="coupon_list-ul">
-      <li v-for="item in coupon.coupons" :key="item.coupon_id" :class="{off:coupon.off}">
+      <li v-for="item in coupon.coupons" :key="item.coupon_id" :class="{off:coupon.off}" @click="select(item)">
         <em v-show="!ifShowCoupon1">{{item.state_name}}</em>
         <span class="left">¥<em>{{item.amount}}</em></span>
         <span class="right">
@@ -94,28 +95,28 @@
   export default {
     data () {
       return {
-        content:null,
-        coupon1:{
-          text:'查看不可用',
-          off:false,
-          nothing:'暂无可用优惠券',
+        content: null,
+        coupon1: {
+          text: '查看不可用',
+          off: false,
+          nothing: '暂无可用优惠券',
         },
-        coupon2:{
-          text:'查看可用',
-          off:true,
-          nothing:'暂无不可用优惠券',
+        coupon2: {
+          text: '查看可用',
+          off: true,
+          nothing: '暂无不可用优惠券',
         },
-        ifShowCoupon1:true,
+        ifShowCoupon1: true,
       }
     },
-    watch:{
+    watch: {
       ifShowCoupon1(n){
         document.title = n ? '我的优惠券' : '查看不可用';
       }
     },
-    computed:{
+    computed: {
       coupon(){
-        if(!this.content) return;
+        if (!this.content) return;
         const obj = this.ifShowCoupon1
           ? Object.assign({}, this.coupon1)
           : Object.assign({}, this.coupon2);
@@ -127,13 +128,23 @@
       }
     },
     methods: {
+      select(coupon){
+//        if(!this.ifShowCoupon1) {
+//          return
+//        }
+        setSession('coupon', {
+          name:coupon.name,
+          coupon_id:coupon.coupon_id
+        });
+        history.go(-1);
+      },
       fetch(){
-        this.$post(URL.getCoupons, {price:0})
-          .then ( res => {
+        this.$post(URL.getCoupons, {price: 0})
+          .then(res => {
             console.log(res);
-            if(res.errcode == 0) {
+            if (res.errcode == 0) {
               this.content = res.content;
-            }else{
+            } else {
               errback(res);
             }
           })

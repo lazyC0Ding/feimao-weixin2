@@ -61,28 +61,40 @@
   }
 
   footer{
-    position: absolute;
+    position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
   }
 
+  .order_comment-ul{
+    overflow:hidden;
+    >li{
+      overflow:hidden;
+      margin-top:.1rem;
+    }
+  }
+
 </style>
 <template>
-  <div v-if="search" style="position:relative;height:100%;">
-    <goods-list :goods="search" cant-open-goods></goods-list>
-    <div class="score border-bottom">
-      <span class="title">商品评分</span>
-      <span class="star" :class="{on:star >= item}" @click="star=item" v-for="item in [1,2,3,4,5]"></span>
-    </div>
-    <div class="textarea">
-      <textarea v-model="comment" placeholder="说点对宝贝的评价吧......" maxlength="140"></textarea>
-      <span class="tips">{{comment.length}}/140</span>
-    </div>
-    <div class="score">
-      <span class="title">上传图片</span>
-    </div>
-    <app-upload-img :images="images"></app-upload-img>
+  <div v-if="search" style="position:relative;padding-bottom:1.1rem;">
+    <ul class="order_comment-ul">
+      <li v-for="(item, index) in search">
+        <goods-list :goods="[item]" cant-open-goods></goods-list>
+        <div class="score border-bottom">
+          <span class="title">商品评分</span>
+          <span class="star" :class="{on:item.score >= star}" @click="item.score=star" v-for="star in [1,2,3,4,5]"></span>
+        </div>
+        <div class="textarea">
+          <textarea v-model="item.comment" placeholder="说点对宝贝的评价吧......" maxlength="140"></textarea>
+          <span class="tips">{{item.comment.length}}/140</span>
+        </div>
+        <div class="score">
+          <span class="title">上传图片</span>
+        </div>
+        <app-upload-img :images="item.images"></app-upload-img>
+      </li>
+    </ul>
     <footer>
       <div class="btn-big" style="margin-bottom:.1rem;" @click="submit">提交</div>
     </footer>
@@ -97,19 +109,70 @@
     data () {
       return {
         search: null,
-        images: [],
-        comment: '',
-        star:0,
       }
+    },
+    computed:{
+      goods(){
+        if(this.search) {
+          return this.search.goods;
+        }
+      },
+      order_sn(){
+        if(this.search) {
+          return this.search.order_sn;
+        }
+      },
     },
     methods: {
       submit(){
+        const data = [];
+        let item;
+        for (let i of this.goods) {
+          if(i.score === 0) {
+            alert('请给商品评分');
+            return;
+          }
+          item = {
+            order_sn:this.order_sn,
+            goods_id:i.goods_id,
+            option_id:i.option_id || 0,
+            score:i.score,
+          };
+          if(i.images.length) {
+            const arr = [];
+            for (let j of i.images) {
+              arr.push(j.src);
+            }
+            item.images = arr.join(',');
+          }
+          if(i.comment.trim()) {
+            item.comment = i.comment;
+          }
+          data.push(item);
+        }
 
+        this.$post(URL.orderComment, {data:JSON.stringify(data)})
+          .then (res => {
+            if(res.errcode == 0) {
+              alert('评价成功,感谢您的评价');
+              history.go(-1);
+            }else{
+              errback(res);
+            }
+          })
       }
     },
     created(){
       document.title = '评价';
-      this.search = getSession('order_comment');
+      const search = getSession('order_comment');
+      for (let i of search.goods){
+        i.images = [];
+        i.comment = '';
+        i.score = 0;
+      }
+
+      this.search = search;
+      console.log(search);
     },
     components: {
       AppPermanent,

@@ -43,7 +43,7 @@
       <img class="content" :src="image.localId">
       <img class="close" src="../assets/img/close_redbj.png" @click.stop="images.splice(index,1)">
     </li><!--
-    --><li class="chooseImg" @click="chooseImg" v-show="images.length < 6">{{images.length + 1}}/6</li>
+    --><li class="chooseImg" @click="chooseImg" v-show="images.length < 6">{{images.length}}/6</li>
   </ul>
 </template>
 <script>

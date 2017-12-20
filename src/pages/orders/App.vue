@@ -102,7 +102,7 @@
           </div>
           <div class="action" v-else-if="item.order_state == 3">
             <span class="orders-btn" @click="delivery(item)">确认收货</span>
-            <span class="orders-btn">查看物流</span>
+            <span class="orders-btn" v-href="['logistics', {order_sn:item.order_sn}]">查看物流</span>
           </div>
           <div class="action" v-else-if="item.order_state == 4">
             <span class="orders-btn" @click="comment(item)">去评价</span>
@@ -145,7 +145,7 @@
         if(!flag) return;
         this.$post(URL.cancel, {order_sn})
           .then ( res => {
-            console.log(res)
+            console.log(res);
             if(res.errcode == 0) {
               this.content.splice(index, 1);
             }else{
@@ -175,7 +175,7 @@
             if(res.errcode == 0) {
               item.order_state = 4;
               toast('收货成功');
-              setTimeout(function () {
+              setTimeout(() => {
                 this.comment(item);
               }, 500);
             }else{
@@ -184,7 +184,7 @@
           })
       },
       comment(item){
-        setSession('order_comment', item.goods);
+        setSession('order_comment', {goods:item.goods, order_sn:item.order_sn});
         openPage('order_comment');
       },
       changeState(state){

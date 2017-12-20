@@ -38,7 +38,7 @@ const webpackConfig = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'),resolve('static')],
+        include: [resolve('src')],
         exclude:/node_modules/
       },
       {

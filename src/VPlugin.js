@@ -247,7 +247,34 @@ export default {
 
     Vue.mixin({
       created(){
-        setVue(this)
+        if(!$vue){
+          setVue(this);
+          // wx.config相关
+          if (isWeixin()) {
+            const url = location.href.split('#')[0];
+            $vue.$post(URL.getWeixinInfo, {url})
+              .then(res => {
+                if (res.errcode == 0) {
+                  const content = res.content;
+                  wx.config({
+                    debug: false,
+                    appId: content.appId,
+                    timestamp: content.timestamp,
+                    nonceStr: content.nonceStr,
+                    signature: content.signature,
+                    jsApiList: [
+                      'chooseImage',
+                      'uploadImage',
+                      'chooseWXPay',
+                      'previewImage',
+                    ]
+                  });
+                } else {
+                  errback(res);
+                }
+              })
+          }
+        }
       },
     });
 

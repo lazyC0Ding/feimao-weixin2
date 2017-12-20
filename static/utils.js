@@ -1,4 +1,4 @@
-const formatNumber = n => {
+var formatNumber = n => {
   n = n.toString();
   return n[1] ? n : '0' + n
 };
@@ -14,9 +14,9 @@ function canJSONParse(str) {
 
 // json => location.search
 function formatParams(json) {
-  const keys = [];
+  var keys = [];
   json = Object.assign({}, json);
-  for (let i in json) {
+  for (var i in json) {
     json[i] = typeof json[i] === 'object' ? JSON.stringify(json[i]) : json[i];
     keys.push(i + '=' + json[i]);
   }
@@ -30,11 +30,11 @@ function getSearchParams(str) {
   if(!str) return;
 
   str = str.startsWith('?') ? str.slice(1) : str;
-  const params = decodeURI(str).split('&');
+  var params = decodeURI(str).split('&');
 
-  let entry;
-  const json = {};
-  for (let i=0, l=params.length; i<l; i++) {
+  var entry;
+  var json = {};
+  for (var i=0, l=params.length; i<l; i++) {
     entry = params[i].split('=');
     json[entry[0]] = canJSONParse(entry[1]) ? JSON.parse(entry[1]) : entry[1];
   }
@@ -47,7 +47,7 @@ function openPage(url, paramsJson) {
     $vue.$setPage('order_confirm', null, true);
   }
   url = url.endsWith('.html') ? url : url + '.html';
-  const paramsStr = paramsJson ? '?' + formatParams(paramsJson) : '';
+  var paramsStr = paramsJson ? '?' + formatParams(paramsJson) : '';
   console.log(paramsStr);
   window.location.href = url + paramsStr;
 }
@@ -57,13 +57,13 @@ function replacePage(url, paramsJson) {
     $vue.$setPage('order_confirm', null, true);
   }
   url = url.endsWith('.html') ? url : url + '.html';
-  const paramsStr = paramsJson ? '?' + formatParams(paramsJson) : '';
+  var paramsStr = paramsJson ? '?' + formatParams(paramsJson) : '';
   location.replace(url + paramsStr);
 }
 
 // 如index.html, name === 'index'
 function getPageName() {
-  let name = location.pathname;
+  var name = location.pathname;
   if(name === '/'){
     name = 'index'
   }else{
@@ -79,9 +79,9 @@ function getPageName() {
 
 // 判断移动端系统
 function getSystemType() {
-  const u = navigator.userAgent;
-  const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;
-  const isIos = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+  var u = navigator.userAgent;
+  var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;
+  var isIos = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
   if(isAndroid) {
     return 'android'
   }else if(isIos) {
@@ -106,7 +106,7 @@ function setSession(key, value) {
 }
 
 function getSession(key) {
-  let value = sessionStorage.getItem(key);
+  var value = sessionStorage.getItem(key);
   if(value === 'undefined') {
     return undefined;
   }else{
@@ -121,7 +121,7 @@ function setStorage(key, value) {
 }
 
 function getStorage(key) {
-  let value = localStorage.getItem(key);
+  var value = localStorage.getItem(key);
   if(value === 'undefined') {
     return undefined;
   }else{

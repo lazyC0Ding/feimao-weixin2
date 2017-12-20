@@ -1,4 +1,4 @@
-const config = {
+var config = {
   debug: true
 };
 
@@ -8,44 +8,16 @@ if (!config.debug) {
 }
 
 // vue对象相关 ↓
-let $vue;
+var $vue;
 
 function setVue($_vue) {
   if (!$vue) {
     $vue = $_vue;
-
-    // wx.config相关
-    if (isWeixin()) {
-      const url = location.href.split('#')[0];
-
-
-      $vue.$post(URL.getWeixinInfo, {url})
-        .then(res => {
-          if (res.errcode == 0) {
-            const content = res.content;
-            wx.config({
-              debug: false,
-              appId: content.appId,
-              timestamp: content.timestamp,
-              nonceStr: content.nonceStr,
-              signature: content.signature,
-              jsApiList: [
-                'chooseImage',
-                'uploadImage',
-                'chooseWXPay',
-                'previewImage',
-              ]
-            });
-          } else {
-            errback(res);
-          }
-        })
-    }
   }
 }
 
 // Loading相关
-let hasLoading = false;
+var hasLoading = false;
 function showLoading() {
   if (!hasLoading) {
     hasLoading = true;
@@ -78,16 +50,16 @@ function toast(msg) {
 }
 
 function login() {
-  const from = getPageName();
+  var from = getPageName();
   if (isWeixin()) {
-    const url = 'https://open.weixin.qq.com/connect/oauth2/authorize';
-    const appid = 'wx739a1b97ce756bcd';
-    const redirect_uri = encodeURIComponent('http://feimao-weixin.zertone2.com/setInfo.html');
-    const response_type = 'code';
-    const scope = 'snsapi_userinfo';
-    let state = from;  // 自带参数
+    var url = 'https://open.weixin.qq.com/connect/oauth2/authorize';
+    var appid = 'wx739a1b97ce756bcd';
+    var redirect_uri = encodeURIComponent('http://feimao-weixin.zertone2.com/setInfo.html');
+    var response_type = 'code';
+    var scope = 'snsapi_userinfo';
+    var state = from;  // 自带参数
 
-    const to = `${url}?appid=${appid}&redirect_uri=${redirect_uri}&response_type=${response_type}&scope=${scope}&state=${state}#wechat_redirect`;
+    var to = `${url}?appid=${appid}&redirect_uri=${redirect_uri}&response_type=${response_type}&scope=${scope}&state=${state}#wechat_redirect`;
     location.href = to;
   } else {
     openPage('login', {from});
@@ -108,15 +80,15 @@ function errback(res) {
 // 以下是页面状态相关
 // 1.改变${pageName}.html页面vue实例上data[attr] = value;
 function changeState(pageName, attr, value) {
-  const data = getSession(pageName);
+  var data = getSession(pageName);
   if (!data) return;
   data[attr] = value;
   return setSession(pageName, data);
 }
 
 function follow_common() {
-  const willRefreshByFollow = ['index', 'follows', 'person_detail'];
-  for (let page of willRefreshByFollow) {
+  var willRefreshByFollow = ['index', 'follows', 'person_detail'];
+  for (var page of willRefreshByFollow) {
     if (page === getPageName() && page === 'index') return;
     changeState(page, '$_follow', true);
   }
@@ -138,9 +110,9 @@ function jumpAction(action) {
       location.replace(action.jump + '.html');
       break;
     default:
-      let params = {};
+      var params = {};
       if (action.params && action.params.length) {
-        for (let i of action.params) {
+        for (var i of action.params) {
           params[i.key] = i.value;
         }
       }

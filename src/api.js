@@ -5,22 +5,6 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 // axios.defaults.baseURL = 'http://feimao.zertone1.com/app/';
 axios.defaults.baseURL = 'http://app.feelmao.com/app/';
 
-const getURLSearchParams = function (json) {
-  const p = new URLSearchParams();
-  for (let i in json) {
-    p.append(i, json[i]);
-  }
-  return p;
-};
-
-function UrlToJson(URLSearchParams) {
-  const json = {};
-  for (let i of URLSearchParams){
-    json[i[0]] = i[1];
-  }
-  return json;
-}
-
 const content = 'pinet.FeiMao.2017';
 const t = '3';
 
@@ -49,20 +33,19 @@ axios.interceptors.request.use(function (config) {
     // -------
 
   } else if (method === 'post') {
-    config.data = config.data || new URLSearchParams();
-    config.data.append('t', t);
-    config.data.append('content', content);
-    config.data.append('time', (Date.parse(new Date())) / 1000);
-    // config.data.sort();
-    let json = UrlToJson(config.data);
-    config.data.append('sign', getSign(json));
-    // config.data.append('sign', md5(decodeURIComponent(config.data.toString())));
-    config.data.delete('content');
-    config.data.append('access_token', token);
-
-    // 控制台打印
-    str = decodeURIComponent(config.data.toString());
-    // -------
+    config.data = config.data || {};
+    config.data.t = t;
+    config.data.content = content;
+    config.data.time = Date.parse(new Date()) / 1000;
+    config.data.sign = getSign(config.data);
+    delete config.data.content;
+    config.data.access_token = token;
+    str = '';
+    for (let i in config.data) {
+      str += encodeURIComponent(i) + '=' + encodeURIComponent(config.data[i]) + '&';
+    };
+    str = str.slice(0, str.length - 1);
+    config.data = str
   }
   url = config.baseURL + config.url;
   console.log(`${method}: ${url}?${str}`);
@@ -98,11 +81,7 @@ export default {
   },
   post(url, params){
     return new Promise((resolve, reject) => {
-      let p;
-      if (params) {
-        p = getURLSearchParams(params)
-      }
-      axios.post(url, p)
+      axios.post(url, params)
         .then(response => {
           resolve(response.data)
         }, err => {

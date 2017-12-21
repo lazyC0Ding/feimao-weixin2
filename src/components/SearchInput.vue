@@ -87,7 +87,7 @@
 <script>
   export default {
     props: {
-      value: String,
+      value: [String, Number],
       placeholder: String,
       disabled: Boolean,
       auto: Boolean,

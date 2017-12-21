@@ -19,6 +19,7 @@
         vertical-align: middle;
       }
       >input{
+        width:3.5rem;
         vertical-align: middle;
         font-size:.3rem;
         &::placeholder{

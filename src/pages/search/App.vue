@@ -30,7 +30,7 @@
 <template>
   <div style="padding-top:.9rem;">
     <search-input v-model="key" placeholder="输入热门文章商品" auto :callback="search">
-      <a @click="search">搜索</a>
+      <a @click="search('')">搜索</a>
     </search-input>
     <div class="keys-container" v-if="hisKeys.length">
       <div class="title">
@@ -64,6 +64,7 @@
     methods: {
       search(key){
         key = key || this.key;
+        if(!key) return;
         let hasKey = false;
         for (let i of this.hisKeys) {
           if(i === key) {

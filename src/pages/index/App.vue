@@ -48,27 +48,32 @@
     > ul {
       width: 100%;
       height: 100%;
-      line-height:2.6rem;
+      line-height: 2.6rem;
       padding-top: .38rem;
       padding-left: .72rem;
       box-sizing: border-box;
       overflow-y: hidden;
       overflow-x: scroll;
       white-space: nowrap;
+      font-size:0;
       &::-webkit-scrollbar {
         width: 0;
         height: 0;
       }
       > li {
+        position: relative;
         display: inline-block;
         text-align: center;
         width: 1.52rem;
-        line-height:normal;
+        height: 1.88rem;
+        line-height: normal;
         vertical-align: top;
         &:first-child {
           margin-left: .1rem;
         }
         dt {
+          font-size:0;
+          overflow:hidden;
           > img {
             width: 1rem;
             height: 1rem;
@@ -76,20 +81,31 @@
           }
         }
         dd {
+          overflow: hidden;
+          margin-top: .1rem;
           > span {
-            margin: .1rem 0;
+            font-size:.2rem;
             width: 1.2rem;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
           }
         }
-        > span {
-          .middle(.4rem);
-          width: .84rem;
-          font-size: .16rem;
-          border: 1px solid #111;
+        > div{
+          position:absolute;
+          left:0;
+          bottom:0;
+          width:100%;
+          text-align: center;
+          overflow: hidden;
+          >span {
+            .middle(.4rem);
+            width: .84rem;
+            font-size: .16rem;
+            border: 1px solid #111;
+          }
         }
+
       }
     }
   }
@@ -132,9 +148,12 @@
             </dt>
             <dd><span>{{person.nickname}}</span></dd>
           </dl>
-          <span @click="follow(person.customer_id)">关注TA</span>
+          <div>
+            <span @click="follow(person.customer_id)">关注TA</span>
+          </div>
         </li><!--
-        --><li v-if="attention.persons.length >= 9">
+        -->
+        <li v-if="attention.persons.length >= 9">
           <dl>
             <dt v-href="'follows'">
               <img src="../../assets/img/people_more.png">
@@ -149,7 +168,8 @@
       <img src="../../assets/img/Tip_nothing.png">
       <div>暂无关注</div>
     </div>
-    <app-articles v-if="attention.articles" v-show="activeTag === 0" :parentData="_data" :articles="attention.articles"></app-articles>
+    <app-articles v-if="attention.articles" v-show="activeTag === 0" :parentData="_data"
+                  :articles="attention.articles"></app-articles>
     <app-articles v-show="activeTag === 1" :parentData="_data" :articles="articles"></app-articles>
     <goods-container v-show="activeTag === 2" :parentData="_data" :goods="recommend" hidePrice></goods-container>
     <load-more
@@ -189,9 +209,9 @@
         articles: [],
         loadMoreAttr: {
           url: URL.getArticles,
-          page:1
+          page: 1
         },
-        hasMore:true,
+        hasMore: true,
         recommend: [],
         message_count: 0,
         $_follow: false,
@@ -199,10 +219,10 @@
     },
     methods: {
       loadMore(content){
-        if(content.length) {
+        if (content.length) {
           this.articles.push(...content);
           this.loadMoreAttr.page++;
-        }else{
+        } else {
           this.hasMore = false;
         }
       },

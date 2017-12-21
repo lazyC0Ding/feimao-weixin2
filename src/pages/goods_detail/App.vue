@@ -645,11 +645,11 @@
           is_collect: 1,
         },
         cantFind: false,
-        page:1,
+        page: 1,
         hasMore: true,
-        ifShowComment:false,
-        comment:'',
-        replyCustomer_id:'',
+        ifShowComment: false,
+        comment: '',
+        replyCustomer_id: '',
       }
     },
     computed: {
@@ -697,7 +697,7 @@
         if (!this.comment.trim()) {
           return;
         }
-        this.$post(URL.reply, {comment: this.comment, pid: this.replyCustomer_id, goods_id:this.params.goods_id})
+        this.$post(URL.reply, {comment: this.comment, pid: this.replyCustomer_id, goods_id: this.params.goods_id})
           .then(res => {
             if (res.errcode == 0) {
               toast(res.message);
@@ -708,10 +708,10 @@
           })
       },
       loadMore(content){
-        if(content.length) {
+        if (content.length) {
           this.content.records.push(...content);
           this.page++
-        }else{
+        } else {
           this.hasMore = false;
         }
       },

@@ -52,7 +52,7 @@
       <span>{{content.reason}}</span>
     </div>
     <div class="refund_applyDetail-row" style="border-bottom: 1px solid #e4e4e4;">退款金额
-      <span>{{content.price}}</span>
+      <span>¥{{content.price}}</span>
     </div>
     <div class="refund_applyDetail-row">上传的凭证</div>
     <ul class="refund_applyDetail-ul">

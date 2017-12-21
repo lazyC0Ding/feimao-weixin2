@@ -59,7 +59,7 @@
         <img :src="msg.avater | avatar">
         <div class="text">
           <div>
-            <span v-if="msg.foregin_type == 1">{{msg.nickname}}</span>
+            <span v-show="msg.foregin_type == 1">{{msg.nickname}}</span>
             <span>{{msg.title}}</span>
           </div>
           <div>{{msg.date_add | time}}</div>

@@ -307,7 +307,7 @@
       <li v-for="item in content.collections">
         <img :src="item.cover" v-href="['goods_detail', {goods_id:item.goods_id}]">
         <div class="name">{{item.name}}</div>
-        <div class="price">{{item.price}}</div>
+        <div class="price">¥{{item.price}}</div>
       </li>
     </ul>
     <ul class="user-ul-3">

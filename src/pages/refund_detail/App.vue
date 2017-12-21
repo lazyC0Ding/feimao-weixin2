@@ -95,7 +95,7 @@
               <div>快递单号：{{item.express_sn}}</div>
             </template>
             <template v-else-if="item.refund_state == 5">
-              <div>退款金额：{{item.price}}</div>
+              <div>退款金额：¥{{item.price}}</div>
             </template>
           </div>
         </div>

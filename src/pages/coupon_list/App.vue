@@ -95,6 +95,7 @@
   export default {
     data () {
       return {
+        search:null,
         content: null,
         coupon1: {
           text: '查看不可用',
@@ -107,7 +108,6 @@
           nothing: '暂无不可用优惠券',
         },
         ifShowCoupon1: true,
-        price:0,
       }
     },
     watch: {
@@ -138,14 +138,11 @@
         if(!this.ifShowCoupon1) {
           return
         }
-        setSession('coupon', {
-          name:coupon.name, 
-          coupon_id:coupon.coupon_id
-        });
-        history.go(-1);
+        this.search.coupon = coupon;
+        replacePage('order_confirm', this.search);
       },
       fetch(){
-        this.$post(URL.getCoupons, {price: this.price})
+        this.$post(URL.getCoupons, {price: this.search ? this.search.total_fee : 0})
           .then(res => {
             console.log(res);
             if (res.errcode == 0) {
@@ -160,7 +157,7 @@
       document.title = '我的优惠券';
       const search = getSearchParams(location.search);
       if(search) {
-        this.price = search.price;
+        this.search = search;
       }
       this.fetch();
     },

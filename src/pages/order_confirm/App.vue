@@ -142,10 +142,10 @@
         <span class="title">使用优惠券</span>
         <span class="right select" :class="{on:discount.coupon}"></span>
       </li>
-      <li v-href="['coupon_list', {price:search.total_fee}]" v-show="discount.coupon" class="row">
+      <li v-href="['coupon_list', search]" v-show="discount.coupon" class="row">
         <span class="title">优惠券</span>
         <img class="row-arrow" src="../../assets/img/direction_right_gray.png">
-        <span class="light right">{{coupon ? coupon.name : '请选择'}}</span>
+        <span class="light right">{{search.coupon ? '满' + search.coupon.limit + '减' + search.coupon.amount : '请选择'}}</span>
       </li>
       <li v-if="search.show_point==1" class="row" @click="selectDiscount('point')">
         <span class="title">使用积分</span>
@@ -171,7 +171,7 @@
         message: '',
         discount: {
           point: false,
-          coupon: false,
+          coupon: true,
         },
         coupon: null,
       }
@@ -187,7 +187,7 @@
           if(this.discount.point) {
             params.point = 1;
           }else if(this.discount.coupon) {
-            params.coupon_id=this.coupon ? this.coupon.coupon_id : 0;
+            params.coupon_id=this.search.coupon ? this.search.coupon.coupon_id : 0;
           }
           return params;
         }
@@ -218,11 +218,23 @@
         }
       },
       payment(){
-        return (Number(this.search.total_fee) + Number(this.expressFee)).toFixed(2);
+        let amount = (Number(this.search.total_fee) + Number(this.expressFee)).toFixed(2);
+        if(this.discount.coupon) {
+          if(this.search.coupon) {
+            amount = amount - Number(this.search.coupon.amount);
+          }
+        }else if(this.discount.point) {
+          amount = amount - Number(this.search.customer.point)/100;
+        }
+        return amount;
       },
     },
     methods: {
       generate(){
+        if(!this.search.address) {
+          toast('请选择收货地址');
+          return;
+        }
         this.$post(URL.generate, this.generateParams)
           .then ( res => {
             if(res.errcode == 0) {
@@ -265,9 +277,6 @@
       init(){
         console.log(getSearchParams(location.search));
         this.search = getSearchParams(location.search);
-        if(getSession('coupon')){
-          this.coupon = getSession('coupon');
-        }
         this.getExpressFee();
       }
     },

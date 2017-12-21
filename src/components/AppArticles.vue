@@ -166,11 +166,8 @@
           })
       },
       showDetail(article){
-        if (this.parentData) {
-          setSession(getPageName(), this.parentData);
-        }
         article.browse = Number(article.browse) + 1;
-        return openPage('article_detail', {article_id:article.article_id})
+        openPage('article_detail', {article_id:article.article_id})
       },
       follow(article, pid){
         this.$post(URL.attention, {pid})

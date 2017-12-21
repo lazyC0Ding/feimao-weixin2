@@ -215,6 +215,7 @@
       },
       changeState(state){
         this.params.state = state;
+        this.params.page = 1;
         this.fetch();
       },
       fetch(){

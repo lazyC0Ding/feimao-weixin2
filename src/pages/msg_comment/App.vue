@@ -32,10 +32,15 @@
           margin: 0 .16rem;
           font-size: .28rem;
           color: #00609B;
+          max-width:2rem;
+          overflow:hidden;
+          text-overflow: ellipsis;
+          white-space:nowrap;
         }
         > .date_add {
           font-size: .24rem;
           color: #9DA5A8;
+          overflow:hidden;
         }
         > .btn {
           float: right;
@@ -137,12 +142,20 @@
       </div>
     </div>
     <the-shade v-show="ifShowComment" @click.native="hideComment"></the-shade>
+    <load-more
+      :url="url"
+      :page="page"
+      :callback="loadMore"
+      :no-listen="!hasMore"
+    ></load-more>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>
 <script>
   import AppPermanent from '@c/AppPermanent.vue'
   import TheShade from '@c/TheShade.vue'
+  import LoadMore from '@c/LoadMore.vue'
+
   export default {
     data () {
       return {
@@ -151,9 +164,19 @@
         ifShowComment:false,
         comment:'',
         replyComment_id:'',
+        url:URL.getCommentMessages,
+        hasMore:true,
       }
     },
     methods: {
+      loadMore(content){
+        if(content.length) {
+          this.content.push(...content);
+          this.page++;
+        }else{
+          this.hasMore = false;
+        }
+      },
       showComment(comment_id){
         this.replyComment_id = comment_id;
         this.ifShowComment = true;
@@ -213,6 +236,7 @@
     components: {
       AppPermanent,
       TheShade,
+      LoadMore,
     }
   }
 </script>

@@ -99,7 +99,7 @@
       </div>
       <div class="name">{{item.name}}</div>
       <div class="price" v-if="!type && !hidePrice">
-        <span>{{item.price}}</span>
+        <span>¥{{item.price}}</span>
       </div>
       <div class="price" v-else-if="type && type == 1">
         <span>¥{{item.activity_price}}</span>

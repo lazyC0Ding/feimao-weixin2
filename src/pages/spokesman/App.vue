@@ -184,11 +184,19 @@
         <span class="right">{{fan.date_add | time_2}}</span>
       </li>
     </ul>
+    <load-more
+      :url="url"
+      :page="page"
+      :callback="loadMore"
+      :no-listen="!hasMore"
+    ></load-more>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>
 <script>
   import AppPermanent from '@c/AppPermanent.vue'
+  import LoadMore from '@c/LoadMore.vue'
+
   /*
   * content.identity:
   * 1:普通用户
@@ -201,6 +209,9 @@
     data () {
       return {
         content:null,
+        url:URL.getFans,
+        page:1,
+        hasMore:true,
       }
     },
     computed:{
@@ -216,6 +227,14 @@
       },
     },
     methods: {
+      loadMore(content){
+        if(content.length) {
+          this.content.fans.push(...content);
+          this.page++;
+        }else{
+          this.hasMore = false;
+        }
+      },
       fetch(){
         this.$post(URL.spokesman)
           .then ( res => {
@@ -233,7 +252,8 @@
       this.fetch();
     },
     components: {
-      AppPermanent
+      AppPermanent,
+      LoadMore,
     }
   }
 </script>

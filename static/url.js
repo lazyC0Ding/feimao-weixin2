@@ -85,4 +85,5 @@ var URL = {
   deleteGoods:'user/deleteGoods',
   deleteArticle:'user/deleteArticle',
   readMessage:'message/readMessage',
+  getFans:'user/getFans',
 };

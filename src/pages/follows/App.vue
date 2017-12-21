@@ -4,21 +4,39 @@
 <template>
   <div>
     <app-articles :parentData="_data" :articles="content" hasAuthorInfo></app-articles>
+    <load-more
+      :url="url"
+      :page="page"
+      :callback="loadMore"
+      :no-listen="!hasMore"
+    ></load-more>
     <app-permanent type="1"></app-permanent>
   </div>
 </template>
 <script>
   import AppArticles from '@c/AppArticles.vue'
   import AppPermanent from '@c/AppPermanent.vue'
+  import LoadMore from '@c/LoadMore.vue'
+
   export default {
     data () {
       return {
         page: 1,
         content: [],
-        $_follow: false
+        $_follow: false,
+        url:URL.getAllRecoAtte,
+        hasMore:true,
       }
     },
     methods: {
+      loadMore(content){
+        if(content.length) {
+          this.content.push(...content);
+          this.page++;
+        }else{
+          this.hasMore = false;
+        }
+      },
       fetch(){
         this.$post(URL.getAllRecoAtte, {page: this.page})
           .then(res => {
@@ -26,7 +44,7 @@
               i['is_attention'] = 0;
             }
             this.content = res.content;
-            this.$_follow = false;
+//            this.$_follow = false;
           })
       },
       keepAlive(){
@@ -42,11 +60,12 @@
     },
     created(){
       document.title = '推荐关注';
-      return this.keepAlive();
+      this.fetch();
     },
     components: {
       AppArticles,
       AppPermanent,
+      LoadMore,
     }
   }
 </script>

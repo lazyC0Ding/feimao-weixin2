@@ -32,10 +32,15 @@
           margin: 0 .16rem;
           font-size: .28rem;
           color: #00609B;
+          max-width:2rem;
+          overflow:hidden;
+          text-overflow: ellipsis;
+          white-space:nowrap;
         }
         > .date_add {
           font-size: .24rem;
           color: #9DA5A8;
+          overflow:hidden;
         }
         > .btn {
           float: right;
@@ -94,19 +99,37 @@
       <img src="../../assets/img/Tip_nothing.png">
       <div>您还没有点赞消息</div>
     </div>
+    <load-more
+      :url="url"
+      :page="page"
+      :callback="loadMore"
+      :no-listen="!hasMore"
+    ></load-more>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>
 <script>
   import AppPermanent from '@c/AppPermanent.vue'
+  import LoadMore from '@c/LoadMore.vue'
+
   export default {
     data () {
       return {
         page:1,
         content:null,
+        url:URL.getLikeMessages,
+        hasMore:true,
       }
     },
     methods: {
+      loadMore(content){
+        if(content.length) {
+          this.content.push(...content);
+          this.page++;
+        }else{
+          this.hasMore = false;
+        }
+      },
       jumpAction(action){
         return jumpAction(action);
       },
@@ -126,7 +149,7 @@
         return type;
       },
       fetch(){
-        this.$post(URL.getLikeMessages, {page:this.page})
+        this.$post(URL.getLikeMessages, {page:1})
           .then( res => {
               if(res.errcode == 0) {
                   console.log(res)
@@ -143,6 +166,7 @@
     },
     components: {
       AppPermanent,
+      LoadMore,
     }
   }
 </script>

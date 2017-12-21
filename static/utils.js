@@ -44,20 +44,13 @@ function getSearchParams(str) {
 
 // 页面相关
 function openPage(url, paramsJson) {
-  if(url.startsWith('order_confirm')){
-    window.theVue.$setPage('order_confirm', null, true);
-  }
-  url = url.endsWith('.html') ? url : url + '.html';
+  url = url.indexOf('.html') > -1 ? url : url + '.html';
   var paramsStr = paramsJson ? '?' + formatParams(paramsJson) : '';
-  console.log(paramsStr);
   window.location.href = url + paramsStr;
 }
 
 function replacePage(url, paramsJson) {
-  if(url.startsWith('order_confirm')){
-    window.theVue.$setPage('order_confirm', null, true);
-  }
-  url = url.endsWith('.html') ? url : url + '.html';
+  url = url.indexOf('.html') > -1 ? url : url + '.html';
   var paramsStr = paramsJson ? '?' + formatParams(paramsJson) : '';
   location.replace(url + paramsStr);
 }

@@ -107,6 +107,7 @@
           nothing: '暂无不可用优惠券',
         },
         ifShowCoupon1: true,
+        price:0,
       }
     },
     watch: {
@@ -144,7 +145,7 @@
         history.go(-1);
       },
       fetch(){
-        this.$post(URL.getCoupons, {price: 0})
+        this.$post(URL.getCoupons, {price: this.price})
           .then(res => {
             console.log(res);
             if (res.errcode == 0) {
@@ -157,6 +158,10 @@
     },
     created(){
       document.title = '我的优惠券';
+      const search = getSearchParams(location.search);
+      if(search) {
+        this.price = search.price;
+      }
       this.fetch();
     },
     components: {

@@ -127,7 +127,7 @@
       <img src="../../assets/img/direction_right_gray.png">
     </div>
     <goods-list style="margin-top:.1rem;" :goods="search.goods"></goods-list>
-    <div class="total">共{{search.goods_count}}件商品，小计<span>¥ {{search.total_fee.toFixed(2)}}</span></div>
+    <div class="total">共{{search.goods_count}}件商品，小计<span>¥ {{search.total_fee}}</span></div>
     <ul class="order_confirm-row-container">
       <li class="row">
         <span class="title">运费</span>
@@ -138,18 +138,18 @@
         <input maxlength="40" v-model="message" class="message" placeholder="选填/请输入对本次交易的留言说明">
         <span class="right" style="color:#9DA5A8" v-show="message.length">{{message.length}}/40</span>
       </li>
-      <li class="row" @click="selectDiscount('coupon')" style="margin-top:.1rem;">
+      <li v-if="search.show_coupon==1" class="row" @click="selectDiscount('coupon')" style="margin-top:.1rem;">
         <span class="title">使用优惠券</span>
         <span class="right select" :class="{on:discount.coupon}"></span>
       </li>
-      <li v-href="'coupon_list'" v-show="discount.coupon" class="row">
+      <li v-href="['coupon_list', {price:search.total_fee}]" v-show="discount.coupon" class="row">
         <span class="title">优惠券</span>
         <img class="row-arrow" src="../../assets/img/direction_right_gray.png">
         <span class="light right">{{coupon ? coupon.name : '请选择'}}</span>
       </li>
-      <li class="row" @click="selectDiscount('point')">
+      <li v-if="search.show_point==1" class="row" @click="selectDiscount('point')">
         <span class="title">使用积分</span>
-        <span class="light" style="margin-left:.1rem;">{{search.customer.point == 0 ? '暂无积分' : search.customer.point}}</span>
+        <span class="light" style="margin-left:.2rem;">{{search.customer.point == 0 ? '暂无积分' : search.customer.point + '积分抵' + Number(search.customer.point)/100}}</span>
         <span class="right select" :class="{on:discount.point}"></span>
       </li>
     </ul>

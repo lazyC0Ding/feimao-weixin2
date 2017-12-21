@@ -173,8 +173,8 @@
     </div>
     <app-articles v-if="attention.articles" v-show="activeTag === 0" :parentData="_data"
                   :articles="attention.articles"></app-articles>
-    <app-articles v-show="activeTag === 1" :parentData="_data" :articles="articles"></app-articles>
-    <goods-container v-show="activeTag === 2" :parentData="_data" :goods="recommend" hidePrice></goods-container>
+    <app-articles v-show="activeTag === 1" :articles="articles"></app-articles>
+    <goods-container v-show="activeTag === 2" :goods="recommend" hidePrice></goods-container>
     <load-more
       :url="loadMoreAttr.url"
       :page="loadMoreAttr.page"

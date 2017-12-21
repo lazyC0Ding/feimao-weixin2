@@ -2,11 +2,39 @@
   @import '../../common';
 
   .finance-tags {
-    .tags(5);
     position: fixed;
     left: 0;
     top: 0;
     width: 100%;
+    height: .8rem;
+    line-height: .8rem;
+    background-color: #000;
+    color: #fff;
+    font-size: .26rem;
+    margin-bottom: .1rem;
+    overflow: hidden;
+    z-index: 10;
+    > li {
+      float: left;
+      height: inherit;
+      text-align: center;
+      width: 20%;
+      &.active {
+        position: relative;
+        font-weight: bold;
+        color: #FFB305;
+        &:after {
+          content: " ";
+          position: absolute;
+          left: 50%;
+          bottom: .1rem;
+          width: .8rem;
+          height: .04rem;
+          margin-left: -.4rem;
+          background-color: #FFB305;
+        }
+      }
+    }
   }
 
   .finance-ul {
@@ -38,8 +66,8 @@
         line-height: normal;
         vertical-align: middle;
         font-size: .26rem;
-        >.main-1{
-          overflow:hidden;
+        > .main-1 {
+          overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
         }
@@ -70,7 +98,8 @@
       <li :class="{active:params.type==4}" @click="changeType(4)">赚钱</li>
     </ul>
     <ul v-if="content" class="finance-ul">
-      <li class="row" v-for="item in content" v-href="['finance_detail', {operation_id:item.operation_id}]" :key="item.operation_id">
+      <li class="row" v-for="item in content" v-href="['finance_detail', {operation_id:item.operation_id}]"
+          :key="item.operation_id">
         <span class="left"
               :class="{is_minus:item.is_minus == 1}">{{item.is_minus == 1 ? '-' : '+'}}{{item.amount}}</span>
         <span class="main">
@@ -80,11 +109,20 @@
         <img class="arrow" src="../../assets/img/direction_right_gray.png">
       </li>
     </ul>
+    <load-more
+      :url="url"
+      :page="params.page"
+      :params="{type:params.type}"
+      :callback="loadMore"
+      :no-listen="!hasMore"
+    ></load-more>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>
 <script>
   import AppPermanent from '@c/AppPermanent.vue'
+  import LoadMore from '@c/LoadMore.vue'
+
   export default {
     data () {
       return {
@@ -93,12 +131,22 @@
           page: 1,
         },
         content: null,
+        url: URL.finance,
+        hasMore: true,
       }
     },
     methods: {
+      loadMore(content){
+        if(content.length) {
+          this.content.push(...content);
+          this.params.page++;
+        }else{
+          this.hasMore = false;
+        }
+      },
       changeType(type){
         this.params.type = type;
-        this.$setPage();
+        this.params.page = 1;
         this.fetch();
       },
       fetch(){
@@ -119,13 +167,14 @@
       if (searchs) {
         this.params.type = searchs.type;
 //        history.replaceState(null, '', getPageName()+'.html');
-      }else{
+      } else {
         this.params.type = getSession(getPageName()).params.type;
       }
       this.fetch();
     },
     components: {
-      AppPermanent
+      AppPermanent,
+      LoadMore,
     }
   }
 </script>

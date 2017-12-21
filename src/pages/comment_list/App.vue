@@ -32,10 +32,15 @@
           > .a-1 {
             font-size: .24rem;
             color: #00609b;
+            max-width:2rem;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
           }
           > .a-2 {
             color: @light;
             font-size: .24rem;
+            overflow:hidden;
           }
         }
         > .b {
@@ -156,12 +161,21 @@
       </div>
     </div>
     <the-shade v-show="ifShowComment" @click.native="hideComment"></the-shade>
+    <load-more
+      :url="url"
+      :page="page"
+      :params="{comment_id:comment_id}"
+      :callback="loadMore"
+      :no-listen="!hasMore"
+    ></load-more>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>
 <script>
   import AppPermanent from '@c/AppPermanent.vue'
   import TheShade from '@c/TheShade.vue'
+  import LoadMore from '@c/LoadMore.vue'
+
   export default {
     data () {
       return {
@@ -171,9 +185,20 @@
         ifShowComment:false,
         replyComment_id:'',
         comment:'',
+        url:URL.getComments,
+        page:1,
+        hasMore:true,
       }
     },
     methods: {
+      loadMore(content){
+        if(content.length) {
+          this.content.push(...content);
+          this.page++;
+        }else{
+          this.hasMore = false;
+        }
+      },
       showComment(comment_id){
         this.replyComment_id = comment_id;
         this.ifShowComment = true;
@@ -222,6 +247,7 @@
     components: {
       AppPermanent,
       TheShade,
+      LoadMore,
     }
   }
 </script>

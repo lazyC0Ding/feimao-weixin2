@@ -74,25 +74,43 @@
       <img src="../../assets/img/Tip_nothing.png">
       <div>暂无系统通知</div>
     </div>
+    <load-more
+      :url="url"
+      :page="page"
+      :callback="loadMore"
+      :no-listen="!hasMore"
+    ></load-more>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>
 <script>
   import AppPermanent from '@c/AppPermanent.vue'
+  import LoadMore from '@c/LoadMore.vue'
+
   export default {
     data () {
       return {
         content: [],
         page: 1,
+        url:URL.getSystemMessages,
+        hasMore:true,
       }
     },
     methods: {
+      loadMore(content){
+        if(content.length) {
+          this.content.push(...content);
+          this.page++;
+        }else{
+          this.hasMore = false;
+        }
+      },
       read(msg){
         msg.is_read = 1;
         jumpAction(msg.action);
       },
       fetch(){
-        this.$post(URL.getSystemMessages, {page: this.page})
+        this.$post(URL.getSystemMessages, {page: 1})
           .then(res => {
             console.log(res);
             if (res.errcode == 0) {
@@ -108,7 +126,8 @@
       this.fetch();
     },
     components: {
-      AppPermanent
+      AppPermanent,
+      LoadMore,
     }
   }
 </script>

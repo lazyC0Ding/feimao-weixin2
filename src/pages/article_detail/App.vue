@@ -351,10 +351,15 @@
           > .a-1 {
             font-size: .24rem;
             color: #00609b;
+            max-width:2rem;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
           }
           > .a-2 {
             color: @light;
             font-size: .24rem;
+            overflow:hidden;
           }
         }
         > .b {
@@ -572,6 +577,13 @@
       </div>
     </div>
     <the-shade v-show="ifShowShade" @click.native="hideShade"></the-shade>
+    <load-more
+      :url="url"
+      :page="page"
+      :params="{article_id:article_id, comment_id:0}"
+      :callback="loadMore"
+      :no-listen="!hasMore"
+    ></load-more>
     <app-permanent type="1"></app-permanent>
   </div>
 </template>
@@ -579,6 +591,8 @@
   import AppPermanent from '@c/AppPermanent.vue'
   import TheShade from '@c/TheShade.vue'
   import GoodsContainer from '@c/GoodsContainer.vue'
+  import LoadMore from '@c/LoadMore.vue'
+
   export default {
     data () {
       return {
@@ -593,6 +607,9 @@
         },
         comment: '',
         replyComment_id:0,
+        url:URL.getComments,
+        page:1,
+        hasMore:true,
       }
     },
     computed: {
@@ -630,6 +647,14 @@
       }
     },
     methods: {
+      loadMore(content){
+        if(content.length) {
+          this.content.comments.push(...content);
+          this.page++;
+        }else{
+          this.hasMore = false;
+        }
+      },
       showComment(comment_id){
         this.replyComment_id = comment_id;
         this.shade.ifShowComment = true;
@@ -741,6 +766,7 @@
       AppPermanent,
       TheShade,
       GoodsContainer,
+      LoadMore,
     }
   }
 </script>

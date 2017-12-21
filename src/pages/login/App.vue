@@ -33,7 +33,7 @@
     font-size:.2rem;
     color:@light;
     text-align:center;
-    em{
+    a{
       color:#478db7;
     }
   }
@@ -52,7 +52,7 @@
       </li>
     </ul>
     <div class="text">
-      <span>点击登录按钮代表您已同意<em>《肥猫用户协议》</em></span><br>
+      <span>点击登录按钮代表您已同意<a href="http://app.feelmao.com/wap/home/agreement_view">《肥猫用户协议》</a></span><br>
       <span>未注册的用户将直接注册并登录</span>
     </div>
     <div class="btn-big" style="margin-top:.6rem;" @click="login">登录</div>

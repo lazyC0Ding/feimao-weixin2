@@ -71,19 +71,37 @@
       <img src="../../assets/img/Tip_nothing.png">
       <div>您还没有关注消息</div>
     </div>
+    <load-more
+      :url="url"
+      :page="page"
+      :callback="loadMore"
+      :no-listen="!hasMore"
+    ></load-more>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>
 <script>
   import AppPermanent from '@c/AppPermanent.vue'
+  import LoadMore from '@c/LoadMore.vue'
+
   export default {
     data () {
       return {
         page: 1,
         content: null,
+        url:URL.getAttentionMessages,
+        hasMore:true,
       }
     },
     methods: {
+      loadMore(content){
+        if(content.length) {
+          this.content.push(...content);
+          this.page++;
+        }else{
+          this.hasMore = false;
+        }
+      },
       read(msg){
         msg.is_read = 1;
         jumpAction(msg.action);
@@ -105,7 +123,8 @@
       return this.fetch();
     },
     components: {
-      AppPermanent
+      AppPermanent,
+      LoadMore,
     }
   }
 </script>

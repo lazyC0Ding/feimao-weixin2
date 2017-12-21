@@ -84,7 +84,7 @@
       pay(){
         switch (this.type) {
           case 1:
-            myConfirm('本次交易将从您的余额中扣除0.01元,确认支付吗?', () => {
+            myConfirm('本次交易将从您的余额中扣除'+this.order_amount+'元,确认支付吗?', () => {
               this.$post(URL.payorder, {type: this.type, orders: this.order_sn})
                 .then(res => {
                   if (res.errcode == 0) {
@@ -96,7 +96,7 @@
             });
             break;
           case 4:
-            myConfirm('本次交易将从您的冻结余额中扣除0.01元,确认支付吗?', () => {
+            myConfirm('本次交易将从您的冻结余额中扣除'+this.order_amount+'元,确认支付吗?', () => {
               this.$post(URL.payorder, {type: this.type, orders: this.order_sn})
                 .then(res => {
                   if (res.errcode == 0) {

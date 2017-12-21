@@ -25,6 +25,10 @@
         vertical-align: middle;
         line-height:normal;
         >.text-1{
+          width:100%;
+          overflow:hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
           font-size:.36rem;
         }
         >.text-2{

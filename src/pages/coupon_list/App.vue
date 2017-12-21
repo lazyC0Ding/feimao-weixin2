@@ -139,7 +139,7 @@
           return
         }
         setSession('coupon', {
-          name:coupon.name,
+          name:coupon.name, 
           coupon_id:coupon.coupon_id
         });
         history.go(-1);

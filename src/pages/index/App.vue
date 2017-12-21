@@ -82,11 +82,14 @@
         }
         dd {
           overflow: hidden;
-          margin-top: .1rem;
+          margin-top:.1rem;
           > span {
+            height:.3rem;
+            line-height:.3rem;
             font-size:.2rem;
             width: 1.2rem;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: visible;
             white-space: nowrap;
             text-overflow: ellipsis;
           }

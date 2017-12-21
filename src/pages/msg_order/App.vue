@@ -72,7 +72,7 @@
 <template>
   <div v-if="content">
     <ul v-if="content.length" class="msg_order-ul">
-      <li v-for="msg in content" :key="msg.message_id" v-action="msg.action">
+      <li v-for="msg in content" :key="msg.message_id" @click="read(msg)">
         <div class="state">
           <span v-show="msg.is_read == 0"></span>
           <span>{{msg.title}}</span>
@@ -105,6 +105,10 @@
       }
     },
     methods: {
+      read(msg){
+        msg.is_read = 1;
+        jumpAction(msg.action);
+      },
       fetch(){
         this.$post(URL.getOrderMessages, {page: this.page})
           .then(res => {

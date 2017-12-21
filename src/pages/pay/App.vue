@@ -64,7 +64,7 @@
       </li>
     </ul>
     <div class="pay-footer">
-      <span class="a">应付: <span>¥{{order_amount}}</span></span>
+      <span class="a">应付: <span>¥{{order_amount.toFixed(2)}}</span></span>
       <span class="b" @click="pay">立即付款</span>
     </div>
     <app-permanent type="2"></app-permanent>
@@ -82,28 +82,36 @@
     },
     methods: {
       pay(){
-        this.$post(URL.payorder, {type: this.type, orders: this.order_sn})
-          .then(res => {
-            console.log(res);
-            if (res.errcode == 0) {
-              const content = res.content;
-              let flag;
-              switch (this.type) {
-                case 1:
-                  flag = confirm('本次交易将从您的余额中扣除0.01元,确认支付吗');
-                  if(flag) {
-//                    replacePage('order_detail', {order_sn:content.order_sn});
+        switch (this.type) {
+          case 1:
+            myConfirm('本次交易将从您的余额中扣除0.01元,确认支付吗?', () => {
+              this.$post(URL.payorder, {type: this.type, orders: this.order_sn})
+                .then(res => {
+                  if (res.errcode == 0) {
                     history.go(-1);
+                  } else {
+                    errback(res)
                   }
-                  break;
-                case 4:
-                  flag = confirm('本次交易将从您的冻结余额中扣除0.01元,确认支付吗');
-                  if(flag) {
-//                    replacePage('order_detail', {order_sn:content.order_sn});
+                });
+            });
+            break;
+          case 4:
+            myConfirm('本次交易将从您的冻结余额中扣除0.01元,确认支付吗?', () => {
+              this.$post(URL.payorder, {type: this.type, orders: this.order_sn})
+                .then(res => {
+                  if (res.errcode == 0) {
                     history.go(-1);
+                  } else {
+                    errback(res)
                   }
-                  break;
-                case 5:
+                });
+            });
+            break;
+          case 5:
+            this.$post(URL.payorder, {type: this.type, orders: this.order_sn})
+              .then(res => {
+                const content = res.content;
+                if (res.errcode == 0) {
                   wx.chooseWXPay({
                     timestamp: content.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
                     nonceStr: content.nonceStr, // 支付签名随机串，不长于 32 位
@@ -111,16 +119,15 @@
                     signType: content.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
                     paySign: content.paySign, // 支付签名
                     success: function (res) {
-//                      replacePage('order_detail', {order_sn:content.order_sn});
                       history.go(-1);
                     }
                   });
-                  break;
-              }
-            }else{
-              errback(res)
-            }
-          });
+                } else {
+                  errback(res)
+                }
+              });
+            break;
+        }
       }
     },
     created(){

@@ -6,10 +6,21 @@
       background-color: #fff;
       overflow: hidden;
       > div.div-1 {
+        position:relative;
         margin-top: .3rem;
         height: .6rem;
         line-height: .6rem;
         overflow: hidden;
+        >.unRead{
+          width: .2rem;
+          height: .2rem;
+          background-color: #D0021B;
+          border-radius: 50%;
+          position: absolute;
+          left: .2rem;
+          top: 50%;
+          margin-top:-.1rem;
+        }
         > img {
           float: left;
           margin-left: .56rem;
@@ -97,8 +108,9 @@
 <template>
   <div v-if="content">
     <ul class="msg_comment-ul" v-if="content.length">
-      <li v-for="msg in content" :key="msg.message_id">
+      <li v-for="msg in content" :key="msg.message_id" @click="msg.is_read = 1">
         <div class="div-1">
+          <span class="unRead" v-show="msg.is_read==0"></span>
           <img :src="msg.avater | avatar">
           <span class="nickname">{{msg.nickname}}</span><!--
           --><span class="date_add">{{msg.date_add | time}}</span>

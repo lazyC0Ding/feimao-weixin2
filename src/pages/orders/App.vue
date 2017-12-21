@@ -71,7 +71,7 @@
 <template>
   <div style="padding-top:.9rem;padding-bottom:.8rem;" v-if="content">
     <search-input v-model="key" placeholder="请输入要搜索的订单" :callback="fetch">
-      <a @click="cancelSearch">取消</a>
+      <a @click="fetch">搜索</a>
     </search-input>
     <ul class="orders-tags">
       <li :class="{active:params.state == 0}" @click="changeState(0)">全部</li>
@@ -98,7 +98,7 @@
           </div>
           <div class="action" v-if="item.order_state == 1">
             <span class="orders-btn" v-href="['pay', {order_sn:item.order_sn, order_amount:item.order_amount}]">立即付款</span>
-            <span class="orders-btn" @click="cancel">取消订单</span>
+            <span class="orders-btn" @click="cancel(item.order_sn, index)">取消订单</span>
           </div>
           <div class="action" v-else-if="item.order_state == 3">
             <span class="orders-btn" @click="delivery(item)">确认收货</span>
@@ -109,7 +109,7 @@
             <span class="orders-btn" v-href="['logistics', {order_sn:item.order_sn}]">查看物流</span>
             <span class="orders-btn" @click="deleteOrder(item.order_sn, index)">删除订单</span>
           </div>
-          <div class="action" v-else-if="item.order_state == 6">
+          <div class="action" v-else-if="item.order_state == 5 || item.order_state == 6">
             <span class="orders-btn" @click="deleteOrder(item.order_sn, index)">删除订单</span>
           </div>
         </div>
@@ -142,47 +142,48 @@
     },
     methods: {
       cancel(order_sn, index){
-        const flag = confirm('是否取消订单?');
-        if(!flag) return;
-        this.$post(URL.cancel, {order_sn})
-          .then ( res => {
-            console.log(res);
-            if(res.errcode == 0) {
-              this.content.splice(index, 1);
-            }else{
-              errback(res);
-            }
-          })
+        myConfirm('确定取消订单?', () => {
+          this.$post(URL.cancel, {order_sn})
+            .then ( res => {
+              console.log(res);
+              if(res.errcode == 0) {
+                this.content.splice(index, 1);
+              }else{
+                errback(res);
+              }
+            })
+        });
+
       },
       deleteOrder(order_sn, index){
-        const flag = confirm('是否删除订单?');
-        if(!flag) return;
-        this.$post(URL.deleteOrder, {order_sn})
-          .then ( res => {
-            console.log(res)
-            if(res.errcode == 0) {
-              this.content.splice(index, 1);
-            }else{
-              errback(res);
-            }
-          })
+        myConfirm('确定删除订单?', () => {
+          this.$post(URL.deleteOrder, {order_sn})
+            .then ( res => {
+              console.log(res)
+              if(res.errcode == 0) {
+                this.content.splice(index, 1);
+              }else{
+                errback(res);
+              }
+            })
+        });
       },
       delivery(item){
-        const flag = confirm('是否确定收货?');
-        if(!flag) return;
-        this.$post(URL.delivery, {order_sn:item.order_sn})
-          .then ( res => {
-            console.log(res)
-            if(res.errcode == 0) {
-              item.order_state = 4;
-              toast('收货成功');
-              setTimeout(() => {
-                this.comment(item);
-              }, 500);
-            }else{
-              errback(res)
-            }
-          })
+        myConfirm('是否确定收货?', () => {
+          this.$post(URL.delivery, {order_sn:item.order_sn})
+            .then ( res => {
+              console.log(res)
+              if(res.errcode == 0) {
+                item.order_state = 4;
+                toast('收货成功');
+                setTimeout(() => {
+                  this.comment(item);
+                }, 500);
+              }else{
+                errback(res)
+              }
+            })
+        });
       },
       comment(item){
         setSession('order_comment', {goods:item.goods, order_sn:item.order_sn});
@@ -203,10 +204,6 @@
             }
           })
       },
-      cancelSearch(){
-        this.key = '';
-        this.fetch();
-      }
     },
     created(){
       document.title = '我的订单';

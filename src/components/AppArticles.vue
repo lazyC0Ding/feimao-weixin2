@@ -42,20 +42,20 @@
           margin-bottom: .4rem;
           font-size: .24rem;
           > span:first-child {
-            background: url(../assets/img/list_browse.png) no-repeat left;
+            background: url(../assets/img/list_browse.png) no-repeat left center;
             background-size: .28rem .22rem;
             padding-left: .35rem;
             color: @text-light;
           }
           > span:nth-child(2) {
-            background: url(../assets/img/list_like.png) no-repeat left;
+            background: url(../assets/img/list_like.png) no-repeat left center;
             background-size: .24rem .26rem;
             margin-left: .2rem;
             padding-left: .35rem;
             color: @text-light;
           }
           > span:last-child {
-            background: url(./img/direction_right_black.png) no-repeat right;
+            background: url(./img/direction_right_black.png) no-repeat right center;
             background-size: .24rem .24rem;
             padding-right: .35rem;
             font-size: .24rem;

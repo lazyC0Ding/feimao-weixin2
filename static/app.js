@@ -40,6 +40,17 @@ function toast(msg) {
   }
 }
 
+function myConfirm(msg, onConfirm, onCancel) {
+  if (window.theVue) {
+    window.theVue.$vux.confirm.show({
+      title:'提示',
+      content:msg,
+      onConfirm:onConfirm,
+      onCancel:onCancel,
+    })
+  }
+}
+
 function login() {
   var from = getPageName();
   if (isWeixin()) {

@@ -54,7 +54,7 @@
 <template>
   <div>
     <ul class="msg_system-ul" v-if="content && content.length">
-      <li v-for="msg in content" :key="msg.message_id" v-action="msg.action">
+      <li v-for="msg in content" :key="msg.message_id" @click="read(msg)">
         <div class="img">
           <img :src="msg.image" v-if="msg.image">
         </div>
@@ -87,6 +87,10 @@
       }
     },
     methods: {
+      read(msg){
+        msg.is_read = 1;
+        jumpAction(msg.action);
+      },
       fetch(){
         this.$post(URL.getSystemMessages, {page: this.page})
           .then(res => {

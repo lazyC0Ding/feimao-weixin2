@@ -89,18 +89,18 @@
     },
     methods: {
       deleteAddress(address_id, index){
-        const flag = confirm('确认删除该地址吗?');
-        if(!flag) return;
-        this.$post(URL.deleteAddress, {address_id})
-          .then ( res => {
-            console.log(res);
-            if(res.errcode == 0) {
-              this.content.splice(index, 1);
-              toast(res.message);
-            }else{
-              errback(res);
-            }
-          })
+        myConfirm('确认删除该地址吗?', () => {
+          this.$post(URL.deleteAddress, {address_id})
+            .then ( res => {
+              console.log(res);
+              if(res.errcode == 0) {
+                this.content.splice(index, 1);
+                toast(res.message);
+              }else{
+                errback(res);
+              }
+            })
+        });
       },
       editStatus(item){
         this.$post(URL.editStatus, {address_id: item.address_id})

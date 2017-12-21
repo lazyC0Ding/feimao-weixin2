@@ -6,7 +6,7 @@
   }
 </style>
 <template>
-  <div class="bottom-container" style="padding-top:.9rem;">
+  <div v-if="goods && articles" class="bottom-container" style="padding-top:.9rem;">
     <search-input v-model="params.keyword" :callback="search">
       <a @click="search">搜索</a>
     </search-input>
@@ -14,8 +14,12 @@
       <li :class="{active:activeTag === 0}" @click="activeTag=0">商品结果</li>
       <li :class="{active:activeTag === 1}" @click="activeTag=1">文章结果</li>
     </ul>
-    <goods-container v-show="activeTag === 0" :goods="goods"></goods-container>
-    <app-articles v-show="activeTag === 1" :articles="articles"></app-articles>
+    <goods-container v-if="goods.length" v-show="activeTag === 0" :goods="goods"></goods-container>
+    <app-articles v-if="articles.length" v-show="activeTag === 1" :articles="articles"></app-articles>
+    <div v-show="activeTag===0 ? !goods.length : !articles.length" class="tip-nothing" style="margin-top:2rem;">
+      <img src="../../assets/img/Tip_nothing.png">
+      <div>暂无{{ activeTag===0 ? '商品' : '文章'}}搜索结果</div>
+    </div>
   </div>
 </template>
 <script>
@@ -30,8 +34,8 @@
           page: 1,
         },
         activeTag: 0,
-        goods: [],
-        articles: [],
+        goods: null,
+        articles: null,
       }
     },
     methods: {

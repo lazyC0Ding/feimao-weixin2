@@ -308,34 +308,34 @@
     },
     methods: {
       deleteOrder(){
-        const flag = confirm('是否删除订单?');
-        if(!flag) return;
-        this.$post(URL.deleteOrder, {order_sn:this.order_sn})
-          .then ( res => {
-            console.log(res)
-            if(this.errcode == 0) {
-              history.go(-1);
-            }else{
-              errback(res)
-            }
-          })
+        myConfirm('是否删除订单', () => {
+          this.$post(URL.deleteOrder, {order_sn:this.order_sn})
+            .then ( res => {
+              console.log(res)
+              if(res.errcode == 0) {
+                history.go(-1);
+              }else{
+                errback(res)
+              }
+            })
+        });
       },
       delivery(){
-        const flag = confirm('是否确定收货');
-        if(!flag) return;
-        this.$post(URL.delivery, {order_sn:this.order_sn})
-          .then ( res => {
-            console.log(res)
-            if(res.errcode == 0) {
-              this.order.order_state = 4;
-              toast('收货成功');
-              setTimeout(() => {
-                this.comment();
-              }, 500);
-            }else{
-              errback(res)
-            }
-          })
+        myConfirm('是否确定收货?', () => {
+          this.$post(URL.delivery, {order_sn:this.order_sn})
+            .then ( res => {
+              console.log(res)
+              if(res.errcode == 0) {
+                this.order.order_state = 4;
+                toast('收货成功');
+                setTimeout(() => {
+                  this.comment();
+                }, 500);
+              }else{
+                errback(res)
+              }
+            })
+        });
       },
       comment(){
         setSession('order_comment', {goods:this.order.goods, order_sn:this.order_sn});
@@ -349,27 +349,17 @@
         openPage('pay', params);
       },
       cancel(){
-        const flag = confirm('是否确定取消该订单?');
-        if (!flag) return;
-        this.$post(URL.cancel, {order_sn:this.order_sn})
-          .then ( res => {
-            console.log(res);
-            if( res.errcode == 0) {
-              history.go(-1);
-            }else{
-              errback(res);
-            }
-          })
-      },
-      deleteOrder(){
-        this.$post(URL.deleteOrder, {order_sn:this.order_sn})
-          .then ( res => {
-            if(res.errcode == 0) {
-              history.go(-1);
-            }else{
-              errback(res);
-            }
-          })
+        myConfirm('是否确定取消该订单?', () => {
+          this.$post(URL.cancel, {order_sn:this.order_sn})
+            .then ( res => {
+              console.log(res);
+              if( res.errcode == 0) {
+                history.go(-1);
+              }else{
+                errback(res);
+              }
+            })
+        });
       },
       fetch(){
         this.$post(URL.getOrderDetail, {order_sn: this.order_sn})

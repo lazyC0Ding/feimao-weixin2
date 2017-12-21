@@ -54,7 +54,7 @@
 <template>
   <div v-if="content">
     <ul v-if="content.length" class="msg_follow-ul">
-      <li v-for="msg in content" v-action="msg.action">
+      <li v-for="msg in content" @click="read">
         <span v-if="msg.is_read == 0"></span>
         <img :src="msg.avater | avatar">
         <div class="text">
@@ -83,6 +83,10 @@
       }
     },
     methods: {
+      read(msg){
+        msg.is_read = 1;
+        jumpAction(msg.action);
+      },
       fetch(){
         this.$post(URL.getFansMessages, {page:this.page})
           .then( res => {

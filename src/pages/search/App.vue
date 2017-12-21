@@ -38,7 +38,7 @@
         <span @click="removeHisKeys">清空</span>
       </div>
       <div class="keys">
-        <span v-href="['search_result', {key:item}]" v-for="item in hisKeys">{{item}}</span>
+        <span @click="search(item)" v-for="item in hisKeys">{{item}}</span>
       </div>
     </div>
     <div class="keys-container">
@@ -46,7 +46,7 @@
         <span>热门搜索</span>
       </div>
       <div class="keys">
-        <span v-href="['search_result', {key:item.keyword}]" v-for="item in content" :key="item.id">{{item.keyword}}</span>
+        <span @click="search(item.keyword)" v-for="item in content" :key="item.id">{{item.keyword}}</span>
       </div>
     </div>
   </div>
@@ -62,26 +62,26 @@
       }
     },
     methods: {
-      search(){
+      search(key){
+        key = key || this.key;
         let hasKey = false;
         for (let i of this.hisKeys) {
-          if(i === this.key) {
+          if(i === key) {
             hasKey = true;
             break;
           }
         }
         if(!hasKey) {
-          this.hisKeys.push(this.key);
+          this.hisKeys.push(key);
           setStorage('hisKeys', this.hisKeys);
         }
-        openPage('search_result', {key:this.key})
+        openPage('search_result', {key})
       },
       removeHisKeys(){
-        const flag = confirm('确定清空历史搜索？');
-        if(flag) {
+        myConfirm('确定清空历史搜索？', () => {
           removeStorage('hisKeys');
           this.hisKeys = [];
-        }
+        });
       },
       fetch(){
         this.$post(URL.hotSearch)

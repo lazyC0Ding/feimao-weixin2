@@ -97,7 +97,7 @@
     <li v-for="item in goods" :key="item.cart_id">
       <span>
         <span class="img" :style="{backgroundImage: 'url(./static/img/default_goods.png)'}">
-          <img @click="openGoodsDetail(item.goods_id)" :src="item.cover || item.image">
+          <img :src="item.cover || item.image">
         </span>
       </span>
       <div>
@@ -124,7 +124,7 @@
         type: Array,
         required: true,
       },
-      cantOpenGoods: Boolean, //能否点击图片打开商品详情页面
+      cantOpenGoods: Boolean, //能否点击图片打开商品详情页面(已废弃)
       showRefund: Boolean,  //待发货状态相关按钮
       isRefund: Boolean,  //待收货状态相关按钮
       order_sn:String,   //打开订单详情用

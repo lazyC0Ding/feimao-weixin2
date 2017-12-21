@@ -1,5 +1,6 @@
 <style type="text/less" lang="less">
   @import '../../common';
+
   .msg_follow-ul {
     > li {
       margin-top: .2rem;
@@ -25,20 +26,20 @@
         margin-right: .22rem;
         margin-top: .3rem;
       }
-      >.text{
+      > .text {
         overflow: hidden;
         > div:first-child {
           margin-top: .28rem;
           font-size: .3rem;
-          overflow:hidden;
-          >span{
-            float:left;
-            &:first-child{
-              margin-right:.2rem;
-              max-width:2.6rem;
+          overflow: hidden;
+          > span {
+            float: left;
+            &:first-child {
+              margin-right: .2rem;
+              max-width: 2.6rem;
               white-space: nowrap;
-              overflow:hidden;
-              text-overflow:ellipsis;
+              overflow: hidden;
+              text-overflow: ellipsis;
             }
           }
         }
@@ -54,7 +55,7 @@
 <template>
   <div v-if="content">
     <ul v-if="content.length" class="msg_follow-ul">
-      <li v-for="msg in content" v-action="msg.action">
+      <li v-for="msg in content" @click="read">
         <span v-if="msg.is_read == 0"></span>
         <img :src="msg.avater | avatar">
         <div class="text">
@@ -83,6 +84,10 @@
       }
     },
     methods: {
+      read(msg){
+        msg.is_read = 1;
+        jumpAction(msg.action);
+      },
       fetch(){
         this.$post(URL.getAttentionMessages, {page: this.page})
           .then(res => {

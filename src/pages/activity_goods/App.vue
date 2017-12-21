@@ -13,8 +13,7 @@
       :params="{type:params.type}"
       :callback="loadMore"
       :no-listen="!hasMore"
-    >
-    </load-more>
+    ></load-more>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>

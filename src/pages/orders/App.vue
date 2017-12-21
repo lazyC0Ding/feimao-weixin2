@@ -115,6 +115,13 @@
         </div>
       </li>
     </ul>
+    <load-more
+      :url="url"
+      :page="params.page"
+      :params="loadMoreParams"
+      :callback="loadMore"
+      :no-listen="!hasMore"
+    ></load-more>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>
@@ -132,15 +139,32 @@
         },
         key:'',
         content: null,
+        url:URL.getOrders,
+        hasMore:true,
       }
     },
     computed: {
+      loadMoreParams(){
+        const json = {
+          state:this.params.state,
+        };
+        if(this.key) json.key = this.key;
+        return json;
+      },
       fetchParams(){
         if (this.key)  return Object.assign({key: this.key}, this.params);
         return this.params;
-      }
+      },
     },
     methods: {
+      loadMore(content){
+        if(content.length) {
+          this.content.push(...content);
+          this.params.page++;
+        }else{
+          this.hasMore = false;
+        }
+      },
       cancel(order_sn, index){
         myConfirm('确定取消订单?', () => {
           this.$post(URL.cancel, {order_sn})
@@ -210,7 +234,6 @@
       const searchs = getSearchParams(location.search);
       if (searchs) {
         this.params.state = searchs.state;
-//        history.replaceState(null, '', getPageName()+'.html');
       }else{
         this.params.state = getSession(getPageName()).params.state;
       }

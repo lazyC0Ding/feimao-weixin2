@@ -103,8 +103,8 @@
         <img class="avatar" :src="content.avater | avatar">
       </li>
       <li class="row" @click="showNickname">
-        <span class="title limit">昵称</span>
-        <span class="right">{{content.nickname}}</span>
+        <span class="title">昵称</span>
+        <span class="right limit">{{content.nickname}}</span>
       </li>
       <li class="row">
         <span class="title">用户ID</span>

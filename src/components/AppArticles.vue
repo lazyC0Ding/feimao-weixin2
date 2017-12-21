@@ -124,7 +124,7 @@
         <span class="button" @click="follow(article, article.customer_id)">{{ article.is_attention == 0 ? '关注TA' : '已关注'}}</span>
         <span class="follows">{{article.attention_count}}人关注</span>
       </div>
-      <div class="cover" v-ratio-img="article.cover" @click="showDetail(article.article_id)">
+      <div class="cover" v-ratio-img="article.cover" @click="showDetail(article)">
         <img @click.stop="deleteArticles(article.article_id, index)" v-show="ifShowClose" src="../assets/img/close_redbj.png">
       </div>
       <div class="text">
@@ -133,7 +133,7 @@
         <div class="actions">
           <span>{{article.browse}}</span>
           <span>{{article.likes}}</span>
-          <span @click="showDetail(article.article_id)">READ MORE</span>
+          <span @click="showDetail(article)">READ MORE</span>
         </div>
       </div>
     </li>
@@ -165,11 +165,12 @@
             }
           })
       },
-      showDetail(article_id){
+      showDetail(article){
         if (this.parentData) {
           setSession(getPageName(), this.parentData);
         }
-        return openPage('article_detail', {article_id})
+        article.browse = Number(article.browse) + 1;
+        return openPage('article_detail', {article_id:article.article_id})
       },
       follow(article, pid){
         this.$post(URL.attention, {pid})

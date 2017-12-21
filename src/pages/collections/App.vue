@@ -17,10 +17,21 @@
   <div style="padding-top:.9rem;" v-if="content">
     <template v-if="content.length">
       <search-input v-model="key" placeholder="请输入要搜索的内容">
-        <a @click="key = ''">取消</a>
+        <a @click="isEdit=!isEdit">{{isEdit ? '取消' : '编辑'}}</a>
       </search-input>
-      <app-articles v-if="type==1" :parentData="_data" :articles="display"></app-articles>
-      <goods-container v-if="type==2" :parentData="_data" :goods="display" type="3"></goods-container>
+      <app-articles
+        v-if="type==1"
+        :parentData="_data"
+        :articles="display"
+        :if-show-close="isEdit"
+      ></app-articles>
+      <goods-container
+        :if-show-close="isEdit"
+        v-if="type==2"
+        :parentData="_data"
+        :goods="display"
+        type="3"
+      ></goods-container>
     </template>
     <div v-if="!content.length" class="tip-nothing" style="margin-top:2rem;">
       <img src="../../assets/img/Tip_nothing.png">
@@ -43,6 +54,7 @@
         cantFind: false,
         key: '',
         showSearch:null,
+        isEdit:false,
       }
     },
     computed:{
@@ -76,8 +88,9 @@
       }
     },
     methods: {
-      cancelSearch(){
+      cancel(){
         this.key = '';
+        this.isEdit = false;
       },
       fetch(){
         this.$post(URL.getCollections, {type: this.type})

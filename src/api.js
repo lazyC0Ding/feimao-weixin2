@@ -14,7 +14,7 @@ axios.interceptors.request.use(function (config) {
   let method = config.method;
   let url, str;
   if (method === 'get') {
-    config.params = config.params || {};
+    config.params = config.params ? Object.assign({}, config.params) : {};
     config.params = Object.assign(config.params, {
       t,
       content,
@@ -33,7 +33,7 @@ axios.interceptors.request.use(function (config) {
     // -------
 
   } else if (method === 'post') {
-    config.data = config.data || {};
+    config.data = config.data ? Object.assign({}, config.data) : {};
     config.data.t = t;
     config.data.content = content;
     config.data.time = Date.parse(new Date()) / 1000;

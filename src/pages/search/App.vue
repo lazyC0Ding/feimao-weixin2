@@ -30,15 +30,15 @@
 <template>
   <div style="padding-top:.9rem;">
     <search-input v-model="key" placeholder="输入热门文章商品" auto :callback="search">
-      <a v-back>取消</a>
+      <a @click="search">搜索</a>
     </search-input>
-    <div class="keys-container">
+    <div class="keys-container" v-if="hisKeys.length">
       <div class="title">
         <span>历史搜索</span>
-        <span>清空</span>
+        <span @click="removeHisKeys">清空</span>
       </div>
       <div class="keys">
-
+        <span v-href="['search_result', {key:item}]" v-for="item in hisKeys">{{item}}</span>
       </div>
     </div>
     <div class="keys-container">
@@ -46,7 +46,7 @@
         <span>热门搜索</span>
       </div>
       <div class="keys">
-        <span v-href="['search_result', {key:key.keyword}]" v-for="key in content" :key="key.id">{{key.keyword}}</span>
+        <span v-href="['search_result', {key:item.keyword}]" v-for="item in content" :key="item.id">{{item.keyword}}</span>
       </div>
     </div>
   </div>
@@ -58,21 +58,43 @@
       return {
         content:[],
         key:'',
+        hisKeys:[],
       }
     },
     methods: {
       search(){
+        let hasKey = false;
+        for (let i of this.hisKeys) {
+          if(i === this.key) {
+            hasKey = true;
+            break;
+          }
+        }
+        if(!hasKey) {
+          this.hisKeys.push(this.key);
+          setStorage('hisKeys', this.hisKeys);
+        }
         openPage('search_result', {key:this.key})
+      },
+      removeHisKeys(){
+        const flag = confirm('确定清空历史搜索？');
+        if(flag) {
+          removeStorage('hisKeys');
+          this.hisKeys = [];
+        }
       },
       fetch(){
         this.$post(URL.hotSearch)
           .then( res => {
-            console.log(res)
+            console.log(res);
             this.content = res.content;
           })
-      }
+      },
     },
     created(){
+      if(getStorage('hisKeys')) {
+        this.hisKeys = getStorage('hisKeys');
+      }
       this.fetch();
     },
     components: {

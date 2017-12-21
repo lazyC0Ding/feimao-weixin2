@@ -82,4 +82,6 @@ var URL = {
   getBuyRecord:'goods/getBuyRecord',
   reply:'goods/reply',
   deleteAddress:'address/deleteAddress',
+  deleteGoods:'user/deleteGoods',
+  deleteArticle:'user/deleteArticle',
 };

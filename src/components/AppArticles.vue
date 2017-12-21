@@ -1,14 +1,19 @@
 <style scoped lang="less" type="text/less">
   @text-light: #9da5a8;
-  @height:.5rem;
-  @primary:#ffb305;
+  @height: .5rem;
+  @primary: #ffb305;
   ul {
     > li {
-      margin-bottom:.2rem;
-      >.cover{
-        max-height:5rem;
-        background:no-repeat center center;
-        background-size:100%;
+      margin-bottom: .2rem;
+      > .cover {
+        position: relative;
+        > img {
+          position: absolute;
+          width: .4rem;
+          height: .4rem;
+          right: 0;
+          top: 0;
+        }
       }
       > .text {
         padding: 0 .34rem 0 .26rem;
@@ -92,8 +97,8 @@
     > .button {
       float: right;
       height: @height;
-      line-height:@height;
-      text-align:center;
+      line-height: @height;
+      text-align: center;
       width: 1.18rem;
       margin-top: .2rem;
       margin-right: .18rem;
@@ -107,14 +112,16 @@
 </style>
 <template>
   <ul>
-    <li v-for="article in articles" :key="article.article_id">
+    <li v-for="(article, index) in articles" :key="article.article_id">
       <div class="author" v-if="article.customer_id">
         <img :src="article.avater | avatar">
         <span class="nickname">{{article.nickname}}</span>
         <span class="button" @click="follow(article, article.customer_id)">{{ article.is_attention == 0 ? '关注TA' : '已关注'}}</span>
         <span class="follows">{{article.attention_count}}人关注</span>
       </div>
-      <div v-ratio-img="article.cover" @click="showDetail(article.article_id)"></div>
+      <div class="cover" v-ratio-img="article.cover" @click="showDetail(article.article_id)">
+        <img @click.stop="deleteArticles(article.article_id, index)" v-show="ifShowClose" src="../assets/img/close_redbj.png">
+      </div>
       <div class="text">
         <div @click="showDetail(article)" class="title">{{article.title}}</div>
         <div @click="showDetail(article)" class="mini_content">{{article.mini_content}}</div>
@@ -135,12 +142,24 @@
         required: true
       },
       parentData: Object,  // 用于文章后退不刷新父级页面
-      hasAuthorInfo:Boolean
+      hasAuthorInfo: Boolean,
+      ifShowClose: Boolean,  // 显示右上角X
     },
     data(){
       return {}
     },
     methods: {
+      deleteArticles(article_id, index){
+        this.$post(URL.deleteArticle, {article_id})
+          .then (res => {
+            console.log(res);
+            if(res.errcode == 0) {
+              this.articles.splice(index, 1);
+            }else{
+              errback(res);
+            }
+          })
+      },
       showDetail(article_id){
         if (this.parentData) {
           setSession(getPageName(), this.parentData);
@@ -153,7 +172,7 @@
             if (res.errcode == 0) {
               article.is_attention = res.content;
               follow_common();
-            }else {
+            } else {
               errback(res)
             }
           })

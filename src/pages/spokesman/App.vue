@@ -136,15 +136,15 @@
           <span class="text-1">{{content.nickname}}</span><br>
           <span class="text-2">
             <span>累计消费额</span>
-            <span>{{content.current_consum}}/{{Number(content.spokesman_setting.spokesman_total).toFixed(2)}}</span>
+            <span>{{isSpokesman ? '已达成' : content.current_consum + '/' + Number(content.spokesman_setting.spokesman_total).toFixed(2)}}</span>
           </span><br>
-          <span class="text-3"><span :style="{width:content.process + '%'}"></span></span>
+          <span class="text-3"><span :style="{width:isSpokesman ? '100%' : content.process + '%'}"></span></span>
         </span>
       </div>
     </div>
     <div class="explain">
       一次性消费{{content.spokesman_setting.spokesman_one}}或累计消费{{content.spokesman_setting.spokesman_total}}元即可成为代言人
-      <span>详情</span>
+      <span v-href="content.spokesman_detail">详情</span>
     </div>
     <ul class="spokesman-info">
       <li>
@@ -185,6 +185,14 @@
 </template>
 <script>
   import AppPermanent from '@c/AppPermanent.vue'
+  /*
+  * content.identity:
+  * 1:普通用户
+  * 2:代言人
+  * 3:特约代言人
+  * 4:A级代理商
+  * 5:B级代理商
+  * 6:供应商*/
   export default {
     data () {
       return {
@@ -192,6 +200,11 @@
       }
     },
     computed:{
+      isSpokesman(){
+        if(this.content) {
+          return this.content.identity == 2 || this.content.identity == 3;
+        }
+      },
       last_consum_time(){
         if(!this.content) return;
         const now = Date.parse(new Date()) / 1000;

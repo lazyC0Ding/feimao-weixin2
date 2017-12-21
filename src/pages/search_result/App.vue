@@ -1,5 +1,6 @@
 <style type="text/less" lang="less">
   @import '../../common';
+
   .search_result-tags {
     .tags(2);
   }
@@ -7,7 +8,7 @@
 <template>
   <div class="bottom-container" style="padding-top:.9rem;">
     <search-input v-model="params.keyword" :callback="search">
-      <a v-back>取消</a>
+      <a @click="search">搜索</a>
     </search-input>
     <ul class="search_result-tags">
       <li :class="{active:activeTag === 0}" @click="activeTag=0">商品结果</li>
@@ -24,27 +25,49 @@
   export default {
     data () {
       return {
-        params:{
-          keyword:'',
-          page:1,
+        params: {
+          keyword: '',
+          page: 1,
         },
-        activeTag:0,
-        goods:[],
-        articles:[],
+        activeTag: 0,
+        goods: [],
+        articles: [],
       }
     },
     methods: {
       fetch(){
         this.$post(URL.searchGoods, this.params)
-          .then( res => {
-            this.goods = res.content;
+          .then(res => {
+            console.log(res);
+            if (res.errcode == 0) {
+              this.goods = res.content;
+            }else{
+              errback(res);
+            }
           });
         this.$post(URL.searchArticle, this.params)
-          .then( res => {
-            this.articles = res.content;
+          .then(res => {
+            console.log(res);
+            if(res.errcode == 0) {
+              this.articles = res.content;
+            }else{
+              errback(res);
+            }
           })
       },
       search(){
+        const arr = getStorage('hisKeys') || [];
+        let hasKey = false;
+        for (let i of arr) {
+          if(i === this.params.keyword) {
+            hasKey = true;
+            break;
+          }
+        }
+        if(!hasKey) {
+          arr.push(this.params.keyword);
+          setStorage('hisKeys', arr);
+        }
         this.params.page = 1;
         return this.fetch();
       }

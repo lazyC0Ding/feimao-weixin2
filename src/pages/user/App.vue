@@ -8,7 +8,7 @@
     overflow: hidden;
     .info {
       position: relative;
-      margin-top: .96rem;
+      margin-top: .7rem;
       height: 1.8rem;
       line-height: 1.8rem;
       overflow: hidden;

@@ -2,11 +2,15 @@
   @import '../../common';
 
   .empty {
-    margin-top: 2rem;
+    margin-top: 1.2rem;
     text-align: center;
-    img {
-      width: 3rem;
-      height: 3rem;
+    >div:nth-child(1) {
+      font-size:0;
+      overflow:hidden;
+      >img {
+        width: 3rem;
+        height: 3rem;
+      }
     }
     > div:nth-child(2) {
       margin-top: .56rem;

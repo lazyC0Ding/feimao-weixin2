@@ -86,5 +86,6 @@ var URL = {
   deleteArticle:'user/deleteArticle',
   readMessage:'message/readMessage',
   getFans:'user/getFans',
-  deleteMessages:'message/deleteMessages'
+  deleteMessages:'message/deleteMessages',
+  receivables:'user/receivables',
 };

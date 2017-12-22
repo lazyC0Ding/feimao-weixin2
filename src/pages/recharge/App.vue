@@ -75,7 +75,7 @@
 <template>
   <div>
     <div class="recharge-top">
-      <div>充值金额</div>
+      <div>{{is_qrcode == 0 ? '充值' : '付款'}}金额</div>
       <div>
         <span>¥</span>
         <input placeholder="0.00" :value="money" @input="inputMoney($event.target.value)" ref="input">
@@ -102,13 +102,25 @@
       return {
         type: 5,
         money: '',
+        is_qrcode:0,
+        customer_id:null,
       }
     },
     methods: {
       recharge(){
-        this.$post(URL.recharge, {type: this.type, money: this.money})
+        let url;
+        let params = {
+          type:this.type,
+          money:this.money,
+        };
+        if(this.is_qrcode == 1) {
+          url = URL.receivables;
+          params.pid = this.customer_id;
+        }else{
+          url = URL.recharge;
+        }
+        this.$post(url, params)
           .then(res => {
-            console.log(res)
             if (res.errcode == 0) {
               const content = res.content;
               wx.chooseWXPay({
@@ -117,8 +129,9 @@
                 package: content.package, // 统一支付接口返回的prepay\_id参数值，提交格式如：prepay\_id=\*\*\*）
                 signType: content.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
                 paySign: content.paySign, // 支付签名
-                success: function (res) {
-                  history.go(-1);
+                success: (res) => {
+                  let msg = this.is_qrcode == 1 ? '付款' : '充值';
+                  alert(msg + '成功');
                 }
               });
             } else {
@@ -141,6 +154,14 @@
         this.money = formattedValue;
         console.log(this.money);
       },
+    },
+    created(){
+      const search = getSearchParams(location.search);
+      if(search) {
+        const {customer_id, is_qrcode} = search;
+        this.is_qrcode = is_qrcode;
+        this.customer_id = customer_id;
+      }
     },
     components: {
       AppPermanent

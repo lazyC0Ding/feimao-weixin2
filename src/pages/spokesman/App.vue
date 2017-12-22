@@ -128,6 +128,12 @@
       >.icon{
         border-radius: 50%;
       }
+      >.title{
+        max-width:2rem;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+      }
     }
   }
 </style>
@@ -142,7 +148,7 @@
             <span>累计消费额</span>
             <span>{{isSpokesman ? '已达成' : content.current_consum + '/' + Number(content.spokesman_setting.spokesman_total).toFixed(2)}}</span>
           </span><br>
-          <span class="text-3"><span :style="{width:isSpokesman ? '100%' : content.process + '%'}"></span></span>
+          <span class="text-3"><span :style="{width:isSpokesman ? '100%' : content.process * 100 + '%'}"></span></span>
         </span>
       </div>
     </div>

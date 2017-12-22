@@ -117,6 +117,7 @@
               if(res.errcode == 0) {
                 console.log(res)
                 this.content = res.content;
+                return this.$post(URL.readMessage, {type: 3});
               }else {
                 errback(res)
               }
@@ -125,7 +126,7 @@
     },
     created(){
       document.title = '粉丝';
-      return this.fetch();
+      this.fetch();
     },
     components: {
       AppPermanent,

@@ -66,7 +66,6 @@
     },
     methods: {
       openMessage(type){
-        this.content[type] = 0;
         let page, attr;
         switch (type) {
           case 1:
@@ -94,13 +93,8 @@
             page = 'msg_like';
             break;
         }
-        this.$post(URL.readMessage, {type})
-          .then (res => {
-            if(res.errcode == 0) {
-              this.content[attr] = 0;
-              openPage(page);
-            }
-          })
+        this.content[attr] = 0;
+        openPage(page);
       },
       fetch(){
         this.$post(URL.getMessages)

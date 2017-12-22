@@ -120,6 +120,7 @@
             console.log(res);
             if (res.errcode == 0) {
               this.content = res.content;
+              return this.$post(URL.readMessage, {type: 1});
             }else{
               errback(res);
             }

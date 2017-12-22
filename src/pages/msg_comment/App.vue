@@ -1,17 +1,18 @@
 <style type="text/less" lang="less">
   @import '../../common';
+
   .msg_comment-ul {
     > li {
       margin-top: .2rem;
       background-color: #fff;
       overflow: hidden;
       > div.div-1 {
-        position:relative;
+        position: relative;
         margin-top: .3rem;
         height: .6rem;
         line-height: .6rem;
         overflow: hidden;
-        >.unRead{
+        > .unRead {
           width: .2rem;
           height: .2rem;
           background-color: #D0021B;
@@ -19,7 +20,7 @@
           position: absolute;
           left: .2rem;
           top: 50%;
-          margin-top:-.1rem;
+          margin-top: -.1rem;
         }
         > img {
           float: left;
@@ -32,15 +33,15 @@
           margin: 0 .16rem;
           font-size: .28rem;
           color: #00609B;
-          max-width:2rem;
-          overflow:hidden;
+          max-width: 2rem;
+          overflow: hidden;
           text-overflow: ellipsis;
-          white-space:nowrap;
+          white-space: nowrap;
         }
         > .date_add {
           font-size: .24rem;
           color: #9DA5A8;
-          overflow:hidden;
+          overflow: hidden;
         }
         > .btn {
           float: right;
@@ -123,7 +124,8 @@
           <span class="btn" @click="showComment(msg.foregin_id)">回复TA</span>
         </div>
         <div class="div-2">{{msg.title}}</div>
-        <div v-if="msg.foregin_type" class="div-3" :class="{ ellipsis: getType(msg.foregin_type) != 1}" @click="jumpAction(msg.action)">
+        <div v-if="msg.foregin_type" class="div-3" :class="{ ellipsis: getType(msg.foregin_type) != 1}"
+             @click="jumpAction(msg.action)">
           [{{getType(msg.foregin_type)}}]{{msg.to_content}}
         </div>
         <div v-else class="div-3 ellipsis" v-action="msg.action">
@@ -161,13 +163,13 @@
   export default {
     data () {
       return {
-        page:1,
-        content:null,
-        ifShowComment:false,
-        comment:'',
-        replyComment_id:'',
-        url:URL.getCommentMessages,
-        hasMore:true,
+        page: 1,
+        content: null,
+        ifShowComment: false,
+        comment: '',
+        replyComment_id: '',
+        url: URL.getCommentMessages,
+        hasMore: true,
       }
     },
     methods: {
@@ -175,10 +177,10 @@
         this.content = [];
       },
       loadMore(content){
-        if(content.length) {
+        if (content.length) {
           this.content.push(...content);
           this.page++;
-        }else{
+        } else {
           this.hasMore = false;
         }
       },
@@ -224,19 +226,20 @@
       },
       fetch(){
         this.$post(URL.getCommentMessages, {page: this.page})
-          .then( res => {
-              if(res.errcode == 0){
-                  console.log(res)
-                this.content = res.content;
-              }else {
-                  errback(res)
-              }
+          .then(res => {
+            if (res.errcode == 0) {
+              console.log(res)
+              this.content = res.content;
+              return this.$post(URL.readMessage, {type: 4});
+            } else {
+              errback(res)
+            }
           })
       }
     },
     created(){
       document.title = '回复';
-      return this.fetch();
+      this.fetch();
     },
     components: {
       AppPermanent,

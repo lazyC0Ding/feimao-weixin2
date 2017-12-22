@@ -138,6 +138,7 @@
             if (res.errcode == 0) {
               console.log(res)
               this.content = res.content;
+              return this.$post(URL.readMessage, {type: 2});
             } else {
               errback(res)
             }

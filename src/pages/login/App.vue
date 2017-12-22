@@ -91,7 +91,7 @@
             if(res.errcode == 0) {
               setUser(res.content);
               setToken(res.content.access_token);
-              replacePage(document.referrer || 'index');
+              replacePage(this.from || 'index');
             }else{
               errback(res);
             }
@@ -101,7 +101,7 @@
     created(){
       const search = getSearchParams(location.search);
       if(search && search.from) {
-        this.from = search.from;
+        this.from = decodeURIComponent(search.from);
       }
       document.title = '登录';
     },

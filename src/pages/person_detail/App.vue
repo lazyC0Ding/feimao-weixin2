@@ -155,13 +155,15 @@
     },
     created(){
       document.title = '个人信息';
-      const { pid, customer_id } = getSearchParams(location.search);
-      this.pid = pid;
+      const { pid, customer_id, is_qrcode } = getSearchParams(location.search);
       if(customer_id) {
+        this.pid = customer_id;
         setSession('customer_id', customer_id);
-        if(!getToken()) {
+        if(is_qrcode == 1 && !getToken()) {
           login();
         }
+      }else{
+        this.pid = pid;
       }
       this.fetch();
     },

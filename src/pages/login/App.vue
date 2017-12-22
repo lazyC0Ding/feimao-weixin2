@@ -91,7 +91,7 @@
             if(res.errcode == 0) {
               setUser(res.content);
               setToken(res.content.access_token);
-              replacePage(this.from || 'index');
+              replacePage(document.referrer || 'index');
             }else{
               errback(res);
             }

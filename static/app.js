@@ -52,14 +52,13 @@ function myConfirm(msg, onConfirm, onCancel) {
 }
 
 function login() {
-  var from = getPageName();
   if (isWeixin()) {
     var url = 'https://open.weixin.qq.com/connect/oauth2/authorize';
     var appid = 'wx739a1b97ce756bcd';
     var redirect_uri = encodeURIComponent('http://feimao-weixin.zertone2.com/setInfo.html');
     var response_type = 'code';
     var scope = 'snsapi_userinfo';
-    var state = from;  // 自带参数
+    var state = location.href;  // 自带参数
 
     var to = `${url}?appid=${appid}&redirect_uri=${redirect_uri}&response_type=${response_type}&scope=${scope}&state=${state}#wechat_redirect`;
     location.href = to;

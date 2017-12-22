@@ -64,6 +64,7 @@
       }
     },
     created(){
+      console.log(document.referrer);
       document.title = '我的二维码';
       const search = getSearchParams(location.search);
       if(search && search.customer_id) {

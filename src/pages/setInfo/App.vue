@@ -108,7 +108,7 @@
               if(res.content.is_bind){
                 setUser(res.content.customer);
                 setToken(res.content.customer.access_token);
-                replacePage(this.from);
+                replacePage(this.from || 'index');
               }else {
                 document.title = '完善信息';
                 this.needBind = true;

@@ -44,13 +44,17 @@ function getSearchParams(str) {
 
 // 页面相关
 function openPage(url, paramsJson) {
-  url = url.indexOf('.html') > -1 ? url : url + '.html';
+  if(url.indexOf('?') === -1) {
+    url = url.indexOf('.html') > -1 ? url : url + '.html';
+  }
   var paramsStr = paramsJson ? '?' + formatParams(paramsJson) : '';
   window.location.href = url + paramsStr;
 }
 
 function replacePage(url, paramsJson) {
-  url = url.indexOf('.html') > -1 ? url : url + '.html';
+  if(url.indexOf('?') === -1){
+    url = url.indexOf('.html') > -1 ? url : url + '.html';
+  }
   var paramsStr = paramsJson ? '?' + formatParams(paramsJson) : '';
   location.replace(url + paramsStr);
 }

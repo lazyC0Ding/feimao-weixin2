@@ -121,6 +121,7 @@
         }
         this.$post(url, params)
           .then(res => {
+            alert(JSON.stringify(res))
             if (res.errcode == 0) {
               const content = res.content;
               wx.chooseWXPay({
@@ -161,6 +162,9 @@
         const {customer_id, is_qrcode} = search;
         this.is_qrcode = is_qrcode;
         this.customer_id = customer_id;
+        if(is_qrcode == 1 && !getToken()) {
+          login();
+        }
       }
     },
     components: {

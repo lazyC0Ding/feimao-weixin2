@@ -163,6 +163,9 @@
         this.wxCode = code;
         this.from = state;
       }
+      console.log('from');
+      console.log(this.from);
+      return;
       this.getOauthInfo();
     },
     components: {

@@ -37,10 +37,10 @@
           font-size: .24rem;
           overflow: hidden;
           > span {
-            &:first-child {
+            &:nth-child(1) {
               float: left;
             }
-            &:last-child {
+            &:nth-child(2) {
               float: right;
               .span-bg-icon(.24rem, right);
               background-image: url(../../assets/img/direction_right_gray.png);
@@ -66,7 +66,7 @@
           </div>
           <div class="bottom">
             <span>{{msg.date_add | time}}</span>
-            <span>查看详情</span>
+            <span v-if="msg.action.action_id != 1">查看详情</span>
           </div>
         </div>
       </li>

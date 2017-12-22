@@ -161,12 +161,8 @@
       if (search) {
         const {code, state} = search;
         this.wxCode = code;
-        this.from = state;
+        this.from = decodeURIComponent(state);
       }
-      console.log('from');
-      console.log(this.from);
-      
-      return;
       this.getOauthInfo();
     },
     components: {

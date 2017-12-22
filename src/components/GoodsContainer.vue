@@ -146,7 +146,7 @@
     },
     methods: {
       deleteGoods(goods_id, index){
-        this.$post(URL.deleteGoods, {goods_id})
+        this.$post(URL.deleteGoods, {goods_ids:goods_id})
           .then (res => {
             console.log(res);
             if(res.errcode == 0) {

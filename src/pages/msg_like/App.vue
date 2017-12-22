@@ -77,7 +77,8 @@
   }
 </style>
 <template>
-  <div v-if="content">
+  <div v-if="content" style="padding-top:.7rem;">
+    <app-delete-msgs type="6" :callback="deleteMessages"></app-delete-msgs>
     <ul class="msg_comment-ul" v-if="content.length">
       <li v-for="msg in content" :key="msg.message_id" @click="msg.is_read=1">
         <div class="div-1">
@@ -111,6 +112,7 @@
 <script>
   import AppPermanent from '@c/AppPermanent.vue'
   import LoadMore from '@c/LoadMore.vue'
+  import AppDeleteMsgs from '@c/AppDeleteMsgs'
 
   export default {
     data () {
@@ -122,6 +124,9 @@
       }
     },
     methods: {
+      deleteMessages(){
+        this.content = [];
+      },
       loadMore(content){
         if(content.length) {
           this.content.push(...content);
@@ -167,6 +172,7 @@
     components: {
       AppPermanent,
       LoadMore,
+      AppDeleteMsgs,
     }
   }
 </script>

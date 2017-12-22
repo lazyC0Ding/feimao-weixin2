@@ -53,11 +53,11 @@
         content: null,
         cantFind: false,
         key: '',
-        showSearch:null,
-        isEdit:false,
+        showSearch: null,
+        isEdit: false,
       }
     },
-    computed:{
+    computed: {
       display(){
         return this.key.trim() ? this.showSearch : this.content;
       }
@@ -81,7 +81,7 @@
         this.showSearch = [];
         const attr = this.type === 1 ? 'title' : 'name';
         for (let i of this.content) {
-          if(i[attr].includes(n)){
+          if (i[attr].includes(n)) {
             this.showSearch.push(i);
           }
         }
@@ -98,7 +98,7 @@
             console.log(res);
             if (res.errcode == 0) {
               this.content = res.content;
-              this.$setPage();
+//              this.$setPage();
             } else {
               errback(res);
             }
@@ -113,13 +113,8 @@
     },
     created(){
       const search = getSearchParams(location.search);
-      if (search) {
-        this.type = search.type;
-//        history.replaceState(null, '', getPageName() + '.html');
-        this.fetch();
-      } else {
-        this.keepAlive();
-      }
+      this.type = search.type;
+      this.fetch();
     },
     components: {
       AppPermanent,

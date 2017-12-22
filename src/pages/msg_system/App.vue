@@ -52,8 +52,9 @@
   }
 </style>
 <template>
-  <div>
-    <ul class="msg_system-ul" v-if="content && content.length">
+  <div v-if="content" style="padding-top:.7rem;">
+    <app-delete-msgs type="1" :callback="deleteMessages"></app-delete-msgs>
+    <ul class="msg_system-ul" v-if="content.length">
       <li v-for="msg in content" :key="msg.message_id" @click="read(msg)">
         <div class="img">
           <img :src="msg.image" v-if="msg.image">
@@ -86,17 +87,21 @@
 <script>
   import AppPermanent from '@c/AppPermanent.vue'
   import LoadMore from '@c/LoadMore.vue'
+  import AppDeleteMsgs from '@c/AppDeleteMsgs'
 
   export default {
     data () {
       return {
-        content: [],
+        content: null,
         page: 1,
         url:URL.getSystemMessages,
         hasMore:true,
       }
     },
     methods: {
+      deleteMessages(){
+        this.content = [];
+      },
       loadMore(content){
         if(content.length) {
           this.content.push(...content);
@@ -128,6 +133,7 @@
     components: {
       AppPermanent,
       LoadMore,
+      AppDeleteMsgs,
     }
   }
 </script>

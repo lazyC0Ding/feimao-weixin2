@@ -125,7 +125,7 @@
         </div>
         <div class="div-2">{{msg.title}}</div>
         <div v-if="msg.foregin_type" class="div-3" :class="{ ellipsis: getType(msg.foregin_type) != 1}"
-             @click="jumpAction(msg.action)">
+             @click="jumpAction(msg)">
           [{{getType(msg.foregin_type)}}]{{msg.to_content}}
         </div>
         <div v-else class="div-3 ellipsis" v-action="msg.action">
@@ -206,8 +206,9 @@
             }
           })
       },
-      jumpAction(action){
-        return jumpAction(action);
+      jumpAction(msg){
+        msg.is_read = 1;
+        return jumpAction(msg.action);
       },
       getType(foreign_type){
         let type;

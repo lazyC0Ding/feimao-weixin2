@@ -55,7 +55,7 @@
   <div v-if="content" style="padding-top:.7rem;">
     <app-delete-msgs type="3" :callback="deleteMessages"></app-delete-msgs>
     <ul v-if="content.length" class="msg_follow-ul">
-      <li v-for="msg in content" @click="read">
+      <li v-for="msg in content" @click="read(msg)">
         <span v-if="msg.is_read == 0"></span>
         <img v-if="msg.foregin_type == 1" :src="msg.avater | avatar">
         <img v-else src="../../assets/img/mes_fensishouyi.png">

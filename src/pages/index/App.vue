@@ -141,7 +141,7 @@
         <li :class="{active:activeTag === 2}" @click="activeTag=2">好物推荐</li>
       </ul>
     </div>
-    <div v-show="activeTag === 0" class="follows">
+    <div v-if="attention.persons.length" v-show="activeTag === 0" class="follows">
       <span>推荐关注</span>
       <ul>
         <li v-for="person in attention.persons" :key="person.customer_id">
@@ -155,8 +155,7 @@
             <span @click="follow(person.customer_id)">关注TA</span>
           </div>
         </li><!--
-        -->
-        <li v-if="attention.persons.length >= 9">
+        --><li v-if="attention.persons.length >= 9">
           <dl>
             <dt v-href="'follows'">
               <img src="../../assets/img/people_more.png">
@@ -238,7 +237,6 @@
           .then(res => {
             if (res.errcode == 0) {
               this.refreshByFollow();
-              follow_common();
             } else {
               errback(res)
             }
@@ -247,24 +245,14 @@
       refreshByFollow(){
         this.$post(URL.getBaseData)
           .then(res => {
-            this.attention = res.content.attention;
-            this.$_follow = false;
-            setSession(getPageName(), this._data);
+            if(res.errcode == 0) {
+              this.attention = res.content.attention;
+              this.$_follow = false;
+              setSession(getPageName(), this._data);
+            }else{
+              errback(res);
+            }
           })
-      },
-      keepAlive(){
-        const data = getSession(getPageName());
-        if (data) {
-          for (let i in data) {
-            this[i] = data[i];
-          }
-          this.isIndexTagsFixed = window.scrollY > this.clientWidth * 8 / 15;
-          if (data.$_follow) {
-            this.refreshByFollow();
-          }
-        } else {
-          this.fetch();
-        }
       },
       fetch(){
         this.$post(URL.getBaseData)

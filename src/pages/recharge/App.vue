@@ -121,7 +121,6 @@
         }
         this.$post(url, params)
           .then(res => {
-            alert(JSON.stringify(res))
             if (res.errcode == 0) {
               const content = res.content;
               wx.chooseWXPay({
@@ -131,8 +130,7 @@
                 signType: content.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
                 paySign: content.paySign, // 支付签名
                 success: (res) => {
-                  let msg = this.is_qrcode == 1 ? '付款' : '充值';
-                  alert(msg + '成功');
+
                 }
               });
             } else {

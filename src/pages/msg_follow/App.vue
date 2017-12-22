@@ -33,7 +33,7 @@
           font-size: .3rem;
           overflow: hidden;
           > span {
-            float: left;
+            vertical-align: top;
             &:first-child {
               margin-right: .2rem;
               max-width: 2.6rem;

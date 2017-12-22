@@ -111,20 +111,20 @@
             }
           })
       },
-      keepAlive(){
-        const data = getSession(getPageName());
-        if (data && data.pid == this.pid) {
-          for (let i in data) {
-            this[i] = data[i];
-          }
-          if (data.$_follow) {
-            return this.refreshByFollow();
-          } else {
-            return;
-          }
-        }
-        return this.fetch();
-      },
+//      keepAlive(){
+//        const data = getSession(getPageName());
+//        if (data && data.pid == this.pid) {
+//          for (let i in data) {
+//            this[i] = data[i];
+//          }
+//          if (data.$_follow) {
+//            return this.refreshByFollow();
+//          } else {
+//            return;
+//          }
+//        }
+//        return this.fetch();
+//      },
       follow(){
         this.$post(URL.attention, {pid: this.pid})
           .then(res => {
@@ -159,8 +159,11 @@
       this.pid = pid;
       if(customer_id) {
         setSession('customer_id', customer_id);
+        if(!getToken()) {
+          login();
+        }
       }
-      return this.keepAlive();
+      this.fetch();
     },
     components: {
       AppPermanent,

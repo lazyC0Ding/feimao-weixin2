@@ -1,17 +1,18 @@
 <style type="text/less" lang="less">
   @import '../../common';
+
   .comments {
-    background-color:#fff;
-    overflow:hidden;
+    background-color: #fff;
+    overflow: hidden;
     > li {
       position: relative;
       overflow: hidden;
-      padding-left:1.1rem;
-      &:last-child{
-        >div.content{
-          &:after{
-            width:0;
-            height:0;
+      padding-left: 1.1rem;
+      &:last-child {
+        > div.content {
+          &:after {
+            width: 0;
+            height: 0;
           }
         }
       }
@@ -26,21 +27,28 @@
       > div.content {
         position: relative;
         overflow: hidden;
-        padding:.28rem 0 .32rem;
+        padding: .28rem 0 .32rem;
         .border-bottom-1px;
         > .a {
+          overflow: hidden;
+          span {
+            overflow: hidden;
+            vertical-align: top;
+          }
           > .a-1 {
             font-size: .24rem;
             color: #00609b;
-            max-width:2rem;
-            overflow:hidden;
-            text-overflow:ellipsis;
-            white-space: nowrap;
+            .a-1-nickname {
+              max-width: 2rem;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
           }
           > .a-2 {
             color: @light;
             font-size: .24rem;
-            overflow:hidden;
+            overflow: hidden;
           }
         }
         > .b {
@@ -65,20 +73,20 @@
     }
   }
 
-  .text{
-    height:.6rem;
-    line-height:.6rem;
-    background-color:#eee;
-    padding-left:.36rem;
-    padding-right:.3rem;
-    font-size:.24rem;
-    >span{
+  .text {
+    height: .6rem;
+    line-height: .6rem;
+    background-color: #eee;
+    padding-left: .36rem;
+    padding-right: .3rem;
+    font-size: .24rem;
+    > span {
       &:nth-child(1) {
-        float:left;
-        color:#00609b;
+        float: left;
+        color: #00609b;
       }
       &:nth-child(2) {
-        float:right;
+        float: right;
       }
     }
   }
@@ -125,7 +133,11 @@
         <div class="content">
           <img class="reply" src="../../assets/img/Article_reply.png">
           <div class="a">
-            <span class="a-1">{{comment.nickname}}</span>
+            <span class="a-1">
+              <span class="a-1-nickname">
+                {{comment.nickname}}
+              </span>
+            </span>
             <span class="a-2">{{comment.date_add | time_3}}</span>
           </div>
           <div class="b">{{comment.content}}</div>
@@ -141,10 +153,11 @@
         <img class="avatar" :src="comment.avater | avatar">
         <div class="content">
           <div class="a">
-            <span class="a-1">{{comment.nickname}}
+            <span class="a-1">
+              <span class="a-1-nickname">{{comment.nickname}}</span>
               <span v-if="comment.to_customer_id != main.customer_id">
                 <span style="color:#111;">回复</span>
-                <span>{{comment.to_nickname}}</span>
+                <span class="a-1-nickname">{{comment.to_nickname}}</span>
               </span>
             </span>
             <span class="a-2">{{comment.date_add | time_3}}</span>
@@ -179,23 +192,23 @@
   export default {
     data () {
       return {
-        comment_id:'',
-        content:null,
-        main:null,
-        ifShowComment:false,
-        replyComment_id:'',
-        comment:'',
-        url:URL.getComments,
-        page:1,
-        hasMore:true,
+        comment_id: '',
+        content: null,
+        main: null,
+        ifShowComment: false,
+        replyComment_id: '',
+        comment: '',
+        url: URL.getComments,
+        page: 1,
+        hasMore: true,
       }
     },
     methods: {
       loadMore(content){
-        if(content.length) {
+        if (content.length) {
           this.content.push(...content);
           this.page++;
-        }else{
+        } else {
           this.hasMore = false;
         }
       },
@@ -221,18 +234,18 @@
           })
       },
       toArticle(){
-        if(document.referrer.includes('article_detail.html')){
+        if (document.referrer.includes('article_detail.html')) {
           history.go(-1);
         }
       },
       fetch(){
-        this.$post(URL.getComments, {comment_id:this.comment_id})
-          .then (res => {
+        this.$post(URL.getComments, {comment_id: this.comment_id})
+          .then(res => {
             console.log(res);
-            if(res.errcode == 0) {
+            if (res.errcode == 0) {
               this.content = res.content;
               this.main = res.content[0];
-            }else{
+            } else {
               errback(res);
             }
           })

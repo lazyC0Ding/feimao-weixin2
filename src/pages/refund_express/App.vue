@@ -85,14 +85,14 @@
       <li class="row no-border-bottom">
         <span class="title">上传图片</span>
       </li>
-      <app-upload-img :images="images"></app-upload-img>
+      <app-upload-img :images="images" :max-length="3"></app-upload-img>
     </ul>
     <div class="btn-big" style="margin-top:.8rem;" @click="apply">提交</div>
     <popup v-model="showExpress" style="overflow-y: visible;">
       <div style="height:.8rem;line-height:.8rem;text-align: right;background-color:#fff;">
         <span @click="showExpress = false" style="margin-right:.3rem;">完成</span>
       </div>
-      <picker :data='express' v-model='currentExpress' @on-change='changeExpress'></picker>
+      <picker :data='express' v-model="currentExpress"></picker>
     </popup>
     <app-permanent type="2"></app-permanent>
   </div>
@@ -108,7 +108,7 @@
         refund_sn: null,
         address: null,
         name: null,
-        currentExpress: [''],
+        currentExpress: ['请选择'],
         showExpress: false,
         express_sn: '',
         images: [],
@@ -116,11 +116,14 @@
     },
     computed: {
       express(){
-        const express = [];
-        for (let i of this.content) {
-          express.push(i.express_name);
+        if(this.content){
+          const express = [];
+          for (let i of this.content) {
+            express.push(i.express_name);
+          }
+          express.unshift('请选择');
+          return [express];
         }
-        return [express];
       },
       params(){
         let currentExpress = this.currentExpress[0];
@@ -149,7 +152,7 @@
     },
     methods: {
       apply(){
-        if(!this.currentExpress[0]){
+        if(!this.currentExpress[0] || this.currentExpress[0] === '请选择'){
           toast('请选择快递公司');
           return;
         }

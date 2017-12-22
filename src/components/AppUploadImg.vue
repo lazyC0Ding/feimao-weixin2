@@ -43,7 +43,7 @@
       <img class="content" :src="image.localId">
       <img class="close" src="../assets/img/close_redbj.png" @click.stop="images.splice(index,1)">
     </li><!--
-    --><li class="chooseImg" @click="chooseImg" v-show="images.length < 6">{{images.length}}/6</li>
+    --><li class="chooseImg" @click="chooseImg" v-show="images.length < maxLength">{{images.length}}/{{maxLength}}</li>
   </ul>
 </template>
 <script>
@@ -52,6 +52,10 @@
       images: {
         type: Array,
         required: true,
+      },
+      maxLength:{
+        type:Number,
+        default:6,
       }
     },
     data(){
@@ -63,7 +67,7 @@
     methods: {
       chooseImg(){
         wx.chooseImage({
-          count: 6 - this.images.length, // 默认9
+          count: this.maxLength - this.images.length, // 默认9
           sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
           sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
           success: (res) => {

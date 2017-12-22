@@ -149,7 +149,7 @@
       </li>
       <li v-if="search.show_point==1" class="row" @click="selectDiscount('point')">
         <span class="title">使用积分</span>
-        <span class="light" style="margin-left:.2rem;">{{search.customer.point == 0 ? '暂无积分' : search.customer.point + '积分抵' + Number(search.customer.point)/100}}</span>
+        <span class="light" style="margin-left:.2rem;">{{search.customer.point == 0 ? '暂无积分' : search.customer.point + '积分抵' + Number(search.customer.point)/100 + '元'}}</span>
         <span class="right select" :class="{on:discount.point}"></span>
       </li>
     </ul>
@@ -226,7 +226,7 @@
         }else if(this.discount.point) {
           amount = amount - Number(this.search.customer.point)/100;
         }
-        return amount;
+        return amount > 0 ? amount : '0.00';
       },
     },
     methods: {

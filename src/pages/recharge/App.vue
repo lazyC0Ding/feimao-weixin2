@@ -160,7 +160,8 @@
         const {customer_id, is_qrcode} = search;
         this.is_qrcode = is_qrcode;
         this.customer_id = customer_id;
-        if(is_qrcode == 1 && !getToken()) {
+        if(is_qrcode == 1) {
+          removeToken();
           login();
         }
       }

@@ -222,7 +222,6 @@
                 this.$post(URL.upload_weixin, {media_id})
                   .then(res => {
                     if (res.errcode == 0) {
-                      alert(JSON.stringify(res));
                       return this.$post(URL.changeAvater, {avater:res.content.content.name})
                     } else {
                       errback(res);

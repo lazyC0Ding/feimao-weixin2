@@ -88,4 +88,5 @@ var URL = {
   getFans:'user/getFans',
   deleteMessages:'message/deleteMessages',
   receivables:'user/receivables',
+  changeAvater:'user/changeAvater',
 };

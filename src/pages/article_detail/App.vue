@@ -600,7 +600,7 @@
         article_id: '',
         content: null,
         ifShowGoods: false,
-        ifShowRecommend: false,
+        ifShowRecommend: true,
         shade: {
           ifShowGoods: false,
           ifShowComment: false,
@@ -755,7 +755,7 @@
       document.title = '文章详情';
       const {article_id, customer_id} = getSearchParams(location.search);
       if (customer_id) {
-        this.ifShowRecommend = true;
+//        this.ifShowRecommend = true;
         setSession('customer_id', customer_id);
       }
       this.article_id = article_id;

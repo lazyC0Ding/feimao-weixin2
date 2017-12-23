@@ -203,7 +203,7 @@
           list: [],
           index: 0,
         },
-        activeTag: 0,
+        activeTag: 1,
         attention: {
           articles: null,
           persons: [],

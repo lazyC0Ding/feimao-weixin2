@@ -159,7 +159,7 @@
       if(customer_id) {
         this.pid = customer_id;
         setSession('customer_id', customer_id);
-        if(is_qrcode == 1) {
+        if(is_qrcode == 1 && !getSession('hasLogin')) {
           removeToken();
           login();
         }

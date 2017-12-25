@@ -89,6 +89,7 @@
           .then ( res => {
             console.log(res);
             if(res.errcode == 0) {
+              setSession('hasLogin', true);
               setUser(res.content);
               setToken(res.content.access_token);
               replacePage(this.from || 'index');

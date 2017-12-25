@@ -446,6 +446,7 @@
     }
     > .actions {
       text-align: right;
+      overflow:hidden;
       > span {
         width: .96rem;
         height: .6rem;

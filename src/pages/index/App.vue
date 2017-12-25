@@ -116,6 +116,7 @@
   .swiper {
     background-size: 100% 100%;
   }
+
 </style>
 <template>
   <div class="bottom-container" style="padding-top:.9rem;">
@@ -132,6 +133,7 @@
       dots-position="center"
       auto
       loop
+      dots-class="banner-dot"
       @click.native="clickBanner"
     ></swiper>
     <div class="index-tags">

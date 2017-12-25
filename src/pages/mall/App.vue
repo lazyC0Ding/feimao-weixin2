@@ -185,6 +185,7 @@
       dots-position="center"
       auto
       loop
+      dots-class="banner-dot"
       @click.native="clickBanner"
     ></swiper>
     <div class="categorys">

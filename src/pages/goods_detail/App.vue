@@ -479,6 +479,7 @@
             dots-position="center"
             auto
             loop
+            dots-class="banner-dot"
           ></swiper>
         </div>
         <div class="info">

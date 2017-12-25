@@ -18,10 +18,12 @@
       overflow: hidden;
       height: 100%;
       > div:first-child {
+        max-width:3rem;
         margin-top: .5rem;
         font-size: .36rem;
         white-space: nowrap;
         overflow: hidden;
+        text-overflow: ellipsis;
       }
       > div:last-child {
         margin-top: .4rem;
@@ -111,20 +113,6 @@
             }
           })
       },
-//      keepAlive(){
-//        const data = getSession(getPageName());
-//        if (data && data.pid == this.pid) {
-//          for (let i in data) {
-//            this[i] = data[i];
-//          }
-//          if (data.$_follow) {
-//            return this.refreshByFollow();
-//          } else {
-//            return;
-//          }
-//        }
-//        return this.fetch();
-//      },
       follow(){
         this.$post(URL.attention, {pid: this.pid})
           .then(res => {

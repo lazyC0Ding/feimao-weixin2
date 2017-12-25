@@ -37,6 +37,7 @@
       <div class="btn-big" @click="content.showQrcode = !content.showQrcode">
         <span>切换为{{content.showQrcode ? '收货' : '个人'}}码</span></div>
     </div>
+    <div>{{test}}</div>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>
@@ -47,6 +48,7 @@
       return {
         content: null,
         clientHeight:document.documentElement.clientHeight,
+        test:'',
       }
     },
     methods: {
@@ -68,6 +70,7 @@
       const search = getSearchParams(location.search);
       if(search && search.customer_id) {
         setSession('customer_id', search.customer_id);
+        this.test = JSON.stringify(search);
       }
       this.fetch();
     },

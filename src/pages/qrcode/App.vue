@@ -37,7 +37,6 @@
       <div class="btn-big" @click="content.showQrcode = !content.showQrcode">
         <span>切换为{{content.showQrcode ? '收货' : '个人'}}码</span></div>
     </div>
-    <div>{{test}}</div>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>
@@ -48,12 +47,15 @@
       return {
         content: null,
         clientHeight:document.documentElement.clientHeight,
-        test:'',
       }
     },
     methods: {
-      fetch(){
-        this.$post(URL.getQrcode)
+      fetch(customer_id){
+        const params = {};
+        if(customer_id) {
+          params.pid = customer_id;
+        }
+        this.$post(URL.getQrcode, params)
           .then(res => {
             console.log(res);
             if (res.errcode == 0) {
@@ -68,11 +70,12 @@
     created(){
       document.title = '我的二维码';
       const search = getSearchParams(location.search);
+      let customer_id;
       if(search && search.customer_id) {
-        setSession('customer_id', search.customer_id);
-        this.test = JSON.stringify(search);
+        customer_id = search.customer_id;
+        setSession('customer_id', customer_id);
       }
-      this.fetch();
+      this.fetch(customer_id);
     },
     components: {
       AppPermanent

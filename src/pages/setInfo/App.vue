@@ -164,7 +164,7 @@
         const {code, state} = search;
         this.wxCode = code;
         let from = decodeURIComponent(state);
-        this.from += from.includes('?') ? '&hasLogin=1' : '?hasLogin=1';
+        this.from = from + (from.includes('?') ? '&hasLogin=1' : '?hasLogin=1');
       }
       this.getOauthInfo();
     },

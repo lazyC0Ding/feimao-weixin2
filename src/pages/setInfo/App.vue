@@ -106,7 +106,7 @@
           .then(res => {
             if(res.errcode == 0) {
               if(res.content.is_bind){
-                setSession('hasLogin', true);
+                setSession('hasLogin', 1);
                 setUser(res.content.customer);
                 setToken(res.content.customer.access_token);
                 replacePage(this.from || 'index');
@@ -163,7 +163,8 @@
       if (search) {
         const {code, state} = search;
         this.wxCode = code;
-        this.from = decodeURIComponent(state);
+        let from = decodeURIComponent(state);
+        this.from += from.includes('?') ? '&hasLogin=1' : '?hasLogin=1';
       }
       this.getOauthInfo();
     },

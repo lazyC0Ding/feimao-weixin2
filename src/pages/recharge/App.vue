@@ -157,10 +157,10 @@
     created(){
       const search = getSearchParams(location.search);
       if(search) {
-        const {customer_id, is_qrcode} = search;
+        const {customer_id, is_qrcode, hasLogin} = search;
         this.is_qrcode = is_qrcode;
         this.customer_id = customer_id;
-        if(is_qrcode == 1 && !getSession('hasLogin')) {
+        if(is_qrcode == 1 && !hasLogin) {
           removeToken();
           login();
         }

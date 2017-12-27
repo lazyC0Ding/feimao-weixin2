@@ -85,7 +85,6 @@
       <app-articles v-if="content.articles && content.articles.length" :parentData="_data"
                     :articles="content.articles"></app-articles>
     </div>
-    <div>{{test}}</div>
     <app-permanent type="1"></app-permanent>
   </div>
 </template>
@@ -98,7 +97,6 @@
         pid: '',
         content: {},
         $_follow: false,
-        test:'',
       }
     },
     methods: {
@@ -145,13 +143,11 @@
     },
     created(){
       document.title = '个人信息';
-      const { pid, customer_id, is_qrcode } = getSearchParams(location.search);
-      this.test = JSON.stringify(getSearchParams(location.search));
-      return;
+      const { pid, customer_id, is_qrcode, hasLogin } = getSearchParams(location.search);
       if(customer_id) {
         this.pid = customer_id;
         setSession('customer_id', customer_id);
-        if(is_qrcode == 1 && !getSession('hasLogin')) {
+        if(is_qrcode == 1 && !hasLogin) {
           removeToken();
           login();
         }

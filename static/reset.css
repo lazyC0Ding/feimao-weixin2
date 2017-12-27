@@ -47,7 +47,7 @@ input, button, textarea {
   border: 0;
   margin: 0;
   padding: 0;
-  /*-webkit-appearance:none;*/
+  -webkit-appearance:none;
   background-color: rgba(0, 0, 0, 0);
   outline: none;
 }

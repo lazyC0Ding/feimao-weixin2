@@ -97,23 +97,28 @@
     top: 2.4rem;
     width: 80%;
     overflow: hidden;
-    padding-bottom: .3rem;
     z-index: 9;
     background-color: #fff;
+    box-sizing: border-box;
+    padding:.3rem;
     > textarea {
       width: 100%;
       height: 3rem;
       box-sizing: border-box;
-      padding: .3rem;
-      resize: none;
+      resize: none ;
       outline: none;
       font-size: .28rem;
       &::placeholder {
         color: @light;
       }
+      &::-webkit-scrollbar{
+        width:0;
+        height:0;
+      }
     }
     > .actions {
       text-align: right;
+      overflow:hidden;
       > span {
         width: .96rem;
         height: .6rem;

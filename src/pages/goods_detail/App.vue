@@ -433,7 +433,7 @@
   .comments-model {
     position: absolute;
     left: 10%;
-    top: 2.4rem;
+    top: 1.5rem;
     width: 80%;
     overflow: hidden;
     z-index: 9;
@@ -463,7 +463,7 @@
         line-height: .6rem;
         text-align: center;
         margin-right: .4rem;
-        border: 0.5px solid #111;
+        border: 1px solid #111;
         box-sizing: border-box;
       }
     }

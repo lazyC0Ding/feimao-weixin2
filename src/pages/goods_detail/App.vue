@@ -532,9 +532,13 @@
         </ul>
         <div class="bottom-content">
           <!-- 商品详情 -->
-          <iframe v-show="activeTag === 0" :style="{height:clientHeight+'px'}" :src="content.desc" frameborder="no"
+          <iframe v-show="activeTag === 0"
+                  :style="{height:clientHeight+'px'}"
+                  :src="content.desc"
+                  frameborder="no"
                   border="0" marginwidth=0
-                  marginheight=0></iframe>
+                  marginheight=0>
+          </iframe>
           <!-- 购买记录 -->
           <ul v-show="activeTag === 1" class="records">
             <li v-for="record in content.records">
@@ -591,7 +595,7 @@
         <!--<li class="img"></li>-->
         <!--<hr>-->
         <li class="img img-2" :class="{active:content.is_collection == 1}" @click="goodsCollection"></li>
-        <li class="btn btn-1" @click="select(2)">立即购买</li>
+        <li class="btn btn-1" @click="select(2)">立即购买1</li>
         <li class="btn btn-2" @click="select(1)">加入购物车</li>
       </ul>
     </template>

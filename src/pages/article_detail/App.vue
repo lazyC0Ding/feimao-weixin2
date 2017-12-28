@@ -429,7 +429,7 @@
     top: 2.4rem;
     width: 80%;
     overflow: hidden;
-    padding-bottom: .3rem;
+    /*padding-bottom: .3rem;*/
     z-index: 9;
     background-color: #fff;
     > textarea {

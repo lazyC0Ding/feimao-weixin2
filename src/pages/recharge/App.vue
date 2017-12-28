@@ -64,8 +64,8 @@
           width: 6rem;
           font-size: 1rem;
           border-bottom: 1px solid #ddd;
-          &::placeholder{
-            color:@light;
+          &::placeholder {
+            color: @light;
           }
         }
       }
@@ -102,21 +102,21 @@
       return {
         type: 5,
         money: '',
-        is_qrcode:0,
-        customer_id:null,
+        is_qrcode: 0,
+        customer_id: null,
       }
     },
     methods: {
       recharge(){
         let url;
         let params = {
-          type:this.type,
-          money:this.money,
+          type: this.type,
+          money: this.money,
         };
-        if(this.is_qrcode == 1) {
+        if (this.is_qrcode == 1) {
           url = URL.receivables;
           params.pid = this.customer_id;
-        }else{
+        } else {
           url = URL.recharge;
         }
         this.$post(url, params)
@@ -156,11 +156,14 @@
     },
     created(){
       const search = getSearchParams(location.search);
-      if(search) {
+      if (search) {
         const {customer_id, is_qrcode, hasLogin} = search;
         this.is_qrcode = is_qrcode;
-        this.customer_id = customer_id;
-        if(is_qrcode == 1 && !hasLogin) {
+        if (customer_id) {
+          this.customer_id = customer_id;
+          setSession('customer_id', customer_id);
+        }
+        if (is_qrcode == 1 && !hasLogin) {
           removeToken();
           login();
         }

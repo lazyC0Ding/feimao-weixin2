@@ -429,14 +429,14 @@
     top: 2.4rem;
     width: 80%;
     overflow: hidden;
-    /*padding-bottom: .3rem;*/
+    padding-bottom: .3rem;
     z-index: 9;
     background-color: #fff;
     > textarea {
       width: 100%;
       height: 3rem;
       box-sizing: border-box;
-      padding: .3rem;
+      /*padding: .3rem;*/
       resize: none;
       outline: none;
       font-size: .28rem;

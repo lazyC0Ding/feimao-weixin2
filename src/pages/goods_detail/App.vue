@@ -595,7 +595,7 @@
         <!--<li class="img"></li>-->
         <!--<hr>-->
         <li class="img img-2" :class="{active:content.is_collection == 1}" @click="goodsCollection"></li>
-        <li class="btn btn-1" @click="select(2)">立即购买1</li>
+        <li class="btn btn-1" @click="select(2)">立即购买</li>
         <li class="btn btn-2" @click="select(1)">加入购物车</li>
       </ul>
     </template>

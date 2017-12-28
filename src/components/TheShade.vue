@@ -10,7 +10,9 @@
   }
 </style>
 <template>
-  <div class="shade"></div>
+  <div class="shade">
+    <slot></slot>
+  </div>
 </template>
 <script>
   export default {

@@ -78,7 +78,7 @@
   }
 
   .comments-model {
-    position: fixed;
+    position: absolute;
     left: 10%;
     top: 2.4rem;
     width: 80%;
@@ -104,7 +104,6 @@
     }
     > .actions {
       text-align: right;
-      overflow:hidden;
       > span {
         width: .96rem;
         height: .6rem;
@@ -112,6 +111,7 @@
         text-align: center;
         margin-right: .4rem;
         border: 0.5px solid #111;
+        box-sizing: border-box;
       }
     }
   }
@@ -142,14 +142,15 @@
       <img src="../../assets/img/Tip_nothing.png">
       <div>您还没有回复消息</div>
     </div>
-    <div class="comments-model" v-show="ifShowComment">
-      <textarea placeholder="请输入评论内容" v-model="comment"></textarea>
-      <div class="actions">
-        <span @click="hideComment">取消</span>
-        <span @click="sendComment">发送</span>
+    <the-shade v-show="ifShowComment" @click.native.self="hideComment">
+      <div class="comments-model" v-show="ifShowComment">
+        <textarea placeholder="请输入评论内容" v-model="comment"></textarea>
+        <div class="actions">
+          <span @click="hideComment">取消</span>
+          <span @click="sendComment">发送</span>
+        </div>
       </div>
-    </div>
-    <the-shade v-show="ifShowComment" @click.native="hideComment"></the-shade>
+    </the-shade>
     <load-more
       :url="url"
       :page="page"

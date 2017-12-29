@@ -469,7 +469,7 @@
       <div class="detail-top">
         <div class="author">
           <a v-href="['person_detail', {pid:article.customer_id}]">
-            <img :src="article.avater | avatar">
+            <img v-avatar="article.avater">
             <span class="nickname">{{article.nickname}}</span>
           </a>
           <span class="button" v-if="article.can_attention != 0" @click="follow">{{ article.is_attention == 0 ? '关注TA' : '已关注' }}</span>
@@ -527,7 +527,7 @@
           <div>文章推荐</div>
           <div>
             <div v-for="item in article.articles" v-href="['article_detail', {article_id:item.article_id}]">
-              <img :src="item.cover | avatar">
+              <img v-avatar="item.cover">
               <span>{{item.title}}</span>
             </div>
           </div>
@@ -538,13 +538,13 @@
         <img src="../../assets/img/direction_right_black.png">
         <span>{{content.likes_count}}</span>
         <ul>
-          <li v-for="item in content.likes"><img :src="item.avater | avatar"></li>
+          <li v-for="item in content.likes"><img v-avatar="item.avater"></li>
         </ul>
       </div>
       <!-- 评论列表 -->
       <ul class="comments">
         <li v-for="comment in content.comments" v-href="['comment_list', {comment_id:comment.comment_id}]">
-          <img class="avatar" :src="comment.avater | avatar">
+          <img class="avatar" v-avatar="comment.avater">
           <div class="content">
             <img class="reply" src="../../assets/img/Article_reply.png" @click.stop="showComment(comment.comment_id)">
             <div class="a">

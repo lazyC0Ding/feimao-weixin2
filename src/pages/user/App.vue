@@ -192,7 +192,7 @@
   <div style="padding-bottom:1rem;" v-if="content">
     <div class="user-top">
       <div class="info">
-        <img v-href="['user_info', user_infoSearch]" class="avatar" :src="content.avater | avatar">
+        <img v-href="['user_info', user_infoSearch]" class="avatar" v-avatar="content.avater">
         <span v-href="['user_info', user_infoSearch]" class="text">
           <span>{{content.nickname}}</span><br>
           <span>{{content.introduction || '介绍下自己'}}</span>

@@ -100,7 +100,7 @@
       <li class="row-avatar" @click="updateAvatar">
         <span class="title">头像</span>
         <img class="row-avatar-arrow" src="../../assets/img/direction_right_black.png">
-        <img class="avatar" :src="content.avater | avatar">
+        <img class="avatar" v-avatar="content.avater">
       </li>
       <li class="row" @click="showNickname">
         <span class="title">昵称</span>

@@ -70,7 +70,7 @@
 <template>
   <div>
     <div class="person_detail-top">
-      <img :src="content.avater | avatar">
+      <img v-avatar="content.avater">
       <div>
         <div>{{content.nickname}}</div>
         <div>{{content.introduction || '暂无简介'}}</div>

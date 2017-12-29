@@ -58,7 +58,7 @@
     <ul v-if="content.length" class="msg_follow-ul">
       <li v-for="msg in content" @click="read(msg)">
         <span v-if="msg.is_read == 0"></span>
-        <img :src="msg.avater | avatar">
+        <img v-avatar="msg.avater">
         <div class="text">
           <div>
             <span>{{msg.nickname}}</span>

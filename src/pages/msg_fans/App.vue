@@ -57,7 +57,7 @@
     <ul v-if="content.length" class="msg_follow-ul">
       <li v-for="msg in content" @click="read(msg)">
         <span v-if="msg.is_read == 0"></span>
-        <img v-if="msg.foregin_type == 1" :src="msg.avater | avatar">
+        <img v-if="msg.foregin_type == 1" v-avatar="msg.avater">
         <img v-else src="../../assets/img/mes_fensishouyi.png">
         <div class="text">
           <div>

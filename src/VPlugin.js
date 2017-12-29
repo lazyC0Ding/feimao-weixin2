@@ -59,6 +59,17 @@ export default {
     };
 
     // 指令
+    Vue.directive('avatar', function (el, binding) {
+      el.src = './static/img/default_head.png';
+      if(binding.value) {
+        let img = new Image();
+        img.onload = function () {
+          el.src = binding.value;
+        };
+        img.src = binding.value;
+      }
+    });
+
     // 使用div等元素的backgroundImage显示图片
     Vue.directive('ratioImg', function (el, binding) {
       const width = document.documentElement.clientWidth;

@@ -141,7 +141,7 @@
   <div v-if="content">
     <div class="spokesman-top">
       <div>
-        <img class="avatar" :src="content.avater | avatar">
+        <img class="avatar" v-avatar="content.avater">
         <span class="text">
           <span class="text-1">{{content.nickname}}</span><br>
           <span class="text-2">
@@ -185,7 +185,7 @@
         <span class="title" style="font-size:.32rem;">粉丝列表</span>
       </li>
       <li class="row" v-for="fan in content.fans">
-        <img class="icon left" :src="fan.avater | avatar">
+        <img class="icon left" v-avatar="fan.avater">
         <span class="title">{{fan.nickname}}</span>
         <span class="right">{{fan.date_add | time_2}}</span>
       </li>

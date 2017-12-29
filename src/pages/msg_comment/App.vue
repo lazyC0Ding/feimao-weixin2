@@ -123,7 +123,7 @@
       <li v-for="msg in content" :key="msg.message_id" @click="msg.is_read = 1">
         <div class="div-1">
           <span class="unRead" v-show="msg.is_read==0"></span>
-          <img :src="msg.avater | avatar">
+          <img v-avatar="msg.avater">
           <span class="nickname">{{msg.nickname}}</span><!--
           --><span class="date_add">{{msg.date_add | time}}</span>
           <span class="btn" @click="showComment(msg.foregin_id)">回复TA</span>

@@ -134,7 +134,7 @@
   <div v-if="content">
     <ul class="comments">
       <li class="comment" v-for="comment in content.slice(0,1)" @click="showComment(comment.comment_id)">
-        <img class="avatar" :src="comment.avater | avatar">
+        <img class="avatar" v-avatar="comment.avater">
         <div class="content">
           <img class="reply" src="../../assets/img/Article_reply.png">
           <div class="a">
@@ -155,7 +155,7 @@
     </div>
     <ul class="comments">
       <li class="comment" v-for="comment in content.slice(1)" @click="showComment(comment.comment_id)">
-        <img class="avatar" :src="comment.avater | avatar">
+        <img class="avatar" v-avatar="comment.avater">
         <div class="content">
           <div class="a">
             <span class="a-1">

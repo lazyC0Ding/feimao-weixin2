@@ -35,6 +35,7 @@
       height: .9rem;
       margin-top: .25rem;
       margin-left: .4rem;
+      border-radius: 50%;
     }
     > div {
       padding-left: .2rem;
@@ -496,7 +497,7 @@
           <div v-else class="price">¥ {{content.price}}</div>
         </div>
         <div class="feimao">
-          <img :src="'' | avatar">
+          <img src="../../assets/img/goods_detail_shop.png">
           <div>
             <div>肥猫商城</div>
             <div>品质保证 | 吃遍全国</div>
@@ -547,7 +548,7 @@
           <!-- 购买记录 -->
           <ul v-show="activeTag === 1" class="records">
             <li v-for="record in content.records">
-              <img :src="record.avater | avatar">
+              <img v-avatar="record.avater">
               <div>
                 <span>{{record.nickname}}</span>
                 <span>购买了{{record.quantity}}件</span>

@@ -149,7 +149,7 @@
         <li v-for="person in attention.persons" :key="person.customer_id">
           <dl v-href="['person_detail', {pid:person.customer_id}]">
             <dt>
-              <img :src="person.avater | avatar">
+              <img v-avatar="person.avater">
             </dt>
             <dd><span>{{person.nickname}}</span></dd>
           </dl>

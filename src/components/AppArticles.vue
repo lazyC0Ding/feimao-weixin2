@@ -119,7 +119,7 @@
   <ul>
     <li v-for="(article, index) in articles" :key="article.article_id">
       <div class="author" v-if="article.customer_id">
-        <img :src="article.avater | avatar">
+        <img v-avatar="article.avater">
         <span class="nickname">{{article.nickname}}</span>
         <span class="button" @click="follow(article, article.customer_id)">{{ article.is_attention == 0 ? '关注TA' : '已关注'}}</span>
         <span class="follows">{{article.attention_count}}人关注</span>

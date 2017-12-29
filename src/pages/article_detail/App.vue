@@ -96,6 +96,7 @@
         vertical-align: middle;
       }
       > .nickname {
+        color:#fff;
         width: 3rem;
         margin-left: .2rem;
         font-size: .28rem;
@@ -384,6 +385,19 @@
     }
   }
 
+  .comments-button{
+    overflow:hidden;
+    text-align:center;
+    >span{
+      padding:0 .35rem;
+      height:.7rem;
+      line-height:.7rem;
+      background-color:#000;
+      color:#fff;
+      font-size:.28rem;
+    }
+  }
+
   .footer {
     .ul-horizontal(@footer-height, 3);
     &:after {
@@ -542,20 +556,25 @@
         </ul>
       </div>
       <!-- 评论列表 -->
-      <ul class="comments">
-        <li v-for="comment in content.comments" v-href="['comment_list', {comment_id:comment.comment_id}]">
-          <img class="avatar" v-avatar="comment.avater">
-          <div class="content">
-            <img class="reply" src="../../assets/img/Article_reply.png" @click.stop="showComment(comment.comment_id)">
-            <div class="a">
-              <span class="a-1">{{comment.nickname}}</span>
-              <span class="a-2">{{comment.date_add | time_3}}</span>
+      <template v-if="content.comments && content.comments.length">
+        <ul class="comments">
+          <li v-for="comment in content.comments" v-href="['comment_list', {comment_id:comment.comment_id}]">
+            <img class="avatar" v-avatar="comment.avater">
+            <div class="content">
+              <img class="reply" src="../../assets/img/Article_reply.png" @click.stop="showComment(comment.comment_id)">
+              <div class="a">
+                <span class="a-1">{{comment.nickname}}</span>
+                <span class="a-2">{{comment.date_add | time_3}}</span>
+              </div>
+              <div class="b">{{comment.content}}</div>
+              <div class="c" v-if="comment.reply_count > 0">查看回复({{comment.reply_count}})</div>
             </div>
-            <div class="b">{{comment.content}}</div>
-            <div class="c" v-if="comment.reply_count > 0">查看回复({{comment.reply_count}})</div>
-          </div>
-        </li>
-      </ul>
+          </li>
+        </ul>
+        <div class="comments-button" v-if="content.comments.length%10==0 && hasMore">
+          <span @click="loadMoreComments">查看更多评论</span>
+        </div>
+      </template>
       <!-- 好物推荐 -->
       <goods-container
         v-if="ifShowRecommend && content.recommend"
@@ -585,13 +604,6 @@
         </div>
       </div>
     </the-shade>
-    <load-more
-      :url="url"
-      :page="page"
-      :params="{article_id:article_id, comment_id:0}"
-      :callback="loadMore"
-      :no-listen="!hasMore"
-    ></load-more>
     <app-permanent type="1"></app-permanent>
   </div>
 </template>
@@ -599,7 +611,6 @@
   import AppPermanent from '@c/AppPermanent.vue'
   import TheShade from '@c/TheShade.vue'
   import GoodsContainer from '@c/GoodsContainer.vue'
-  import LoadMore from '@c/LoadMore.vue'
 
   export default {
     data () {
@@ -655,6 +666,21 @@
       }
     },
     methods: {
+      loadMoreComments(){
+        this.$post(URL.getComments, {page:this.page+1,article_id:this.article_id, comment_id:0})
+          .then( res => {
+            if(res.errcode == 0) {
+              if(res.content.length) {
+                this.content.comments.push(...res.content);
+                this.page++;
+              }else{
+                this.hasMore = false;
+              }
+            }else{
+              errback(res);
+            }
+          })
+      },
       loadMore(content){
         if(content.length) {
           this.content.comments.push(...content);
@@ -774,7 +800,6 @@
       AppPermanent,
       TheShade,
       GoodsContainer,
-      LoadMore,
     }
   }
 </script>

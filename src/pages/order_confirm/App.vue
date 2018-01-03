@@ -66,7 +66,7 @@
   }
 
   .message {
-    font-size:.28rem;
+    font-size: .28rem;
     margin-left: .2rem;
     width: 4.4rem;
     &::placeholder {
@@ -145,7 +145,8 @@
       <li v-href="['coupon_list', search]" v-show="discount.coupon" class="row">
         <span class="title">优惠券</span>
         <img class="row-arrow" src="../../assets/img/direction_right_gray.png">
-        <span class="light right">{{search.coupon ? '满' + search.coupon.limit + '减' + search.coupon.amount : '请选择'}}</span>
+        <span
+          class="light right">{{search.coupon ? '满' + search.coupon.limit + '减' + search.coupon.amount : '请选择'}}</span>
       </li>
       <li v-if="search.show_point==1" class="row" @click="selectDiscount('point')">
         <span class="title">使用积分</span>
@@ -166,7 +167,7 @@
   export default {
     data () {
       return {
-        search:null,
+        search: null,
         expressFee: null,
         message: '',
         discount: {
@@ -178,16 +179,16 @@
     },
     computed: {
       generateParams(){
-        if(this.search && this.search.address){
+        if (this.search && this.search.address) {
           const params = {
-            address_id:this.search.address.address_id,
-            data:this.data,
+            address_id: this.search.address.address_id,
+            data: this.data,
           };
-          if(this.message) params.comment = this.message;
-          if(this.discount.point) {
+          if (this.message) params.comment = this.message;
+          if (this.discount.point) {
             params.point = 1;
-          }else if(this.discount.coupon) {
-            params.coupon_id=this.search.coupon ? this.search.coupon.coupon_id : 0;
+          } else if (this.discount.coupon) {
+            params.coupon_id = this.search.coupon ? this.search.coupon.coupon_id : 0;
           }
           return params;
         }
@@ -199,9 +200,9 @@
           item = {
             goods_id: i.goods_id,
             quantity: i.quantity,
-            option_id:i.option_id
+            option_id: i.option_id
           };
-          if(i.cart_id) {
+          if (i.cart_id) {
             item.cart_id = i.cart_id;
           }
           data.push(item);
@@ -209,7 +210,7 @@
         return JSON.stringify(data);
       },
       getExpressFeeParams(){
-        if(this.search.address) {
+        if (this.search.address) {
           return {
             address_id: this.search.address.address_id,
             total_fee: this.search.total_fee,
@@ -219,27 +220,28 @@
       },
       payment(){
         let amount = (Number(this.search.total_fee) + Number(this.expressFee)).toFixed(2);
-        if(this.discount.coupon) {
-          if(this.search.coupon) {
+        if (this.discount.coupon) {
+          if (this.search.coupon) {
             amount = amount - Number(this.search.coupon.amount);
           }
-        }else if(this.discount.point) {
-          amount = amount - Number(this.search.customer.point)/100;
+        } else if (this.discount.point) {
+          amount = amount - Number(this.search.customer.point) / 100;
         }
         return amount > 0 ? amount : '0.00';
       },
     },
     methods: {
       generate(){
-        if(!this.search.address) {
+        if (!this.search.address) {
           toast('请选择收货地址');
           return;
         }
         this.$post(URL.generate, this.generateParams)
-          .then ( res => {
-            if(res.errcode == 0) {
+          .then(res => {
+            if (res.errcode == 0) {
               window.history.replaceState({}, '订单详情', 'order_detail.html?order_sn=' + res.content.order_sn);
-            }else{
+              openPage('pay', res.content);
+            } else {
               errback(res);
             }
           })
@@ -251,7 +253,7 @@
         }
       },
       getExpressFee(){
-        if(this.search.address) {
+        if (this.search.address) {
           this.$post(URL.getExpressFee, this.getExpressFeeParams)
             .then(res => {
               console.log(res)
@@ -262,7 +264,7 @@
                 errback(res);
               }
             })
-        }else{
+        } else {
           this.expressFee = '0.00';
         }
       },

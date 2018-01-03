@@ -438,7 +438,7 @@
   }
 
   .comments-model {
-    position: absolute;
+    position: fixed;
     left: 10%;
     top: 1.5rem;
     width: 80%;
@@ -446,6 +446,7 @@
     background-color: #fff;
     box-sizing: border-box;
     padding:.3rem;
+    z-index:100;
     > textarea {
       width: 100%;
       height: 3rem;
@@ -612,17 +613,16 @@
       <img src="../../assets/img/Tip_nothing.png">
       <div>未找到对应的文章信息</div>
     </div>
-    <!-- shade -->
-    <the-shade v-show="ifShowShade" @click.native.self="hideShade">
-      <!-- 评论弹框 -->
-      <div class="comments-model" v-show="shade.ifShowComment">
-        <textarea placeholder="请输入评论内容" v-model="comment"></textarea>
-        <div class="actions">
-          <span @click="hideComment">取消</span>
-          <span @click="sendComment">发送</span>
-        </div>
+    <!-- 评论弹框 -->
+    <div class="comments-model" v-show="shade.ifShowComment">
+      <textarea placeholder="请输入评论内容" v-model="comment"></textarea>
+      <div class="actions">
+        <span @click="hideComment">取消</span>
+        <span @click="sendComment">发送</span>
       </div>
-    </the-shade>
+    </div>
+    <!-- shade -->
+    <the-shade v-show="ifShowShade" @click.native.self="hideShade"></the-shade>
     <app-permanent type="1"></app-permanent>
   </div>
 </template>

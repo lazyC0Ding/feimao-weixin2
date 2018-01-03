@@ -88,7 +88,7 @@
               this.$post(URL.payorder, {type: this.type, orders: this.order_sn})
                 .then(res => {
                   if (res.errcode == 0) {
-                    history.go(-1);
+                    replacePage('order_detail', {order_sn: this.order_sn});
                   } else {
                     errback(res)
                   }
@@ -100,7 +100,7 @@
               this.$post(URL.payorder, {type: this.type, orders: this.order_sn})
                 .then(res => {
                   if (res.errcode == 0) {
-                    history.go(-1);
+                    replacePage('order_detail', {order_sn: this.order_sn});
                   } else {
                     errback(res)
                   }
@@ -118,8 +118,8 @@
                     package: content.package, // 统一支付接口返回的prepay\_id参数值，提交格式如：prepay\_id=\*\*\*）
                     signType: content.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
                     paySign: content.paySign, // 支付签名
-                    success: function (res) {
-                      history.go(-1);
+                    success: (res) => {
+                      replacePage('order_detail', {order_sn: this.order_sn});
                     }
                   });
                 } else {

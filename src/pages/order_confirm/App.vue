@@ -239,7 +239,6 @@
         this.$post(URL.generate, this.generateParams)
           .then(res => {
             if (res.errcode == 0) {
-              window.history.replaceState({}, '订单详情', 'order_detail.html?order_sn=' + res.content.order_sn);
               openPage('pay', res.content);
             } else {
               errback(res);

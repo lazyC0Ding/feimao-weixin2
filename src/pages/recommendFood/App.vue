@@ -84,22 +84,23 @@
     methods: {
       submit(){
         if(!this.name.trim()) {
-          alert('请输入您的姓名');
+          myAlert('请输入您的姓名');
           return;
         }
         if(!this.phone.trim()) {
-          alert('请输入您的电话');
+          myAlert('请输入您的电话');
           return;
         }
         if(!this.contents.trim()) {
-          alert('请输入推荐内容');
+          myAlert('请输入推荐内容');
           return;
         }
         this.$post(URL.recommendFood, this.params)
           .then (res => {
             if(res.errcode == 0) {
-              alert('感谢您的推荐!');
-              history.go(-1)
+              myAlert('感谢您的推荐!', () => {
+                history.go(-1);
+              });
             }else{
               errback(res);
             }

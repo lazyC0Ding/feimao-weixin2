@@ -158,8 +158,9 @@
           .then( res => {
             console.log(res)
             if(res.errcode == 0) {
-              alert('提交成功！交由后台审核，三个工作室日内反馈结果');
-              history.go(-1);
+              myAlert('提交成功！交由后台审核，三个工作室日内反馈结果', () => {
+                history.go(-1);
+              });
             }else{
               errback(res);
             }

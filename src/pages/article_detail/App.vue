@@ -443,7 +443,7 @@
     top: 1.5rem;
     width: 80%;
     overflow: hidden;
-    z-index: 9;
+    z-index: 11;
     background-color: #fff;
     box-sizing: border-box;
     padding:.3rem;
@@ -473,6 +473,21 @@
         border: 1px solid #111;
         box-sizing: border-box;
       }
+    }
+  }
+
+  .title-with-hr {
+    height: .9rem;
+    line-height: .9rem;
+    text-align: center;
+    font-size: .24rem;
+    > hr {
+      display: inline-block;
+      margin: .2rem;
+      width: .5rem;
+      height: 1px;
+      background-color: #000;
+      vertical-align: middle;
     }
   }
 </style>
@@ -571,9 +586,14 @@
             </div>
           </li>
         </ul>
-        <div class="comments-button" v-if="content.comments.length%10==0 && hasMore">
-          <span @click="loadMoreComments">查看更多评论</span>
+        <div class="title-with-hr" v-if="content.comments.length%10==0 && hasMore" @click="loadMoreComments">
+          <hr>
+          点击查看更多评论
+          <hr>
         </div>
+        <!--<div class="comments-button" v-if="content.comments.length%10==0 && hasMore">-->
+          <!--<span @click="loadMoreComments">点击查看更多评论</span>-->
+        <!--</div>-->
       </template>
       <!-- 好物推荐 -->
       <goods-container

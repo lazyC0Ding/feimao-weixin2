@@ -129,7 +129,7 @@
         let item;
         for (let i of this.goods) {
           if(i.score === 0) {
-            alert('请给商品评分');
+            myAlert('请给商品评分');
             return;
           }
           item = {
@@ -154,7 +154,7 @@
         this.$post(URL.orderComment, {data:JSON.stringify(data)})
           .then (res => {
             if(res.errcode == 0) {
-              alert('评价成功,感谢您的评价');
+              myAlert('评价成功,感谢您的评价');
               history.go(-1);
             }else{
               errback(res);

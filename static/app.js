@@ -1,5 +1,5 @@
 var config = {
-  debug: false
+  debug: true,
 };
 
 if (!config.debug) {
@@ -36,6 +36,25 @@ function toast(msg) {
     window.theVue.$vux.toast.show({
       text: msg,
       type: 'text',
+    })
+  }
+}
+
+function myAlert(msg, onHide, onShow) {
+  if (window.theVue) {
+    window.theVue.$vux.alert.show({
+      title: '提示',
+      content: msg,
+      onShow () {
+        if(onShow) {
+          onShow();
+        }
+      },
+      onHide () {
+        if(onHide) {
+          onHide();
+        }
+      }
     })
   }
 }

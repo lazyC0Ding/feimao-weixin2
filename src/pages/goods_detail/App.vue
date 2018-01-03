@@ -130,7 +130,6 @@
     height: .8rem;
     line-height: .8rem;
     background-color: #fff;
-    border-top: 1px solid #e4e4e4;
     > li {
       display: inline-block;
       height: 100%;

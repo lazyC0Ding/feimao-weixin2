@@ -59,6 +59,7 @@ export default {
     };
 
     // 指令
+    //默认头像
     Vue.directive('avatar', function (el, binding) {
       el.src = './static/img/default_head.png';
       if(binding.value) {

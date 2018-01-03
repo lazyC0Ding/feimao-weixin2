@@ -1,19 +1,20 @@
 <style type="text/less" lang="less">
   @import '../../common';
-  .textarea{
-    margin-top:.2rem;
-    height:3.6rem;
-    background-color:#fff;
-    >textarea{
-      width:100%;
-      height:100%;
-      padding:.3rem;
-      resize:none;
-      outline:none;
+
+  .textarea {
+    margin-top: .2rem;
+    height: 3.6rem;
+    background-color: #fff;
+    > textarea {
+      width: 100%;
+      height: 100%;
+      padding: .3rem;
+      resize: none;
+      outline: none;
       box-sizing: border-box;
-      font-size:.28rem;
-      &::placeholder{
-        color:@light;
+      font-size: .28rem;
+      &::placeholder {
+        color: @light;
       }
     }
   }
@@ -32,18 +33,19 @@
   export default {
     data () {
       return {
-        contents:'',
+        contents: '',
       }
     },
     methods: {
       submit(){
-        this.$post(URL.feedback, {contents:this.contents})
-          .then ( res => {
+        this.$post(URL.feedback, {contents: this.contents})
+          .then(res => {
             console.log(res)
-            if(res.errcode == 0) {
-              alert('提交成功！感谢您的宝贵意见');
-              history.go(-1);
-            }else{
+            if (res.errcode == 0) {
+              myAlert('提交成功！感谢您的宝贵意见', () => {
+                history.go(-1);
+              });
+            } else {
               errback(res);
             }
           })

@@ -30,17 +30,17 @@
       > .title {
         width: 1.4rem;
       }
-      >input{
-        font-size:.28rem;
-        &::placeholder{
-          color:@light;
+      > input {
+        font-size: .28rem;
+        &::placeholder {
+          color: @light;
         }
       }
     }
-    >li.no-border-bottom{
-      &:after{
-        width:0;
-        height:0;
+    > li.no-border-bottom {
+      &:after {
+        width: 0;
+        height: 0;
       }
     }
     > li.images {
@@ -116,7 +116,7 @@
     },
     computed: {
       express(){
-        if(this.content){
+        if (this.content) {
           const express = [];
           for (let i of this.content) {
             express.push(i.express_name);
@@ -128,19 +128,19 @@
       params(){
         let currentExpress = this.currentExpress[0];
         let express_id;
-        for (let i of this.content){
-          if(i.express_name === currentExpress) {
+        for (let i of this.content) {
+          if (i.express_name === currentExpress) {
             express_id = i.express_id;
             break;
           }
         }
         const params = {
-          refund_sn:this.refund_sn,
+          refund_sn: this.refund_sn,
           express_id,
-          express_sn:this.express_sn,
+          express_sn: this.express_sn,
         };
 
-        if(this.images.length) {
+        if (this.images.length) {
           const arr = [];
           for (let i of this.images) {
             arr.push(i.src);
@@ -152,22 +152,23 @@
     },
     methods: {
       apply(){
-        if(!this.currentExpress[0] || this.currentExpress[0] === '请选择'){
+        if (!this.currentExpress[0] || this.currentExpress[0] === '请选择') {
           toast('请选择快递公司');
           return;
         }
 
-        if(!this.express_sn.trim()) {
+        if (!this.express_sn.trim()) {
           toast('请输入快递单号');
           return;
         }
         this.$post(URL.uploadExpress, this.params)
-          .then( res => {
+          .then(res => {
             console.log(res)
-            if(res.errcode == 0) {
-              alert('提交成功！交由后台审核，三个工作室日内反馈结果');
-              history.go(-1);
-            }else{
+            if (res.errcode == 0) {
+              myAlert('提交成功！交由后台审核，三个工作室日内反馈结果', () => {
+                history.go(-1);
+              });
+            } else {
               errback(res);
             }
           })

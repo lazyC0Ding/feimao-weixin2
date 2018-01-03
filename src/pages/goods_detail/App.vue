@@ -215,6 +215,15 @@
     }
     > .bottom-content {
       overflow: hidden;
+      position:relative;
+      >div.hidden{
+        position:absolute;
+        left:0;
+        top:0;
+        width:100%;
+        height:100%;
+
+      }
       > iframe {
         width: 100%;
       }
@@ -537,13 +546,15 @@
         </ul>
         <div class="bottom-content">
           <!-- 商品详情 -->
-          <iframe v-show="activeTag === 0"
-                  :style="{height:clientHeight+'px'}"
-                  :src="content.desc"
-                  frameborder="no"
-                  border="0" marginwidth=0
-                  marginheight=0>
-          </iframe>
+          <div class="hidden" v-show="activeTag === 0 && !isTagsFixed"></div>
+          <iframe
+            v-show="activeTag === 0"
+            :style="{height:clientHeight+'px'}"
+            :src="content.desc"
+            frameborder="no"
+            border="0" marginwidth=0
+            marginheight=0
+          ></iframe>
           <!-- 购买记录 -->
           <ul v-show="activeTag === 1" class="records">
             <li v-for="record in content.records">
@@ -623,8 +634,7 @@
       :params="getBuyRecord.params"
       :callback="loadMore"
       :no-listen="activeTag!=1 || !hasMore"
-    >
-    </load-more>
+    ></load-more>
     <app-permanent type="2"></app-permanent>
   </div>
 </template>
@@ -646,6 +656,7 @@
         clientHeight: document.documentElement.clientHeight,
         isTagsFixed: false,
         before_mai: null,
+        iframe:null,
         ifShowSelect: false,
         buyType: 0,
         now: 0,

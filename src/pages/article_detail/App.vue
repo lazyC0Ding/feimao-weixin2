@@ -709,6 +709,10 @@
         }
       },
       showComment(comment_id){
+        if(!getToken()) {
+          login();
+          return;
+        }
         this.replyComment_id = comment_id;
         this.shade.ifShowComment = true;
       },

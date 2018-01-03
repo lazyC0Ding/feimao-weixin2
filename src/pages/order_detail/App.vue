@@ -2,12 +2,24 @@
   @import '../../common';
 
   .order_detail-top {
+    position:relative;
     height: 2rem;
     line-height: 2rem;
     background-color: #000;
     color: #fff;
     font-size: 0;
     overflow: hidden;
+    >button{
+      position:absolute;
+      top:.2rem;
+      right:.2rem;
+      height: .5rem;
+      line-height:.5rem;
+      padding:0 .1rem;
+      background-color:#fff;
+      color:#000;
+      font-size:.24rem;
+    }
     > img {
       margin-left: .7rem;
       margin-right: .5rem;
@@ -48,11 +60,11 @@
       line-height: normal;
       vertical-align: middle;
       > .a {
-        font-size:.24rem;
-        color:@light;
+        font-size: .24rem;
+        color: @light;
       }
       > .b {
-        max-width:5rem;
+        max-width: 5rem;
         margin-top: .1rem;
         font-size: .28rem;
         text-overflow: ellipsis;
@@ -150,7 +162,7 @@
     padding: .14rem .2rem .24rem;
     font-size: .24rem;
     background-color: #fff;
-    .copy-span{
+    .copy-span {
       -webkit-user-select: auto;
     }
     > div {
@@ -185,44 +197,78 @@
 <template>
   <div v-if="order" style="padding-bottom:1rem;">
     <!-- 头部各种state -->
-    <div class="order_detail-top" v-if="order.order_state == 1">
-      <img src="../../assets/img/Orderdet_fukuan.png">
-      <span>
-        <span class="span-1">等待买家付款</span><br>
-        <span class="span-2">{{d_time | countdown_2}}后自动取消订单</span>
-      </span>
-    </div>
-    <div class="order_detail-top" v-else-if="order.order_state == 2">
-      <img src="../../assets/img/Orderdet_fahuo.png">
-      <span>
+    <div class="order_detail-top">
+      <template v-if="order.order_state == 1">
+        <img src="../../assets/img/Orderdet_fukuan.png">
+        <span>
+           <span class="span-1">等待买家付款</span><br>
+           <span class="span-2">{{d_time | countdown_2}}后自动取消订单</span>
+           </span>
+      </template>
+      <template v-else-if="order.order_state == 2">
+        <img src="../../assets/img/Orderdet_fahuo.png">
+        <span>
         <span class="span-1">等待卖家发货</span><br>
       </span>
-    </div>
-    <div class="order_detail-top" v-else-if="order.order_state == 3">
-      <img src="../../assets/img/Orderdet_shouhuo.png">
-      <span>
+      </template>
+      <template v-else-if="order.order_state == 3">
+        <img src="../../assets/img/Orderdet_shouhuo.png">
+        <span>
         <span class="span-1">卖家已发货</span><br>
         <span class="span-2">{{d_time | countdown_2}}后自动确认收货</span>
       </span>
-    </div>
-    <div class="order_detail-top" v-else-if="order.order_state == 4">
-      <img src="../../assets/img/Orderdet_pingjia.png">
-      <span>
+      </template>
+      <template v-else-if="order.order_state == 4">
+        <img src="../../assets/img/Orderdet_pingjia.png">
+        <span>
         <span class="span-1">等待买家评价</span><br>
       </span>
-    </div>
-    <div class="order_detail-top" v-else-if="order.order_state == 5">
-      <img src="../../assets/img/Orderdet_wancheng.png">
-      <span>
+      </template>
+      <template v-else-if="order.order_state == 5">
+        <img src="../../assets/img/Orderdet_wancheng.png">
+        <span>
         <span class="span-1">订单已完成</span><br>
       </span>
-    </div>
-    <div class="order_detail-top" v-else>
-      <img src="../../assets/img/Orderdet_guanbi.png">
-      <span>
+      </template>
+      <template v-else>
+        <img src="../../assets/img/Orderdet_guanbi.png">
+        <span>
         <span class="span-1">订单已关闭</span><br>
       </span>
+      </template>
+      <button v-href="'mall'">回到商城</button>
     </div>
+    <!--<div class="order_detail-top" v-else-if="order.order_state == 2">-->
+      <!--<img src="../../assets/img/Orderdet_fahuo.png">-->
+      <!--<span>-->
+        <!--<span class="span-1">等待卖家发货</span><br>-->
+      <!--</span>-->
+    <!--</div>-->
+    <!--<div class="order_detail-top" v-else-if="order.order_state == 3">-->
+      <!--<img src="../../assets/img/Orderdet_shouhuo.png">-->
+      <!--<span>-->
+        <!--<span class="span-1">卖家已发货</span><br>-->
+        <!--<span class="span-2">{{d_time | countdown_2}}后自动确认收货</span>-->
+      <!--</span>-->
+    <!--</div>-->
+    <!--<div class="order_detail-top" v-else-if="order.order_state == 4">-->
+      <!--<img src="../../assets/img/Orderdet_pingjia.png">-->
+      <!--<span>-->
+        <!--<span class="span-1">等待买家评价</span><br>-->
+      <!--</span>-->
+    <!--</div>-->
+    <!--<div class="order_detail-top" v-else-if="order.order_state == 5">-->
+      <!--<img src="../../assets/img/Orderdet_wancheng.png">-->
+      <!--<span>-->
+        <!--<span class="span-1">订单已完成</span><br>-->
+      <!--</span>-->
+    <!--</div>-->
+    <!--<div class="order_detail-top" v-else>-->
+      <!--<img src="../../assets/img/Orderdet_guanbi.png">-->
+      <!--<span>-->
+        <!--<span class="span-1">订单已关闭</span><br>-->
+      <!--</span>-->
+    <!--</div>-->
     <!-- 物流信息 -->
     <div class="express" v-if="express && express.length" v-href="['logistics', {order_sn:order_sn}]">
       <img src="../../assets/img/direction_right_gray.png">
@@ -280,7 +326,8 @@
       <span v-href="['logistics', {order_sn:order_sn}]">查看物流</span><span @click="delivery">确认收货</span>
     </div>
     <div class="order_detail-footer" v-else-if="order.order_state == 4">
-      <span @click="deleteOrder">删除订单</span><span v-href="['logistics', {order_sn:order_sn}]">查看物流</span><span @click="comment">去评价</span>
+      <span @click="deleteOrder">删除订单</span><span v-href="['logistics', {order_sn:order_sn}]">查看物流</span><span
+      @click="comment">去评价</span>
     </div>
     <div class="order_detail-footer" v-else-if="order.order_state ==  5 || order.order_state == 6">
       <span @click="deleteOrder">删除订单</span>
@@ -309,12 +356,12 @@
     methods: {
       deleteOrder(){
         myConfirm('是否删除订单', () => {
-          this.$post(URL.deleteOrder, {order_sn:this.order_sn})
-            .then ( res => {
+          this.$post(URL.deleteOrder, {order_sn: this.order_sn})
+            .then(res => {
               console.log(res)
-              if(res.errcode == 0) {
+              if (res.errcode == 0) {
                 history.go(-1);
-              }else{
+              } else {
                 errback(res)
               }
             })
@@ -322,23 +369,23 @@
       },
       delivery(){
         myConfirm('是否确定收货?', () => {
-          this.$post(URL.delivery, {order_sn:this.order_sn})
-            .then ( res => {
+          this.$post(URL.delivery, {order_sn: this.order_sn})
+            .then(res => {
               console.log(res)
-              if(res.errcode == 0) {
+              if (res.errcode == 0) {
                 this.order.order_state = 4;
                 toast('收货成功');
                 setTimeout(() => {
                   this.comment();
                 }, 500);
-              }else{
+              } else {
                 errback(res)
               }
             })
         });
       },
       comment(){
-        setSession('order_comment', {goods:this.order.goods, order_sn:this.order_sn});
+        setSession('order_comment', {goods: this.order.goods, order_sn: this.order_sn});
         openPage('order_comment');
       },
       pay(){
@@ -350,12 +397,12 @@
       },
       cancel(){
         myConfirm('是否确定取消该订单?', () => {
-          this.$post(URL.cancel, {order_sn:this.order_sn})
-            .then ( res => {
+          this.$post(URL.cancel, {order_sn: this.order_sn})
+            .then(res => {
               console.log(res);
-              if( res.errcode == 0) {
+              if (res.errcode == 0) {
                 history.go(-1);
-              }else{
+              } else {
                 errback(res);
               }
             })

@@ -443,7 +443,6 @@
     top: 1.5rem;
     width: 80%;
     overflow: hidden;
-    z-index: 11;
     background-color: #fff;
     box-sizing: border-box;
     padding:.3rem;

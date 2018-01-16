@@ -2,23 +2,23 @@
   @import '../../common';
 
   .order_detail-top {
-    position:relative;
+    position: relative;
     height: 2rem;
     line-height: 2rem;
     background-color: #000;
     color: #fff;
     font-size: 0;
     overflow: hidden;
-    >button{
-      position:absolute;
-      top:.2rem;
-      right:.2rem;
+    > button {
+      position: absolute;
+      top: .2rem;
+      right: .2rem;
       height: .5rem;
-      line-height:.5rem;
-      padding:0 .1rem;
-      background-color:#fff;
-      color:#000;
-      font-size:.24rem;
+      line-height: .5rem;
+      padding: 0 .1rem;
+      background-color: #fff;
+      color: #000;
+      font-size: .24rem;
     }
     > img {
       margin-left: .7rem;
@@ -201,75 +201,43 @@
       <template v-if="order.order_state == 1">
         <img src="../../assets/img/Orderdet_fukuan.png">
         <span>
-           <span class="span-1">等待买家付款</span><br>
-           <span class="span-2">{{d_time | countdown_2}}后自动取消订单</span>
-           </span>
+          <span class="span-1">等待买家付款</span><br>
+          <span class="span-2">{{d_time | countdown_2}}后自动取消订单</span>
+        </span>
       </template>
       <template v-else-if="order.order_state == 2">
         <img src="../../assets/img/Orderdet_fahuo.png">
         <span>
-        <span class="span-1">等待卖家发货</span><br>
-      </span>
+          <span class="span-1">等待卖家发货</span><br>
+        </span>
       </template>
       <template v-else-if="order.order_state == 3">
         <img src="../../assets/img/Orderdet_shouhuo.png">
         <span>
-        <span class="span-1">卖家已发货</span><br>
-        <span class="span-2">{{d_time | countdown_2}}后自动确认收货</span>
-      </span>
+          <span class="span-1">卖家已发货</span><br>
+          <span class="span-2">{{d_time | countdown_2}}后自动确认收货</span>
+        </span>
       </template>
       <template v-else-if="order.order_state == 4">
         <img src="../../assets/img/Orderdet_pingjia.png">
         <span>
-        <span class="span-1">等待买家评价</span><br>
-      </span>
+          <span class="span-1">等待买家评价</span><br>
+        </span>
       </template>
       <template v-else-if="order.order_state == 5">
         <img src="../../assets/img/Orderdet_wancheng.png">
         <span>
-        <span class="span-1">订单已完成</span><br>
-      </span>
+          <span class="span-1">订单已完成</span><br>
+        </span>
       </template>
       <template v-else>
         <img src="../../assets/img/Orderdet_guanbi.png">
         <span>
-        <span class="span-1">订单已关闭</span><br>
-      </span>
+          <span class="span-1">订单已关闭</span><br>
+        </span>
       </template>
       <button v-href="'mall'">回到商城</button>
     </div>
-    <!--<div class="order_detail-top" v-else-if="order.order_state == 2">-->
-      <!--<img src="../../assets/img/Orderdet_fahuo.png">-->
-      <!--<span>-->
-        <!--<span class="span-1">等待卖家发货</span><br>-->
-      <!--</span>-->
-    <!--</div>-->
-    <!--<div class="order_detail-top" v-else-if="order.order_state == 3">-->
-      <!--<img src="../../assets/img/Orderdet_shouhuo.png">-->
-      <!--<span>-->
-        <!--<span class="span-1">卖家已发货</span><br>-->
-        <!--<span class="span-2">{{d_time | countdown_2}}后自动确认收货</span>-->
-      <!--</span>-->
-    <!--</div>-->
-    <!--<div class="order_detail-top" v-else-if="order.order_state == 4">-->
-      <!--<img src="../../assets/img/Orderdet_pingjia.png">-->
-      <!--<span>-->
-        <!--<span class="span-1">等待买家评价</span><br>-->
-      <!--</span>-->
-    <!--</div>-->
-    <!--<div class="order_detail-top" v-else-if="order.order_state == 5">-->
-      <!--<img src="../../assets/img/Orderdet_wancheng.png">-->
-      <!--<span>-->
-        <!--<span class="span-1">订单已完成</span><br>-->
-      <!--</span>-->
-    <!--</div>-->
-    <!--<div class="order_detail-top" v-else>-->
-      <!--<img src="../../assets/img/Orderdet_guanbi.png">-->
-      <!--<span>-->
-        <!--<span class="span-1">订单已关闭</span><br>-->
-      <!--</span>-->
-    <!--</div>-->
-    <!-- 物流信息 -->
     <div class="express" v-if="express && express.length" v-href="['logistics', {order_sn:order_sn}]">
       <img src="../../assets/img/direction_right_gray.png">
       <span class="info">

@@ -7,6 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const pages = [];
 
+// const globpath = './src/devPages/*';
 const globpath = './src/pages/*';
 const _pages = glob.sync(globpath);
 for (let page of _pages){

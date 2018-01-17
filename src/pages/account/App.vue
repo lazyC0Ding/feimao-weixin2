@@ -2,10 +2,22 @@
   @import '../../common';
 
   .account-top {
+    position:relative;
     height: 4.8rem;
     text-align: center;
     background-size: 100% 100%;
     overflow: hidden;
+    >.btn-withdraw{
+      position:absolute;
+      top:.6rem;
+      right:.6rem;
+      background: #000;
+      height: .52rem;
+      line-height: .52rem;
+      padding: 0 .36rem;
+      font-size: .28rem;
+      color: #fff;
+    }
     > .top-1 {
       margin-top: .96rem;
       font-size: .28rem;
@@ -57,6 +69,7 @@
 <template>
   <div v-if="content">
     <div class="account-top" :style="{backgroundImage:'url(./static/img/account_bj.png)'}">
+      <span class="btn-withdraw" @click="withdraw">提现</span>
       <div class="top-1">总余额(元)</div>
       <div class="top-2">{{content.total_account}}</div>
       <div class="top-3">
@@ -126,6 +139,9 @@
               errback(res);
             }
           })
+      },
+      withdraw(){
+        myAlert('只限APP端提现!');
       }
     },
     created(){

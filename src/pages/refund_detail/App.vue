@@ -137,16 +137,18 @@
         openPage('refund_express')
       },
       cancel(){
-        this.$post(URL.cancal_refund, {refund_sn: this.content.refund_sn})
-          .then(res => {
-            console.log(res)
-            if (res.errcode == 0) {
-              toast('取消退款申请成功');
-              history.go(-1);
-            } else {
-              errback(res);
-            }
-          })
+        myConfirm('是否确认取消退款?', () => {
+          this.$post(URL.cancal_refund, {refund_sn: this.content.refund_sn})
+            .then(res => {
+              console.log(res)
+              if (res.errcode == 0) {
+                toast('取消退款申请成功');
+                history.go(-1);
+              } else {
+                errback(res);
+              }
+            })
+        });
       },
       fetch(){
         this.$post(URL.getRefundDetails, {refund_sn: this.refund_sn})

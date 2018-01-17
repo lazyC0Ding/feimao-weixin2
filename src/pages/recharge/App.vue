@@ -130,7 +130,9 @@
                 signType: content.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
                 paySign: content.paySign, // 支付签名
                 success: (res) => {
-
+                  if(this.is_qrcode) {
+                    openPage('index');
+                  }
                 }
               });
             } else {

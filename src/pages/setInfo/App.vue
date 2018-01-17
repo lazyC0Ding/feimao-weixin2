@@ -62,7 +62,7 @@
           <send-code :phone="phone" type="0"></send-code>
         </li>
       </ul>
-      <div class="text">点击完成绑定按钮代表您已同意<a href="http://app.feelmao.com/wap/home/agreement_view">《肥猫用户协议》</a></div>
+      <div class="text">点击完成绑定按钮代表您已同意<a href="https://app.feelmao.com/wap/home/agreement_view">《肥猫用户协议》</a></div>
       <div class="btn-big" style="margin-top:.6rem;" @click="bind">完成绑定</div>
     </template>
     <div class="tip" v-if="!needBind" >正在跳转中...</div>

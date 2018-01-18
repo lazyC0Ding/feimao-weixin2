@@ -279,6 +279,11 @@ export default {
                       'uploadImage',
                       'chooseWXPay',
                       'previewImage',
+                      'hideAllNonBaseMenuItem',
+                      'showMenuItems',
+                      'onMenuShareAppMessage',
+                      'onMenuShareQQ',
+                      'onMenuShareTimeline',
                     ]
                   });
                 } else {

@@ -135,6 +135,57 @@
             if (res.errcode == 0) {
               console.log(res)
               this.content = res.content;
+
+              wx.ready( () => {
+                let {share_desc, share_image, share_title, url} = res.content.share;
+                wx.hideAllNonBaseMenuItem();
+                wx.showMenuItems({
+                  menuList: ["menuItem:share:appMessage", "menuItem:share:timeline", "menuItem:share:qq"] // 要显示的菜单项，所有menu项见附录3
+                });
+                const arr = url.split('?');
+                const search = getSearchParams(arr[1]);
+                let str = encodeChinese(search);
+                url = [arr[0], str].join('?');
+                wx.onMenuShareAppMessage({
+                  title: share_title,
+                  desc: share_desc,
+                  link: url,
+                  imgUrl: share_image,
+                  type: 'link', // 分享类型,music、video或link，不填默认为link
+                  dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                  success: function () {
+                    toast('分享成功');
+                  },
+                  cancel: function () {
+
+                  }
+                });
+
+                wx.onMenuShareQQ({
+                  title: share_title, // 分享标题
+                  desc: share_desc, // 分享描述
+                  link: url, // 分享链接
+                  imgUrl: share_image, // 分享图标
+                  success: function () {
+                    toast('分享成功');
+                  },
+                  cancel: function () {
+
+                  }
+                });
+
+                wx.onMenuShareTimeline({
+                  title: share_title, // 分享标题
+                  link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                  imgUrl: share_image, // 分享图标
+                  success: function () {
+                    toast('分享成功');
+                  },
+                  cancel: function () {
+
+                  }
+                });
+              })
             } else {
               errback(res)
             }

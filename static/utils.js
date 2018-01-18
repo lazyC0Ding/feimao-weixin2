@@ -12,6 +12,14 @@ function canJSONParse(str) {
   return true
 }
 
+function encodeChinese(json) {
+  var str = '';
+  for (var i in json) {
+    str += encodeURIComponent(i) + '=' + encodeURIComponent(json[i]) + '&';
+  }
+  return str.slice(0, str.length - 1);
+}
+
 // json => location.search
 function formatParams(json) {
   var keys = [];

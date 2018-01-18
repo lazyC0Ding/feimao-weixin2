@@ -1,5 +1,5 @@
 var config = {
-  debug: false,
+  debug: true,
 };
 
 if (!config.debug) {

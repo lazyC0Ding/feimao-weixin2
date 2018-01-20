@@ -300,7 +300,7 @@
       <span @click="deleteOrder">删除订单</span>
     </div>
     <app-permanent type="2"></app-permanent>
-    <app-permanent type="3" v-href="'mall'" style="bottom:2rem;"></app-permanent>
+    <app-permanent type="3" v-href="'mall'" style="bottom:2.2rem;"></app-permanent>
   </div>
 </template>
 <script>

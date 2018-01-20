@@ -236,7 +236,6 @@
           <span class="span-1">订单已关闭</span><br>
         </span>
       </template>
-      <button v-href="'mall'">回到商城</button>
     </div>
     <div class="express" v-if="express && express.length" v-href="['logistics', {order_sn:order_sn}]">
       <img src="../../assets/img/direction_right_gray.png">
@@ -301,6 +300,7 @@
       <span @click="deleteOrder">删除订单</span>
     </div>
     <app-permanent type="2"></app-permanent>
+    <app-permanent type="3" v-href="'mall'" style="bottom:2rem;"></app-permanent>
   </div>
 </template>
 <script>

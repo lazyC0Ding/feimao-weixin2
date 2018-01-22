@@ -69,7 +69,6 @@
 <template>
   <div v-if="content">
     <div class="account-top" :style="{backgroundImage:'url(./static/img/account_bj.png)'}">
-      <span class="btn-withdraw" @click="withdraw">提现</span>
       <div class="top-1">总余额(元)</div>
       <div class="top-2">{{content.total_account}}</div>
       <div class="top-3">
@@ -109,10 +108,10 @@
         <span class="title">我的积分</span>
         <img class="row-arrow" src="../../assets/img/direction_right_gray.png">
       </li>
-      <!--<li class="row">-->
-      <!--<span class="title">保证金转入余额</span>-->
-      <!--<img class="row-arrow" src="../../assets/img/direction_right_gray.png">-->
-      <!--</li>-->
+      <li class="row" @click="withdraw">
+        <span class="title">提现</span>
+        <img class="row-arrow" src="../../assets/img/direction_right_gray.png">
+      </li>
     </ul>
     <app-permanent type="2"></app-permanent>
   </div>

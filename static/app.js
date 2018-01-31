@@ -46,12 +46,12 @@ function myAlert(msg, onHide, onShow) {
       title: '提示',
       content: msg,
       onShow () {
-        if(onShow) {
+        if (onShow) {
           onShow();
         }
       },
       onHide () {
-        if(onHide) {
+        if (onHide) {
           onHide();
         }
       }
@@ -62,10 +62,10 @@ function myAlert(msg, onHide, onShow) {
 function myConfirm(msg, onConfirm, onCancel) {
   if (window.theVue) {
     window.theVue.$vux.confirm.show({
-      title:'提示',
-      content:msg,
-      onConfirm:onConfirm,
-      onCancel:onCancel,
+      title: '提示',
+      content: msg,
+      onConfirm: onConfirm,
+      onCancel: onCancel,
     })
   }
 }
@@ -123,7 +123,7 @@ function jumpAction(action) {
     case '3':
       if (action.jump === '/') {
         location.replace(action.jump);
-      }else{
+      } else {
         location.replace(action.jump + '.html');
       }
       break;
@@ -142,3 +142,16 @@ function jumpAction(action) {
   }
 }
 
+//跳转到下载地址
+function openDownloadUrl(msg) {
+  msg = msg || '此';
+  msg += '功能须在客户端上进行, 确认下载吗?';
+  myConfirm(msg, () => {
+    if (getSystemType() === 'ios') {
+      location.href = 'http://itunes.apple.com/app/id1339091760';
+    } else if (getSystemType() === 'android') {
+      //TODO
+      myAlert('安卓版本还未上线, 请稍后');
+    }
+  })
+}

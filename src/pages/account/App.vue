@@ -140,7 +140,7 @@
           })
       },
       withdraw(){
-        myAlert('只限APP端提现!');
+        openDownloadUrl('提现');
       }
     },
     created(){

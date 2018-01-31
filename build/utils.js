@@ -7,14 +7,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const pages = [];
 
-// const globpath = './src/devPages/*';
 const globpath = './src/pages/*';
 const _pages = glob.sync(globpath);
-for (let page of _pages){
-  pages.push({
-    name:path.basename(page),
-    js:page + '/app.js',
-  })
+for (let page of _pages) {
+  // if (['index'].includes(path.basename(page))) {
+    pages.push({
+      name: path.basename(page),
+      js: page + '/app.js',
+    })
+  // }
 }
 
 exports.pages = pages;
@@ -68,7 +69,7 @@ exports.cssLoaders = function (options) {
   };
 
   // generate loader string to be used with extract text plugin
-  function generateLoaders (loader, loaderOptions) {
+  function generateLoaders(loader, loaderOptions) {
     const loaders = [cssLoader];
     if (loader) {
       loaders.push({
@@ -96,7 +97,7 @@ exports.cssLoaders = function (options) {
     css: generateLoaders(),
     postcss: generateLoaders(),
     less: generateLoaders('less'),
-    sass: generateLoaders('sass', { indentedSyntax: true }),
+    sass: generateLoaders('sass', {indentedSyntax: true}),
     scss: generateLoaders('sass'),
     stylus: generateLoaders('stylus'),
     styl: generateLoaders('stylus')

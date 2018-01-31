@@ -8,7 +8,7 @@
   }
 </style>
 <template>
-  <img :src="src">
+  <img @click.stop="action" :src="src">
 </template>
 <script>
   export default {
@@ -26,6 +26,16 @@
           case '3':
             return './static/img/icon_toIndex.png'
 
+        }
+      }
+    },
+    methods:{
+      action(){
+        switch(this.type){
+          case '1':
+            return openDownloadUrl('发帖');
+          case '2':
+            return openDownloadUrl('客服');
         }
       }
     }

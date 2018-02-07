@@ -145,7 +145,7 @@ function jumpAction(action) {
 //跳转到下载地址
 function openDownloadUrl(msg) {
   msg = msg || '此';
-  msg += '功能须在客户端上进行, 确认下载吗?';
+  msg += '功能须在app上进行, 确认下载吗?';
   myConfirm(msg, () => {
     if (getSystemType() === 'ios') {
       location.href = 'http://itunes.apple.com/app/id1339091760';

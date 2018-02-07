@@ -237,8 +237,8 @@
         </span>
       </template>
     </div>
-    <div class="express" v-if="express && express.length" v-href="['logistics', {order_sn:order_sn}]">
-      <img src="../../assets/img/direction_right_gray.png">
+    <div class="express" v-if="express && express.length" @click="openLogistics">
+      <img v-if="order.express_type != 2" src="../../assets/img/direction_right_gray.png">
       <span class="info">
         <span class="a">{{express[0].time}}</span><br>
         <span class="b">{{express[0].context}}</span>
@@ -290,10 +290,10 @@
       <span @click="cancel">取消订单</span><span @click="pay">立即付款</span>
     </div>
     <div class="order_detail-footer" v-else-if="order.order_state == 3">
-      <span v-href="['logistics', {order_sn:order_sn}]">查看物流</span><span @click="delivery">确认收货</span>
+      <span v-if="order.express_type != 2" @click="openLogistics">查看物流</span><span @click="delivery">确认收货</span>
     </div>
     <div class="order_detail-footer" v-else-if="order.order_state == 4">
-      <span @click="deleteOrder">删除订单</span><span v-href="['logistics', {order_sn:order_sn}]">查看物流</span><span
+      <span @click="deleteOrder">删除订单</span><span v-if="order.express_type != 2" @click="openLogistics">查看物流</span><span
       @click="comment">去评价</span>
     </div>
     <div class="order_detail-footer" v-else-if="order.order_state ==  5 || order.order_state == 6">
@@ -322,6 +322,11 @@
       }
     },
     methods: {
+      openLogistics(){
+        if(this.order.express_type != 2){
+          openPage('logistics', {order_sn:this.order_sn})
+        }
+      },
       deleteOrder(){
         myConfirm('是否删除订单', () => {
           this.$post(URL.deleteOrder, {order_sn: this.order_sn})

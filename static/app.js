@@ -1,5 +1,5 @@
 var config = {
-  debug: false,
+  debug: true,
 };
 
 if (!config.debug) {
@@ -71,7 +71,8 @@ function myConfirm(msg, onConfirm, onCancel) {
 }
 
 function login() {
-  var from = encodeURIComponent(location.href);
+  // var from = encodeURIComponent(location.href);
+  var from = encodeURIComponent(location.pathname + location.search);
   if (isWeixin()) {
     var url = 'https://open.weixin.qq.com/connect/oauth2/authorize';
     var appid = 'wx739a1b97ce756bcd';

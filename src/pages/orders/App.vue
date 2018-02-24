@@ -102,11 +102,11 @@
           </div>
           <div class="action" v-else-if="item.order_state == 3">
             <span class="orders-btn" @click="delivery(item)">确认收货</span>
-            <span class="orders-btn" v-href="['logistics', {order_sn:item.order_sn}]">查看物流</span>
+            <span class="orders-btn" v-if="item.express_type != 2" v-href="['logistics', {order_sn:item.order_sn}]">查看物流</span>
           </div>
           <div class="action" v-else-if="item.order_state == 4">
             <span class="orders-btn" @click="comment(item)">去评价</span>
-            <span class="orders-btn" v-href="['logistics', {order_sn:item.order_sn}]">查看物流</span>
+            <span class="orders-btn" v-if="item.express_type != 2" v-href="['logistics', {order_sn:item.order_sn}]">查看物流</span>
             <span class="orders-btn" @click="deleteOrder(item.order_sn, index)">删除订单</span>
           </div>
           <div class="action" v-else-if="item.order_state == 5 || item.order_state == 6">

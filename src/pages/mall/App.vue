@@ -251,7 +251,7 @@
       <div class="img">
         <img v-for="item in sepcial.cover" :src="item.image">
       </div>
-      <ul class="seckill_goods-goods">
+      <ul class="seckill_goods-goods" v-if="sepcial.goods.length">
         <li v-for="item in sepcial.goods">
           <img :src="item.cover" v-href="['goods_detail', {goods_id:item.goods_id}]">
           <div class="name">{{item.name}}</div>

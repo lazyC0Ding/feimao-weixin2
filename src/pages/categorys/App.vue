@@ -58,7 +58,7 @@
     <load-more
       :url="url"
       :page="page"
-      :params="{category_id:category_id}"
+      :params="{category_id}"
       :callback="loadMore"
       :no-listen="!hasMore"
     >
@@ -86,7 +86,7 @@
     methods: {
       loadMore(content){
         if (content.goods.length) {
-          this.goods.push(...content);
+          this.goods.push(...content.goods);
           this.page++;
         }else{
           this.hasMore = false;

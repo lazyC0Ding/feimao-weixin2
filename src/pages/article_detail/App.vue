@@ -274,6 +274,13 @@
             border-radius: 50%;
           }
           > span {
+            width:100%;
+            padding-left:.58rem;
+            margin-left:-.58rem;
+            box-sizing: border-box;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
             font-size: .28rem;
             vertical-align: middle;
           }

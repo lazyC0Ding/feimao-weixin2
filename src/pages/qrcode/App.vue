@@ -35,7 +35,7 @@
       </div>
       <div class="text">扫描二维码{{content.showQrcode ? '成为我的粉丝' : '付款给我'}}</div>
       <div class="btn-big" @click="content.showQrcode = !content.showQrcode">
-        <span>切换为{{content.showQrcode ? '收货' : '个人'}}码</span></div>
+        <span>切换为{{content.showQrcode ? '收款' : '个人'}}码</span></div>
     </div>
     <app-permanent type="2"></app-permanent>
   </div>

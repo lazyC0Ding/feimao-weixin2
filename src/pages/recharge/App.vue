@@ -131,7 +131,7 @@
                 paySign: content.paySign, // 支付签名
                 success: (res) => {
                   if(this.is_qrcode) {
-                    openPage('index');
+                    openPage('mall');
                   }
                 }
               });

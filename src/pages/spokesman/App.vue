@@ -176,7 +176,7 @@
         </dl>
       </li>
     </ul>
-    <div class="recent-consume">
+    <div v-if="content.last_consum_time" class="recent-consume">
       <span>最近消费时间</span>
       <span>{{last_consum_time}}天前</span>
     </div>

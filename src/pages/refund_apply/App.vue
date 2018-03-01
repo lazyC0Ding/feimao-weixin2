@@ -89,7 +89,7 @@
       </li>
       <li class="row">
         <span class="title">退款金额</span>
-        <input v-model="money" placeholder="不可超过商品价格">
+        <input v-model="money" :placeholder="moneyPlaceholder">
         <span class="right">元</span>
       </li>
       <li class="row no-border-bottom">
@@ -108,6 +108,7 @@
   export default {
     data () {
       return {
+        moneyPlaceholder:'',
         content:null,
         goods: null,
         type: 1,
@@ -150,7 +151,7 @@
           return;
         }
         if(Number(this.money) > this.content.refund_amount) {
-          toast('可退款最大金额为' + this.content.refund_amount + '元');
+          toast('退款金额不得大于' + this.content.refund_amount + '元');
           return;
         }
         let url = this.order_sn ? URL.refund : URL.reapplyRefund;
@@ -172,6 +173,7 @@
             console.log(res)
             if(res.errcode == 0) {
               this.content = res.content;
+              this.moneyPlaceholder = '不得大于' + this.content.refund_amount + '元';
             }else{
               errback(res);
             }

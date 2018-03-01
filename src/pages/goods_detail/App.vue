@@ -399,11 +399,11 @@
       color: @light;
     }
     > ul {
-      margin-top: .2rem;
       padding: 0 .4rem .4rem .2rem;
       font-size: .28rem;
       > li {
         display: inline-block;
+        margin-top: .2rem;
         margin-left: .2rem;
         padding: .1rem .3rem;
         font-size: .28rem;

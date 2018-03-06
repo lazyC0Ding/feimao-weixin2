@@ -147,7 +147,7 @@ function jumpAction(action) {
 function openDownloadUrl(msg) {
   msg = msg || '此';
   msg += '功能须在app上进行, 确认下载吗?';
-  myConfirm(msg, () => {
+  myConfirm(msg, function(){
     if (getSystemType() === 'ios') {
       location.href = 'http://itunes.apple.com/app/id1339091760';
     } else if (getSystemType() === 'android') {

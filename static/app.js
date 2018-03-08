@@ -76,7 +76,7 @@ function login() {
   if (isWeixin()) {
     var url = 'https://open.weixin.qq.com/connect/oauth2/authorize';
     var appid = 'wx739a1b97ce756bcd';
-    var redirect_uri = encodeURIComponent('https://wap.feelmao.com/setInfo.html');
+    var redirect_uri = encodeURIComponent('http://wap.feelmao.com/setInfo.html');
     var response_type = 'code';
     var scope = 'snsapi_userinfo';
     var state = from;  // 自带参数

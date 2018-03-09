@@ -143,7 +143,7 @@
         if (pid) {
           params.pid = pid;
         }
-        alert(params);
+        alert(params.pid);
         this.$post(URL.oauthRegister, params)
           .then(res => {
             console.log(res)

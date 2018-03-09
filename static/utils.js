@@ -105,14 +105,46 @@ function isWeixin(){
   }
 }
 
+
+//cookie
+function setCookie(name,value)
+{
+  var Days = 365;
+  var exp = new Date();
+  exp.setTime(exp.getTime() + Days*24*60*60*1000);
+  document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+}
+function getCookie(name)
+{
+  var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+  if(arr=document.cookie.match(reg))
+    return unescape(arr[2]);
+  else
+    return null;
+}
+function delCookie(name)
+{
+  var exp = new Date();
+  exp.setTime(exp.getTime() - 1);
+  var cval=getCookie(name);
+  if(cval!=null)
+    document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+}
+
 //sessionStorage相关
 function setSession(key, value) {
   value = typeof value === 'object' ? JSON.stringify(value) : value;
+  setCookie(key, value);
+
   sessionStorage.setItem(key, value)
 }
 
 function getSession(key) {
+
   var value = sessionStorage.getItem(key);
+  if(!value || value === 'undefined'){
+    value = getCookie(key);
+  }
   if(value === 'undefined') {
     return undefined;
   }else{
@@ -123,11 +155,16 @@ function getSession(key) {
 //localStorage相关
 function setStorage(key, value) {
   value = typeof value === 'object' ? JSON.stringify(value) : value;
-  localStorage.setItem(key, value)
+  //
+   localStorage.setItem(key, value)
+  setCookie(key, value);
 }
 
 function getStorage(key) {
   var value = localStorage.getItem(key);
+  if(!value || value === 'undefined'){
+    value = getCookie(key);
+  }
   if(value === 'undefined') {
     return undefined;
   }else{
@@ -136,6 +173,7 @@ function getStorage(key) {
 }
 
 function removeStorage(key) {
+  delCookie(key);
   localStorage.removeItem(key);
 }
 

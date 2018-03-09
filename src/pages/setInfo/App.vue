@@ -143,13 +143,14 @@
         if (pid) {
           params.pid = pid;
         }
+        alert(params);
         this.$post(URL.oauthRegister, params)
           .then(res => {
             console.log(res)
             if (res.errcode == 0) {
               setUser(res.content);
               setToken(res.content.access_token);
-              replacePage(this.from || 'index');
+              // replacePage(this.from || 'index');
             } else {
               errback(res);
             }

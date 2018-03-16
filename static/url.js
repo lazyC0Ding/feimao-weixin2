@@ -23,6 +23,7 @@ var URL = {
   getGoodsDetail:'goods/getGoodsDetail',
   addcart:'cart/addcart',
   settlement:'cart/settlement',
+  beforeSettle:'cart/beforeSettle',
   getCarts:'cart/getCarts',
   editCart:'cart/editCart',
   delCart:'cart/delCart',

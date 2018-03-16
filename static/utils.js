@@ -107,7 +107,7 @@ function isWeixin(){
 
 
 //cookie
-function setCookie(name,value)
+function  setCookie(name,value)
 {
   var Days = 365;
   var exp = new Date();

@@ -276,7 +276,9 @@
       },
       init(){
         console.log(getSearchParams(location.search));
+        console.log(getSession('order_confirm'));
         this.search = getSearchParams(location.search);
+        // this.search = getSession('order_confirm');
         this.getExpressFee();
       }
     },

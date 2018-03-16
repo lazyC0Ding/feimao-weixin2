@@ -432,6 +432,8 @@
           this.$post(URL.settlement, {data:JSON.stringify(data), type: 2})
             .then( res => {
                if (res.errcode == 0) {
+                 setSession('order_confirm',res.content);
+                 // openPage('order_confirm');
                  openPage('order_confirm', res.content);
                  console.log(res)
                }else{

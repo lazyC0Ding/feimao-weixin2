@@ -167,6 +167,7 @@
   export default {
     data () {
       return {
+        param:null,
         search: null,
         expressFee: null,
         message: '',
@@ -276,10 +277,18 @@
       },
       init(){
         console.log(getSearchParams(location.search));
-        console.log(getSession('order_confirm'));
-        this.search = getSearchParams(location.search);
+        this.param = getSearchParams(location.search);
+        this.$post(URL.settlement, {data:JSON.stringify(this.param.data), type: this.param.type})
+          .then( res => {
+            if (res.errcode == 0) {
+              this.search = res.content;
+              console.log(res);
+              this.getExpressFee();
+            }else{
+              errback(res);
+            }
+          });
         // this.search = getSession('order_confirm');
-        this.getExpressFee();
       }
     },
     created(){

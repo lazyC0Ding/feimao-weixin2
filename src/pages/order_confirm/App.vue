@@ -283,7 +283,7 @@
           .then( res => {
             if (res.errcode == 0) {
               if(this.search.address){
-                delete res.content.address;
+                res.content.address = this.search.address;
               }
               this.search = res.content;
               console.log(res);

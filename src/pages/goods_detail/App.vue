@@ -794,6 +794,7 @@
             params = {data, type: 1};
             callback = (res) => {
               if (res.errcode == 0) {
+                res.content.type = 1;
                 openPage('order_confirm', res.content);
               } else {
                 errback(res);

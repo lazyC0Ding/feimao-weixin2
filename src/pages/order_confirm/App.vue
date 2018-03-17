@@ -278,7 +278,7 @@
       init(){
         console.log(getSearchParams(location.search));
         this.param = getSearchParams(location.search);
-        this.$post(URL.settlement, {data:JSON.stringify(this.param.data), type: this.param.type})
+        this.$post(URL.settlement, {data:JSON.stringify(this.param.data ? this.param.data : this.param.goods), type: (this.param.type ? this.param.type : 2)})
           .then( res => {
             if (res.errcode == 0) {
               this.search = res.content;

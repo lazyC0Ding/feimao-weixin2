@@ -117,6 +117,7 @@
   }
 </style>
 <template>
+
   <div v-if="search && expressFee" style="padding-bottom:1rem;">
     <div class="address" v-href="['address_list', search]">
       <span class="placeholder" v-if="!search.address">请选择收货地址</span>
@@ -281,6 +282,9 @@
         this.$post(URL.settlement, {data:JSON.stringify(this.param.data ? this.param.data : this.param.goods), type: (this.param.type ? this.param.type : 2)})
           .then( res => {
             if (res.errcode == 0) {
+              if(this.search.address){
+                delete res.content.address;
+              }
               this.search = res.content;
               console.log(res);
               this.getExpressFee();

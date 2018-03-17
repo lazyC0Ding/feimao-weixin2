@@ -282,8 +282,8 @@
         this.$post(URL.settlement, {data:JSON.stringify(this.param.data ? this.param.data : this.param.goods), type: (this.param.type ? this.param.type : 2)})
           .then( res => {
             if (res.errcode == 0) {
-              if(this.search && this.search.address){
-                res.content.address = this.search.address;
+              if(this.param && this.param.address){
+                res.content.address = this.param.address;
               }
               this.search = res.content;
               console.log(res);

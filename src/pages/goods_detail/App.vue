@@ -789,6 +789,7 @@
           // 立即购买
           case 2:
             url = URL.settlement;
+            console.log(this.params);
             const data = JSON.stringify([this.params]);
             params = {data, type: 1};
             callback = (res) => {

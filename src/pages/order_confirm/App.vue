@@ -119,7 +119,7 @@
 <template>
 
   <div v-if="search && expressFee" style="padding-bottom:1rem;">
-    <div class="address" v-href="['address_list', search]">
+    <div class="address" @click="addressList">
       <span class="placeholder" v-if="!search.address">请选择收货地址</span>
       <span class="info" v-if="search.address">
         <span class="a">{{search.address.name}}<span>{{search.address.phone}}</span></span><br>
@@ -233,6 +233,9 @@
       },
     },
     methods: {
+      addressList(){
+        openPage("address_list",this.search.cart_ids ? {"cart_ids" : this.search.cart_ids} : this.search);
+      },
       generate(){
         if (!this.search.address) {
           toast('请选择收货地址');
@@ -279,14 +282,14 @@
       init(){
         console.log(getSearchParams(location.search));
         this.param = getSearchParams(location.search);
-        this.$post(URL.settlement, {data:JSON.stringify(this.param.data ? this.param.data : this.param.goods), type: (this.param.type ? this.param.type : 2)})
+        this.$post(URL.settlement, {data:this.param.cart_ids ? this.param.cart_ids : JSON.stringify(this.param.goods), type: (this.param.type ? this.param.type : 2)})
           .then( res => {
             if (res.errcode == 0) {
               if(this.param && this.param.address){
                 res.content.address = this.param.address;
               }
               this.search = res.content;
-              console.log(res);
+              this.search.cart_ids = this.param.cart_ids;
               this.getExpressFee();
             }else{
               errback(res);

@@ -102,6 +102,8 @@
     created(){
       document.title = '选择收货地址';
       this.search = getSearchParams(location.search);
+      console.log(this.search);
+
       this.fetch();
     },
     components: {

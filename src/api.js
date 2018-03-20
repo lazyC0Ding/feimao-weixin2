@@ -2,8 +2,8 @@ const axios = require('axios');
 
 axios.defaults.timeout = 15000;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
-// axios.defaults.baseURL = 'http://feimao.zertone1.com/app/';
-axios.defaults.baseURL = 'https://app.feelmao.com/app/';
+axios.defaults.baseURL = 'http://feimao.zertone1.com/app/';
+// axios.defaults.baseURL = 'https://app.feelmao.com/app/';
 
 const content = 'pinet.FeiMao.2017';
 const t = '3';

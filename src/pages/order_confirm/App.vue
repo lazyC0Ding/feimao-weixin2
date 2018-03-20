@@ -290,6 +290,7 @@
               }
               this.search = res.content;
               this.search.cart_ids = this.param.cart_ids;
+              this.search.type = this.param.type;
               this.getExpressFee();
             }else{
               errback(res);

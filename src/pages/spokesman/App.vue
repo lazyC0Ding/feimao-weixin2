@@ -223,7 +223,7 @@
     computed:{
       isSpokesman(){
         if(this.content) {
-          return [2,3,6].includes(this.content.identity);
+          return [2,3,6].includes(this.content.identity * 1);
         }
       },
       last_consum_time(){

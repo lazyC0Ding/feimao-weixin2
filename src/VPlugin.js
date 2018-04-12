@@ -34,15 +34,13 @@ export default {
       }
     };
 	Vue.config.errorHandler = function(err, vm, info){
-		
-		Ajax.post("http://feimao.zertone1.com/app/init/errorLog", 
+		api.post("http://feimao.zertone1.com/app/init/errorLog", 
 		{"errorMessage" : err.message, 
 		'scriptURI' : location.href, 
 		'lineNumber' : 0, 
 		'columnNumber':0, 
 		"access_token" : getCookie("token"),
-		"errorObj" : err.stack}, function(){
-		} );
+		"errorObj" : err.stack});
 		console.error(err);
 	};
 

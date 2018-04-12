@@ -132,9 +132,12 @@
     },
     created(){
       document.title = '选择支付方式';
-      const {order_amount, order_sn} = getSearchParams(location.search);
-      this.order_amount = order_amount;
-      this.order_sn = order_sn;
+      if(getSearchParams(location.search)){
+        const {order_amount, order_sn} = getSearchParams(location.search);
+        this.order_amount = order_amount * 1;
+        this.order_sn = order_sn;
+
+      }
     },
     components: {
       AppPermanent,

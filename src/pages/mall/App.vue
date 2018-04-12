@@ -203,6 +203,7 @@
     <scroll-notice v-if="notices && notices.length" :notices="notices"></scroll-notice>
     <div class="seckill_goods" v-if="seckill_goods.time && seckill_goods.time.length">
       <div class="seckill_goods-time" v-for="time in seckill_goods.time">
+
         <span>{{time.activity_name}}</span>
         <span class="time">{{seckill_goods_D_time | countdown | countdown_h}}</span>
         :
@@ -297,7 +298,7 @@
   export default {
     data () {
       return {
-        clientWidth: document.documentElement.clientWidth,
+        clientWidth: document.documentElement.clientWidth ? document.documentElement.clientWidth : 0 ,
         message_count: 0,
         banner: {
           list: [],
@@ -305,8 +306,14 @@
         },
         categorys: [],
         notices: [],
-        seckill_goods: {},
-        coupon_goods: {},
+        seckill_goods: {
+          goods : [],
+          time : []
+        },
+        coupon_goods: {
+          goods : [],
+          time : []
+        },
         sepcial: {},
         goods: [],
         seckill_goods_D_time: 0,
@@ -319,6 +326,7 @@
     },
     computed: {
       seckill_goods_time(){
+        if(!this.seckill_goods.time.length) return;
         const time = this.seckill_goods.time[0];
         if (!time) return;
         return {
@@ -328,6 +336,7 @@
         }
       },
       coupon_goods_time(){
+        if(!this.coupon_goods.time.length) return;
         const time = this.coupon_goods.time[0];
         if (!time) return;
         return {
@@ -377,17 +386,16 @@
         setTimeout(this.getD_timestamp, 1000);
       },
       openCategorys(category_id){
-        openPage('categorys', {category_id, categorys: this.categorys})
+        openPage('categorys', {category_id, categorys: this.categorys});
       },
       fetch(){
-        this.$post(URL.getGoodsHomeData)
+        this.$get(URL.getGoodsHomeData)
           .then(res => {
             if (res.errcode == 0) {
-              console.log(res)
               const content = res.content;
               const banners = content.banners;
               for (let i in banners) {
-                banners[i].img = banners[i].image
+                banners[i].img = banners[i].image;
               }
               this.banner.list = banners;
               this.categorys = content.categorys;
@@ -406,7 +414,7 @@
       fetchMsgCount(){
         this.$post(URL.getInitData)
           .then(res => {
-            this.message_count = res.content.message_count;
+            this.message_count = res.content ?  res.content.message_count : 0;
           })
       }
     },

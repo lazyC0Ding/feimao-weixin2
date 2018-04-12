@@ -653,7 +653,7 @@
         specs: [],
         activity: null,
         activeTag: 0,
-        clientHeight: document.documentElement.clientHeight,
+        clientHeight: document.documentElement.clientHeight ? document.documentElement.clientHeight : 768,
         isTagsFixed: false,
         before_mai: null,
         iframe:null,
@@ -815,7 +815,6 @@
         this.$post(URL.getGoodsDetail, {goods_id: this.params.goods_id})
           .then(res => {
             if (res.errcode == 0) {
-              console.log(res);
               const images = [];
               for (let i of res.content.images) {
                 images.push({img: i});
@@ -895,7 +894,15 @@
     },
     created(){
       document.title = '商品详情';
-      const {goods_id, customer_id} = getSearchParams(location.search);
+      let json = getSearchParams(location.search);
+      let goods_id = 0;
+      if(json['goods_id']){
+        goods_id = json['goods_id'];
+      }
+      let customer_id = 0;
+      if(json['customer_id']){
+        customer_id = json['customer_id'];
+      }
       this.params.goods_id = goods_id;
       if (customer_id) {
         setSession('customer_id', customer_id);

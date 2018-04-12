@@ -33,6 +33,18 @@ export default {
         }
       }
     };
+	Vue.config.errorHandler = function(err, vm, info){
+		
+		Ajax.post("http://feimao.zertone1.com/app/init/errorLog", 
+		{"errorMessage" : err.message, 
+		'scriptURI' : location.href, 
+		'lineNumber' : 0, 
+		'columnNumber':0, 
+		"access_token" : getCookie("token"),
+		"errorObj" : err.stack}, function(){
+		} );
+		console.error(err);
+	};
 
     // 更新某个页面vue实例的data的attr属性
     Vue.prototype.$setData = function (pageName, attr, value, ifRefresh) {
@@ -168,6 +180,7 @@ export default {
         }
       }
     });
+	
 
     // 过滤器
     // 1970-01-01 20:00

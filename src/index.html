@@ -13,13 +13,33 @@
   <link href=./static/reset.css rel=stylesheet>
 </head>
 <body>
+<script src="./static/url.js"></script>
+<script src="./static/utils.js"></script>
+<script>
+	window.onerror = function(errorMessage, scriptURI, lineNumber,columnNumber,errorObj){
+		if (errorMessage != "Script error." && !scriptURI){
+			return false;
+		}
+		 columnNumber = columnNumber || (window.event && window.event.errorCharacter) || 0;
+		Ajax.post("http://feimao.zertone1.com/app/init/errorLog", 
+		{"errorMessage" : errorMessage, 
+		'scriptURI' : scriptURI, 
+		'lineNumber' : lineNumber, 
+		'columnNumber':columnNumber, 
+		"access_token" : getCookie("token"),
+		"errorObj" : errorObj}, function(){
+		} );
+		
+		return false;
+	}
+</script>
 <div id="app">
 
 </div>
 <script src="./static/jweixin-1.2.0.js"></script>
 <script src="./static/rem.js"></script>
-<script src="./static/url.js"></script>
-<script src="./static/utils.js"></script>
+
+
 <script src="./static/app.js"></script>
 </body>
 </html>

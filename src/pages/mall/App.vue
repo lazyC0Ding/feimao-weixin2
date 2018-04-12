@@ -200,7 +200,7 @@
         </li>
       </ul>
     </div>
-    <scroll-notice v-if="notices.length" :notices="notices"></scroll-notice>
+    <scroll-notice v-if="notices && notices.length" :notices="notices"></scroll-notice>
     <div class="seckill_goods" v-if="seckill_goods.time && seckill_goods.time.length">
       <div class="seckill_goods-time" v-for="time in seckill_goods.time">
         <span>{{time.activity_name}}</span>
@@ -251,7 +251,7 @@
       <div class="img">
         <img v-for="item in sepcial.cover" :src="item.image">
       </div>
-      <ul class="seckill_goods-goods" v-if="sepcial.goods.length">
+      <ul class="seckill_goods-goods" v-if="sepcial.goods && sepcial.goods.length">
         <li v-for="item in sepcial.goods">
           <img :src="item.cover" v-href="['goods_detail', {goods_id:item.goods_id}]">
           <div class="name">{{item.name}}</div>

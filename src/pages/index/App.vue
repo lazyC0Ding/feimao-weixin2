@@ -284,7 +284,6 @@
     },
     created(){
       this.fetch();
-
       window.addEventListener('scroll', () => {
         this.isIndexTagsFixed = window.scrollY > this.clientWidth * 8 / 15;
       })

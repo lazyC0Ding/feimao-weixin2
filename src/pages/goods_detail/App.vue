@@ -730,7 +730,7 @@
           })
       },
       loadMore(content){
-        if (content.length) {
+        if (content && content.length) {
           this.content.records.push(...content);
           this.page++
         } else {

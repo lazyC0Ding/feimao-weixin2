@@ -45,12 +45,12 @@ function myAlert(msg, onHide, onShow) {
     window.theVue.$vux.alert.show({
       title: '提示',
       content: msg,
-      onShow () {
+      onShow : function () {
         if (onShow) {
           onShow();
         }
       },
-      onHide () {
+      onHide : function () {
         if (onHide) {
           onHide();
         }

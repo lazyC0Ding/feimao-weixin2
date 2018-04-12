@@ -81,7 +81,7 @@ function login() {
     var scope = 'snsapi_userinfo';
     var state = from;  // 自带参数
 
-    var to = `${url}?appid=${appid}&redirect_uri=${redirect_uri}&response_type=${response_type}&scope=${scope}&state=${state}#wechat_redirect`;
+    var to = url + "?appid=" + appid + "&redirect_uri=" + redirect_uri + "&response_type=" + response_type + "&scope=" + scope + "&state=" + state + "#wechat_redirect";
     location.href = to;
   } else {
     openPage('login', {from});

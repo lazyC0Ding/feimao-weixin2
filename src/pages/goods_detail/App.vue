@@ -806,7 +806,7 @@
       },
       selectSpec(spec, item_id){
         if (!spec.active_id) {
-          this.$set(spec, 'active_id', item_id)
+          this.$set(spec, 'active_id', item_id);
         } else {
           spec.active_id = item_id;
         }

@@ -24,8 +24,7 @@
           case '2':
             return './static/img/permanent_call.png';
           case '3':
-            return './static/img/icon_toIndex.png'
-
+            return './static/img/icon_toIndex.png';
         }
       }
     },

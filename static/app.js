@@ -84,7 +84,7 @@ function login() {
     var to = url + "?appid=" + appid + "&redirect_uri=" + redirect_uri + "&response_type=" + response_type + "&scope=" + scope + "&state=" + state + "#wechat_redirect";
     location.href = to;
   } else {
-    openPage('login', {from});
+    openPage('login', {"from" : from});
   }
 }
 

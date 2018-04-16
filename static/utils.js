@@ -1,15 +1,15 @@
 function formatNumber(n) {
   n = n.toString();
-  return n[1] ? n : '0' + n
+  return n[1] ? n : '0' + n;
 }
 
 function canJSONParse(str) {
   try{
     JSON.parse(str);
   }catch(e){
-    return false
+    return false;
   }
-  return true
+  return true;
 }
 
 function encodeChinese(json) {
@@ -34,7 +34,7 @@ function formatParams(json) {
 }
 var Ajax={
     get: function(url, fn) {
-        var xhr = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据          
+        var xhr = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据
         xhr.open('GET', url, true);
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200 || xhr.status == 304) { // readyState == 4说明请求已完成

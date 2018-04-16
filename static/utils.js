@@ -68,6 +68,9 @@ function getSearchParams(str) {
   var json = {};
   for (var i=0, l=params.length; i<l; i++) {
     entry = params[i].split('=');
+    if(entry.length <= 1){
+      continue;
+    }
     json[entry[0]] = canJSONParse(entry[1]) ? JSON.parse(entry[1]) : entry[1];
   }
   return json;

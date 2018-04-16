@@ -89,7 +89,7 @@
     },
     created(){
       // 将数组第一个元素复制添加到数组末尾,保证动画的连贯
-      this.notices.push(this.notices[0]);
+      //this.notices.push(this.notices[0]);
     },
     mounted(){
       this.ul = this.$refs.ul;

@@ -42,13 +42,13 @@ axios.interceptors.request.use(function (config) {
     config.data.access_token = token;
     str = '';
     for (let i in config.data) {
-      str += encodeURIComponent(i) + '=' + encodeURIComponent(config.data[i]) + '&';
+      str += i + '=' + encodeURIComponent(config.data[i]) + '&';
     };
     str = str.slice(0, str.length - 1);
     config.data = str
   }
   url = config.baseURL + config.url;
-  console.log(`${method}: ${url}?${str}`);
+  //console.log(`${method}: ${url}?${str}`);
   return config;
 }, function (error) {
   return Promise.reject(error);

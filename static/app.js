@@ -110,7 +110,8 @@ function changeState(pageName, attr, value) {
 
 function follow_common() {
   var willRefreshByFollow = ['index', 'follows', 'person_detail'];
-  for (var page of willRefreshByFollow) {
+  for (var i in willRefreshByFollow) {
+    var page = willRefreshByFollow[i];
     if (page === getPageName() && page === 'index') return;
     changeState(page, '$_follow', true);
   }
@@ -134,7 +135,8 @@ function jumpAction(action) {
     default:
       var params = {};
       if (action.params && action.params.length) {
-        for (var i of action.params) {
+        for (var s in action.params) {
+          var i = action.params[s];
           params[i.key] = i.value;
         }
       }

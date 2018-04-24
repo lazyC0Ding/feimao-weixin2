@@ -790,15 +790,9 @@
           case 2:
             url = URL.settlement;
             const data = JSON.stringify([this.params]);
-            params = {data, type: 1};
-            callback = (res) => {
-              if (res.errcode == 0) {
-                res.content.type = 1;
-                openPage('order_confirm', res.content);
-              } else {
-                errback(res);
-              }
-            };
+            params = { goods : data, type: 1};
+            openPage("order_confirm", params);
+
             break;
         }
         this.$post(url, params)

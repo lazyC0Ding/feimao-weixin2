@@ -283,7 +283,9 @@
       init(){
         console.log(getSearchParams(location.search));
         this.param = getSearchParams(location.search);
-        this.$post(URL.settlement, {data:this.param.cart_ids ? this.param.cart_ids : JSON.stringify(this.param.goods), type: (this.param.type ? this.param.type : 2)})
+        this.$post(URL.settlement, {data:this.param.cart_ids ? this.param.cart_ids : JSON.stringify(this.param.goods),
+          type: (this.param.type ? this.param.type : 2),
+          address_id : (this.param.address_id ? this.param.address_id : 0)})
           .then( res => {
             if (res.errcode == 0) {
               if(this.param && this.param.address){

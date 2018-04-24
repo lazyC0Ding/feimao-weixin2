@@ -170,6 +170,7 @@
       return {
         param:null,
         search: null,
+        orgSearch : null,
         expressFee: null,
         message: '',
         discount: {
@@ -234,7 +235,7 @@
     },
     methods: {
       addressList(){
-        openPage("address_list",this.search.cart_ids ? {"cart_ids" : this.search.cart_ids} : this.search);
+        openPage("address_list",this.param);
       },
       generate(){
         if (!this.search.address) {

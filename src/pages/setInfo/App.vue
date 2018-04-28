@@ -161,10 +161,10 @@
       document.title = '肥猫';
       const search = getSearchParams(location.search);
       if (search) {
-        const {code, state} = search;
+        const {code, state, from} = search;
         this.wxCode = code;
-        let from = decodeURIComponent(state);
-        this.from = from + (from.includes('?') ? '&hasLogin=1' : '?hasLogin=1');
+        let _from = from ? decodeURIComponent(from) : decodeURIComponent(state);
+        this.from = _from + (_from.includes('?') ? '&hasLogin=1' : '?hasLogin=1');
       }
       this.getOauthInfo();
     },

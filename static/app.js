@@ -149,10 +149,9 @@ function openDownloadUrl(msg) {
   msg += '功能须在app上进行, 确认下载吗?';
   myConfirm(msg, function(){
     if (getSystemType() === 'ios') {
-      location.href = 'http://itunes.apple.com/app/id1339091760';
+      location.href = 'https://itunes.apple.com/cn/app/%E8%82%A5%E7%8C%AB%E5%9C%88%E5%AD%90/id1339091760?mt=8';
     } else if (getSystemType() === 'android') {
-      //TODO
-      myAlert('安卓版本还未上线, 请稍后');
+      location.href = 'http://sj.qq.com/myapp/detail.htm?apkName=com.yzl.feimao';
     }
   })
 }

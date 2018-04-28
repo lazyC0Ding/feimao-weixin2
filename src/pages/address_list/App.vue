@@ -84,7 +84,7 @@
     },
     methods: {
       selectAddress(address){
-        this.search.address = address;
+        this.search.address_id = address.address_id;
         replacePage('order_confirm', this.search);
       },
       fetch(){

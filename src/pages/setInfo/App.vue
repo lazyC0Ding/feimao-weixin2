@@ -99,7 +99,7 @@
           type:this.params.type,
           openid:this.wxData.openid,
           unionid:this.wxData.unionid,
-          nickname:this.wxData.nickname,
+          nickname:this.wxData.nickname.replace(/(^\s*)|(\s*$)/g, ""),
           headimgurl:this.wxData.headimgurl,
         };
         this.$post(URL.oauthLogin, params)

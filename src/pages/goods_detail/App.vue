@@ -836,6 +836,9 @@
                 const search = getSearchParams(arr[1]);
                 let str = encodeChinese(search);
                 url = [arr[0], str].join('?');
+                if(getUser().customer_id){
+                  url = url + "?customer_id=" + getUser().customer_id;
+                };
                 wx.onMenuShareAppMessage({
                   title: share_title,
                   desc: share_desc,

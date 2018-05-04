@@ -405,6 +405,18 @@
               this.sepcial = content.sepcial;
               this.goods = content.goods;
               this.getD_timestamp();
+
+
+              let url = location.href;
+              if(getUser().customer_id){
+                if(url.indexOf("?") == -1){
+                  url = url + "?customer_id=" + getUser().customer_id;
+                  window.history.pushState({},0,url);
+                }else{
+                  url = url + "&customer_id=" + getUser().customer_id;
+                  window.history.pushState({},0,url);
+                }
+              };
             } else {
               errback(res)
             }

@@ -146,7 +146,7 @@
         // alert(params.pid);
         this.$post(URL.oauthRegister, params)
           .then(res => {
-            console.log(res)
+            console.log(res);
             if (res.errcode == 0) {
               setUser(res.content);
               setToken(res.content.access_token);

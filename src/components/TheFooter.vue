@@ -71,8 +71,10 @@
     methods:{
       replacePage(str){
         if(str == "index" || str == "mall"){
-          if(getUser().customer_id){
-            replacePage(str,{customer_id: getUser().customer_id});
+          let cus_id = getUser().customer_id;
+          console.log(cus_id);
+          if(cus_id){
+            replacePage(str,{customer_id: cus_id});
           }else{
             replacePage(str);
           }

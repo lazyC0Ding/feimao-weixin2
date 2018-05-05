@@ -72,7 +72,7 @@
       replacePage(str){
         if(str == "index" || str == "mall"){
           if(getUser().customer_id){
-            replacePage(str,JSON.stringify({customer_id: getUser().customer_id}));
+            replacePage(str,{customer_id: getUser().customer_id});
           }else{
             replacePage(str);
           }

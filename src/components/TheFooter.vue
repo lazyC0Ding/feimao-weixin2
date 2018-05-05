@@ -72,7 +72,7 @@
       replacePage(str){
         if(str == "index" || str == "mall"){
           let user = getUser();
-          if(user.customer_id){
+          if(user != null && user.customer_id){
             replacePage(str,{customer_id: user.customer_id});
           }else{
             replacePage(str);

@@ -96,7 +96,7 @@ function replacePage(url, paramsJson) {
 // 如index.html, name === 'index'
 function getPageName() {
   var name = location.pathname;
-  if(name === '/'){
+  if(!name || name === '/'){
     name = 'index'
   }else{
     if(name.startsWith('/')){

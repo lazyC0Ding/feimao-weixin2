@@ -164,7 +164,12 @@
         const {code, state, from} = search;
         this.wxCode = code;
         let _from = from ? decodeURIComponent(from) : decodeURIComponent(state);
-        this.from = _from + (_from.includes('?') ? '&hasLogin=1' : '?hasLogin=1');
+		if(_from){
+			this.from = _from + (_from.includes('?') ? '&hasLogin=1' : '?hasLogin=1');
+		}else{
+			this.from = '/index.html?hasLogin=1';
+		}
+        
         // let from = decodeURIComponent(state);
         // if(from){
         //   this.from = from + (from.includes('?') ? '&hasLogin=1' : '?hasLogin=1');

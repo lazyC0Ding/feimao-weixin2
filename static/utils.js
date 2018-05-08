@@ -5,6 +5,9 @@ if(!String.prototype.startsWith){
 	 String.prototype.endsWith = function(suffix) {
 	  return this.indexOf(suffix, this.length - suffix.length) !== -1;
 	 };
+	 String.prototype.includes = function(str){
+		return this.indexOf(str) !== -1;
+	 }
 }
 
 function formatNumber(n) {

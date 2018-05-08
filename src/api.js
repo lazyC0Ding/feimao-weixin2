@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 axios.defaults.timeout = 15000;
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 // axios.defaults.baseURL = 'http://feimao.zertone1.com/app/';
 axios.defaults.baseURL = 'https://app.feelmao.com/app/';
 
@@ -11,6 +11,9 @@ const t = '3';
 axios.interceptors.request.use(function (config) {
   showLoading();
   const token = getToken() || '';
+  config.headers = {
+    "Content-Type" : "application/x-www-form-urlencoded"
+  };
   let method = config.method;
   let url, str;
   if (method === 'get') {

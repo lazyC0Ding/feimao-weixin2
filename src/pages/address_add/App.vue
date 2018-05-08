@@ -103,6 +103,7 @@
     methods: {
       save(){
         const params = Object.assign({}, this._data);
+        console.log(params);
         if(this.address_id === 0) {
           delete params.address_id;
         }
@@ -125,6 +126,7 @@
     created(){
       const params = getSearchParams(location.search);
       if (params) {
+        console.log("_data",this._data);
         document.title = '编辑收货地址';
         for (let i in this._data) {
           this._data[i] = params[i];

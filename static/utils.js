@@ -1,3 +1,12 @@
+if(!String.prototype.startsWith){
+	String.prototype.startsWith = function (prefix){
+	  return this.slice(0, prefix.length) === prefix;
+	 };
+	 String.prototype.endsWith = function(suffix) {
+	  return this.indexOf(suffix, this.length - suffix.length) !== -1;
+	 };
+}
+
 function formatNumber(n) {
   n = n.toString();
   return n[1] ? n : '0' + n;
@@ -95,6 +104,7 @@ function replacePage(url, paramsJson) {
 
 // 如index.html, name === 'index'
 function getPageName() {
+	
   var name = location.pathname;
   if(!name || name === '/'){
     name = 'index'

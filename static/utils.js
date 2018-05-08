@@ -241,7 +241,7 @@ function removeToken() {
 
 //md5加密
 function getSign(json) {
-  return md5(formatParams(json, true));
+  return md5(formatParams(json));
 }
 
 function md5(string) {

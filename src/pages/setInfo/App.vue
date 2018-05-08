@@ -165,7 +165,7 @@
         this.wxCode = code;
         let _from = from ? decodeURIComponent(from) : decodeURIComponent(state);
 		if(_from){
-			this.from = _from + (_from.includes('?') ? '&hasLogin=1' : '?hasLogin=1');
+			this.from = _from + (_from.indexOf('?') >= 0 ? '&hasLogin=1' : '?hasLogin=1');
 		}else{
 			this.from = '/index.html?hasLogin=1';
 		}

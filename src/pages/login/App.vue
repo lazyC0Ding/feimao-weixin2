@@ -102,7 +102,7 @@
       const search = getSearchParams(location.search);
       if(search && search.from) {
         let from = decodeURIComponent(search.from);
-        this.from = from + (from.includes('?') ? '&hasLogin=1' : '?hasLogin=1');
+        this.from = from + (from.indexOf('?') >= 0 ? '&hasLogin=1' : '?hasLogin=1');
       }
       document.title = '登录';
     },

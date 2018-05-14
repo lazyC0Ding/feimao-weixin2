@@ -278,7 +278,31 @@ export default {
             window.theVue.$post(URL.getWeixinInfo, {url})
               .then(res => {
                 if (res.errcode == 0) {
-                  const content = res.content;
+                 const content = res.content;
+                if (typeof window.WeixinJSBridge == "undefined"){
+                    document.addEventListener("WeixinJSBridgeReady", function () {
+                      /* 操作 */
+                      wx.config({
+                        debug: false,
+                        appId: content.appId,
+                        timestamp: content.timestamp,
+                        nonceStr: content.nonceStr,
+                        signature: content.signature,
+                        jsApiList: [
+                          'chooseImage',
+                          'uploadImage',
+                          'chooseWXPay',
+                          'previewImage',
+                          'hideAllNonBaseMenuItem',
+                          'showMenuItems',
+                          'onMenuShareAppMessage',
+                          'onMenuShareQQ',
+                          'onMenuShareTimeline',
+                        ]
+                      });
+                    });
+                }else {
+                  /* 操作 */
                   wx.config({
                     debug: false,
                     appId: content.appId,
@@ -297,6 +321,10 @@ export default {
                       'onMenuShareTimeline',
                     ]
                   });
+                }
+
+
+
                 } else {
                   errback(res);
                 }

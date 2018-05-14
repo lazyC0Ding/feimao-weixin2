@@ -162,6 +162,7 @@
       const search = getSearchParams(location.search);
       if (search) {
         const {code, state, from} = search;
+
         this.wxCode = code;
         let _from = from ? decodeURIComponent(from) : decodeURIComponent(state);
 		if(_from){

@@ -89,8 +89,12 @@
       getOauthInfo(){
         this.$post(URL.getOauthInfo, Object.assign({code: this.wxCode}, this.params))
           .then(res => {
-            this.wxData = res.content;
-            this.oauthLogin();
+			if(res.errcode == 0) {
+				this.wxData = res.content;
+				this.oauthLogin();
+			}else{
+              login(encodeURIComponent(this.from));
+            }
           })
       },
       oauthLogin(){
@@ -162,6 +166,7 @@
       const search = getSearchParams(location.search);
       if (search) {
         const {code, state, from} = search;
+
         this.wxCode = code;
         let _from = from ? decodeURIComponent(from) : decodeURIComponent(state);
 		if(_from){

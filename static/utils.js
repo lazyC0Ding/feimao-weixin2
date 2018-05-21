@@ -33,13 +33,16 @@ function encodeChinese(json) {
 }
 
 // json => location.search
-function formatParams(json) {
+function formatParams(json, encoded) {
   var keys = [];
   var str = JSON.stringify(json);
   json = JSON.parse(str);
   for (var i in json) {
     json[i] = typeof json[i] === 'object' ? JSON.stringify(json[i]) : json[i];
-    keys.push(i + '=' + json[i]);
+    if(encoded){
+		json[i] = encodeURIComponent(json[i]);
+	}
+	keys.push(i + '=' + json[i]);
   }
 
   return keys.sort().join('&');
@@ -238,7 +241,7 @@ function removeToken() {
 
 //md5加密
 function getSign(json) {
-  return md5(encodeURIComponent(formatParams(json)));
+  return md5(formatParams(json));
 }
 
 function md5(string) {

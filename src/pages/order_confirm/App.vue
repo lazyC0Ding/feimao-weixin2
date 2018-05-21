@@ -200,15 +200,17 @@
         const data = [];
         let item;
         for (let i of this.search.goods) {
-          item = {
-            goods_id: i.goods_id,
-            quantity: i.quantity,
-            option_id: i.option_id
-          };
-          if (i.cart_id) {
-            item.cart_id = i.cart_id;
+          if(!i.is_gift){
+            item = {
+              goods_id: i.goods_id,
+              quantity: i.quantity,
+              option_id: i.option_id
+            };
+            if (i.cart_id) {
+              item.cart_id = i.cart_id;
+            }
+            data.push(item);
           }
-          data.push(item);
         }
         return JSON.stringify(data);
       },
@@ -283,9 +285,12 @@
       init(){
         console.log(getSearchParams(location.search));
         this.param = getSearchParams(location.search);
-        this.$post(URL.settlement, {data:this.param.cart_ids ? this.param.cart_ids : JSON.stringify(this.param.goods),
+        let params ={
+          data:this.param.cart_ids ? this.param.cart_ids : JSON.stringify(this.param.goods),
           type: (this.param.type ? this.param.type : 2),
-          address_id : (this.param.address_id ? this.param.address_id : 0)})
+          address_id : (this.param.address_id ? this.param.address_id : 0)
+        };
+        this.$post(URL.settlement, params)
           .then( res => {
             if (res.errcode == 0) {
               if(this.param && this.param.address){

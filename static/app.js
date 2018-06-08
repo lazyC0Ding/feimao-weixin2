@@ -73,18 +73,21 @@ function myConfirm(msg, onConfirm, onCancel) {
 function login() {
   // var from = encodeURIComponent(location.href);
   var from = encodeURIComponent(location.pathname + location.search);
+  setCookie("from", from);
   if (isWeixin()) {
     var url = 'https://open.weixin.qq.com/connect/oauth2/authorize';
     var appid = 'wx739a1b97ce756bcd';
     var redirect_uri = encodeURIComponent('https://wap.feelmao.com/setInfo.html');
     var response_type = 'code';
     var scope = 'snsapi_userinfo';
-    var state = from;  // 自带参数
+    var state = "STATE";  // 自带参数
 
     var to = url + "?appid=" + appid + "&redirect_uri=" + redirect_uri + "&response_type=" + response_type + "&scope=" + scope + "&state=" + state + "#wechat_redirect";
     location.href = to;
   } else {
-    openPage('login', {"from" : from});
+    console.log("login", from);
+    console.log("cookie", getCookie("from"));
+    openPage('login');
   }
 }
 

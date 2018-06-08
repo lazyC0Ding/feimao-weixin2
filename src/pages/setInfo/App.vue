@@ -194,11 +194,14 @@
       document.title = '肥猫';
       const search = getSearchParams(location.search);
       if (search) {
-        const {code, state, from} = search;
+        const {code} = search;
 
         this.wxCode = code;
-        let _from = from ? decodeURIComponent(from) : decodeURIComponent(state);
+
+        var _from = getCookie("from");
+        let _from = _from ? decodeURIComponent(_from) : null;
 		if(_from){
+            delCookie("from");
 			this.from = _from + (_from.indexOf('?') >= 0 ? '&hasLogin=1' : '?hasLogin=1');
 		}else{
 			this.from = '/index.html?hasLogin=1';

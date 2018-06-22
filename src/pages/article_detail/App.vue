@@ -163,8 +163,8 @@
       }
       > div.image {
         margin-top: .4rem;
-        min-height: 4rem;
-        background-size: 100% 100%;
+        /*min-height: 4rem;*/
+        /*background-size: 100% 100%;*/
         > img {
           width: 100%;
           display: block;
@@ -539,8 +539,11 @@
         <div class="content">
           <template v-for="item in article.content">
             <div class="text" v-if="item.type === 'text'">{{item.content}}</div>
-            <div class="image" v-else-if="item.type === 'image'" @click="previewImage(item)" :style="{backgroundImage:'url(./static/img/default_pic.png)'}">
-              <img :src="item.content">
+            <!--<div class="image" v-else-if="item.type === 'image'" @click="previewImage(item)" :style="{backgroundImage:'url(./static/img/default_pic.png)'}">-->
+              <!--<img :src="item.content">-->
+            <!--</div>-->
+            <div class="image"  v-else-if="item.type === 'image'" @click="previewImage(item)">
+              <img class="lazy" src="./static/img/default_pic.png" :data-echo="item.content">
             </div>
             <div class="url" v-else-if="item.type === 'url'" v-href="['goods_detail', {goods_id:item.goods.goods_id}]">
               <img :src="item.goods.cover">
@@ -637,6 +640,12 @@
   import AppPermanent from '@c/AppPermanent.vue'
   import TheShade from '@c/TheShade.vue'
   import GoodsContainer from '@c/GoodsContainer.vue'
+  window.Echo=(function(window,document,undefined){'use strict';var store=[],offset,throttle,poll;var _inView=function(el){var coords=el.getBoundingClientRect();return((coords.top>=0&&coords.left>=0&&coords.top)<=(window.innerHeight||document.documentElement.clientHeight)+parseInt(offset));};var _pollImages=function(){for(var i=store.length;i--;){var self=store[i];if(_inView(self)){self.src=self.getAttribute('data-echo');store.splice(i,1);}}};var _throttle=function(){clearTimeout(poll);poll=setTimeout(_pollImages,throttle);};var init=function(obj){var nodes=document.querySelectorAll('[data-echo]');var opts=obj||{};offset=opts.offset||0;throttle=opts.throttle||250;for(var i=0;i<nodes.length;i++){store.push(nodes[i]);}_throttle();if(document.addEventListener){window.addEventListener('scroll',_throttle,false);}else{window.attachEvent('onscroll',_throttle);}};return{init:init,render:_throttle};})(window,document);
+
+  Echo.init({
+    offset: 0,//离可视区域多少像素的图片可以被加载
+    throttle: 0 //图片延时多少毫秒加载
+  });
 
   export default {
     data () {

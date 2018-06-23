@@ -671,10 +671,10 @@
           for(let i of this.content.article.content){
             if(i.type === "image"){
               if(i.content.indexOf(".null") >=0){
-                i.content.replace(".null","?imageView2/0/format/jpg");
+                i.content = i.content.replace(".null","?imageView2/0/format/jpg");
               }
               if(i.content.indexOf(".webp") >=0){
-                i.content.replace(".webp","?imageView2/0/format/jpg");
+                i.content = i.content.replace(".webp","?imageView2/0/format/jpg");
               }
             }
           }

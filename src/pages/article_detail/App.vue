@@ -163,7 +163,6 @@
       }
       > div.image {
         margin-top: .4rem;
-        min-height: 4rem;
         background-size: 100% 100%;
         > img {
           width: 100%;
@@ -539,7 +538,7 @@
         <div class="content">
           <template v-for="item in article.content">
             <div class="text" v-if="item.type === 'text'">{{item.content}}</div>
-            <div class="image" v-else-if="item.type === 'image'" @click="previewImage(item)" :style="{backgroundImage:'url(./static/img/default_pic.png)'}">
+            <div class="image" v-else-if="item.type === 'image'" @click="previewImage(item)" :style="{backgroundImage:'url(./static/img/default_pic.png)' ,'min-height': item.width? '0' : '4rem','height': item.width? (item.height / item.width * 7.5) + 'rem' : 'auto' }">
               <img :src="item.content">
             </div>
             <div class="url" v-else-if="item.type === 'url'" v-href="['goods_detail', {goods_id:item.goods.goods_id}]">
@@ -673,8 +672,20 @@
               if((i.content.indexOf(".null") >=0) || (i.content.indexOf(".webp") >=0)){
                 i.content = i.content + "?imageView2/0/format/jpg";
               }
+              if(i.content.indexOf("width") >= 0){
+                let str = i.content.split("/");
+                for(let j of str){
+                  if(j.indexOf("width") >= 0){
+                    i.width = j.match(/\d+/g)[0] * 1;
+                  }
+                  if(j.indexOf("height") >= 0){
+                    i.height = j.match(/\d+/g)[0] * 1;
+                  }
+                }
+              }
             }
           }
+          console.log(this.content.article);
           return this.content.article;
         }
       },

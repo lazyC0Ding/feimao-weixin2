@@ -100,9 +100,11 @@
     },
     created(){
       const search = getSearchParams(location.search);
-      if(search && search.from) {
-        let from = decodeURIComponent(search.from);
+      var _from = getCookie("from");
+      if(_from) {
+        let from = decodeURIComponent(_from);
         this.from = from + (from.indexOf('?') >= 0 ? '&hasLogin=1' : '?hasLogin=1');
+        delCookie("from");
       }
       document.title = '登录';
     },

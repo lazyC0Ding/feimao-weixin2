@@ -46,10 +46,22 @@
       color: #478db7;
     }
   }
+  .error{
+    text-align:center;
+    img{
+      margin-top: 2rem;
+      width:1.8rem;
+    }
+    .text{
+      color: @light;
+      margin-top: 0.6rem;
+    }
+
+  }
 </style>
 <template>
   <div>
-    <template v-if="needBind">
+    <template v-if="needBind && !showError">
       <div class="tip">为了体验肥猫完整服务请绑定您的手机号码</div>
       <ul class="login-ul">
         <li>
@@ -65,7 +77,14 @@
       <div class="text">点击完成绑定按钮代表您已同意<a href="https://app.feelmao.com/wap/home/agreement_view">《肥猫用户协议》</a></div>
       <div class="btn-big" style="margin-top:.6rem;" @click="bind">完成绑定</div>
     </template>
-    <div class="tip" v-if="!needBind" >正在跳转中...</div>
+    <div class="tip" v-if="!needBind && !showError" >正在跳转中...</div>
+    <div class="error" v-if="!needBind && showError">
+          <img src="../../assets/img/tip_lost.png" />
+          <div class="text">页面走丢了</div>
+
+          <div style="margin: 0.8rem auto;"  @click="refresh()" class="btn-middle">点击刷新</div>
+
+    </div>
   </div>
 </template>
 <script>
@@ -78,6 +97,7 @@
         wxCode: '',
         from: '',
         needBind:false,
+        showError : false,
         params: {
           oauth: 'weixin',
           type: 5,
@@ -86,6 +106,9 @@
       }
     },
     methods: {
+      refresh (){
+        location.reload();
+      },
       getOauthInfo(){
         this.$post(URL.getOauthInfo, Object.assign({code: this.wxCode}, this.params))
           .then(res => {
@@ -162,14 +185,23 @@
       }
     },
     created(){
+      var _this = this;
+      setTimeout(function(){
+          if(!_this.needBind){
+            _this.showError = true;
+          }
+      }, 5000);
       document.title = '肥猫';
       const search = getSearchParams(location.search);
       if (search) {
-        const {code, state, from} = search;
+        const {code} = search;
 
         this.wxCode = code;
-        let _from = from ? decodeURIComponent(from) : decodeURIComponent(state);
+
+        var _from = getCookie("from");
+        let _from = _from ? decodeURIComponent(_from) : null;
 		if(_from){
+            delCookie("from");
 			this.from = _from + (_from.indexOf('?') >= 0 ? '&hasLogin=1' : '?hasLogin=1');
 		}else{
 			this.from = '/index.html?hasLogin=1';

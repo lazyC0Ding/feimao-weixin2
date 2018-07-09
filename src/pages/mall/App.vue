@@ -267,6 +267,14 @@
         </li>
       </ul>
     </div>
+    <div class="goods" ref="tags">
+      <div>
+        <hr>
+          一起买
+        <hr>
+      </div>
+      <tags-container style="padding-top:0;padding-bottom: .01rem" :tags="tags"></tags-container>
+    </div>
     <div class="goods" ref="goods">
       <div>
         <hr>
@@ -291,6 +299,7 @@
   import SearchInput from '@c/SearchInput.vue'
   import TheFooter from '@c/TheFooter.vue'
   import ScrollNotice from '@c/ScrollNotice.vue'
+  import TagsContainer from '@c/TagsContainer.vue'
   import GoodsContainer from '@c/GoodsContainer.vue'
   import {Swiper} from 'vux'
   import LoadMore from '@c/LoadMore.vue'
@@ -314,6 +323,7 @@
           goods : [],
           time : []
         },
+        tags:[],
         sepcial: {},
         goods: [],
         seckill_goods_D_time: 0,
@@ -423,6 +433,17 @@
           });
         this.fetchMsgCount();
       },
+      fetchTag(){
+        this.$get(URL.getTags)
+          .then(res => {
+            if (res.errcode == 0) {
+              this.tags = res.content.tag;
+
+            } else {
+              errback(res)
+            }
+          });
+      },
       fetchMsgCount(){
         this.$post(URL.getInitData)
           .then(res => {
@@ -433,6 +454,7 @@
     created(){
 
       this.fetch();
+      this.fetchTag();
       window.addEventListener('scroll', () => {
         this.isCategorysFixed = window.scrollY > this.clientWidth * 8 / 15;
       })
@@ -445,6 +467,7 @@
       ScrollNotice,
       GoodsContainer,
       LoadMore,
+      TagsContainer,
     }
   }
 </script>

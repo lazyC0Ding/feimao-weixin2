@@ -1,5 +1,6 @@
 var URL = {
   getGoodsHomeData:'mall/getGoodsHomeData',
+  getTags:'mall/getTags',
   getBaseData:'community/getBaseData',
   sendcode:'user/sendcode',
   login:'user/Login',

@@ -58,6 +58,10 @@ const webpackConfig = {
         },
       },
       {
+        test: /vue-scroller.src.*?js$/,
+        loader: 'babel'
+      },
+      {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         loader: 'url-loader',
         options: {

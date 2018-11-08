@@ -91,4 +91,7 @@ var URL = {
   deleteMessages:'message/deleteMessages',
   receivables:'user/receivables',
   changeAvater:'user/changeAvater',
+  canGetCoupon: "coupon/canGetCoupon",
+  drawCoupon: "coupon/drawCoupon",
+  couponConfig: "setting/couponConfig",
 };

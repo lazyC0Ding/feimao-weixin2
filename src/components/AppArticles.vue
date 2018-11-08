@@ -129,7 +129,7 @@
       </div>
       <div class="text">
         <div @click="showDetail(article)" class="title">{{article.title}}</div>
-        <div @click="showDetail(article)" class="mini_content">{{article.mini_content}}</div>
+        <div @click="showDetail(article)" class="mini_content" style="-webkit-box-orient: vertical;">{{article.mini_content}}</div>
         <div class="actions">
           <span>{{article.browse}}</span>
           <span>{{article.likes}}</span>

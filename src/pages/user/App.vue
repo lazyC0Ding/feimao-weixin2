@@ -186,6 +186,11 @@
       }
     }
   }
+  .row-icon{
+    transform: translate(0, 20%);
+    margin-left: 8px;
+    width: 16px;
+  }
 
 </style>
 <template>
@@ -284,6 +289,11 @@
       </ul>
     </div>
     <ul class="user-ul-3">
+      <li class="row" v-href="'coupon_center'">
+        <span class="title">{{couponConfig.coupon_title ? couponConfig.coupon_title: "领券中心"}}</span>
+        <img v-show="couponConfig.coupon_icon" class="row-icon" :src="couponConfig.coupon_icon">
+        <img class="row-arrow" src="../../assets/img/direction_right_gray.png">
+      </li>
       <li class="row" v-href="'account'">
         <span class="title">我的账户</span>
         <img class="row-arrow" src="../../assets/img/direction_right_gray.png">
@@ -331,6 +341,10 @@
     data () {
       return {
         content: null,
+        couponConfig: {
+          coupon_title: "双11优惠券",
+          coupon_icon: null
+        }
       }
     },
     computed:{
@@ -361,7 +375,19 @@
               errback(res);
             }
           })
+        this.$post(URL.couponConfig)
+          .then(res => {
+            if (res.errcode == 0) {
+              this._setConfig(res.content);
+            } else {
+              errback(res);
+            }
+          })
       },
+      _setConfig(data) {
+        console.log(data);
+        this.couponConfig = data;
+      }
     },
     created(){
       this.fetch();

@@ -12,7 +12,8 @@
   "dependencies": {
     "vue": "^2.5.2",
     "vux": "^2.7.4",
-    "vux-loader": "^1.1.27"
+    "vux-loader": "^1.1.27",
+    "vue-scroller": "^2.2.4"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

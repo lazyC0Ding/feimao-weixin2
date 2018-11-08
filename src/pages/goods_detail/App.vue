@@ -108,7 +108,16 @@
       }
     }
   }
-
+  .banner-area{
+    width: 100%;
+    padding: 0.26rem;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .link-banner{
+    width: 100%;
+  }
   .before_mai {
     margin-top: .1rem;
     padding-bottom: .3rem;
@@ -496,7 +505,7 @@
             dots-class="banner-dot"
           ></swiper>
         </div>
-        <div class="info">
+        <div class="info" @click="jumpCouponCenter()">
           <div class="title">{{content.name}}</div>
           <div v-if="activity" class="price">
             <span>{{activity.activity_content}} ¥ {{activity.activity_price}}</span>
@@ -530,6 +539,9 @@
           </ul>
         </div>
         <div class="before_mai" ref="before_mai">
+          <div v-show="banner.path" class="banner-area">
+            <img :src="banner.path" class="link-banner" @click="bannerHandle(banner.type, banner.value)"/>
+          </div>
           <div class="title-with-hr">
             <hr>
             购前须知
@@ -672,6 +684,11 @@
         ifShowComment: false,
         comment: '',
         replyCustomer_id: '',
+        banner: {
+          type: null,
+          path: null,
+          value: null
+        }
       }
     },
     computed: {
@@ -805,7 +822,16 @@
           spec.active_id = item_id;
         }
       },
+      _initBanner(data) {
+        // banner_type banner_path banner_value
+        this.banner.type = data.banner_type;
+        this.banner.path =  data.banner_path;
+        this.banner.value = data.banner_value;
+        console.log('--------------banner--------------');
+        console.log(this.banner);
+      },
       fetch(){
+        let _this = this;
         this.$post(URL.getGoodsDetail, {goods_id: this.params.goods_id})
           .then(res => {
             if (res.errcode == 0) {
@@ -813,6 +839,7 @@
               for (let i of res.content.images) {
                 images.push({img: i});
               }
+              _this._initBanner(res.content);
               res.content.images = images;
               this.content = res.content;
               const {recommend_goods, specs, activity} = res.content;
@@ -884,6 +911,36 @@
       },
       getNow(){
         this.now = Date.parse(new Date()) / 1000;
+      },
+      jumpCouponCenter() {
+        openPage("coupon_center", {});
+      },
+      bannerHandle(type, id) {
+        // 1，跳转文章；2，跳转到领券中心；3,则仅为广告图
+        type = parseInt(type);
+        switch (type) {
+          case 0:
+            openPage("goods_detail", {
+              goods_id: id
+            });
+            // 跳转商品
+            break;
+          case 1:
+            openPage("article_detail", {
+              article_id: id
+            });
+            // 跳转文章
+            break;
+          case 2:
+            // 跳转领券中心
+            openPage("coupon_center", {});
+            break;
+          case 3:
+            // 纯广告不做跳转
+            return ;
+          default:
+            return ;
+        }
       }
     },
     created(){

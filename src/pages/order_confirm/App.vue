@@ -157,7 +157,7 @@
     </ul>
     <div class="order_confirm-footer">
       <span class="a">应付: <span>¥{{payment}}</span></span>
-      <span class="b" @click="generate">立即付款</span>
+      <span class="b" @click="generate">提交订单</span>
     </div>
     <app-permanent type="2"></app-permanent>
   </div>

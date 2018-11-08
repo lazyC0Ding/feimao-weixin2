@@ -74,7 +74,8 @@
   <div v-if="content">
     <ul class="coupon_list-ul">
       <li v-for="item in coupon.coupons" :key="item.coupon_id" :class="{off:coupon.off}" @click="select(item)" :style="liStyle">
-        <em v-show="!ifShowCoupon1">{{item.state_name}}</em>
+        <em>只能在APP内使用</em>
+        <!--  v-show="!ifShowCoupon1" {{item.state_name}} -->
         <span class="left">¥<em>{{item.amount}}</em></span>
         <span class="right">
           <span class="right-1">{{item.name}}</span><br>
@@ -142,7 +143,7 @@
         replacePage('order_confirm', this.search);
       },
       fetch(){
-        this.$post(URL.getCoupons, {price: this.search ? this.search.total_fee : 0})
+        this.$post(URL.getCoupons, {price: this.search ? this.search.total_fee : -1})
           .then(res => {
             console.log(res);
             if (res.errcode == 0) {
